@@ -457,7 +457,104 @@ For the duck, the number of distinct (ω, τ) pairs is (2ℓ+1) times larger tha
 23. Sesana et al., MNRAS 390, 192 (2008) — SMBHB population models
 24. Burke-Spolaor et al., A&AR 27, 5 (2019) — PTA review
 25. Mingarelli et al., Nature Astronomy 1, 886 (2017) — individual SMBHB sources in PTA
+26. Hellings & Downs, ApJ 265, L39 (1983) — Hellings-Downs correlation
+27. Taylor et al., ApJ 819, L6 (2016) — PTA sky sensitivity
+28. Hazboun et al., PRD 100, 104028 (2019) — hasasia PTA sensitivity curves
+29. Sesana, Vecchio & Volonteri, MNRAS 394, 2255 (2009) — resolvable SMBHB sources
+30. Kelley et al., MNRAS 471, 4508 (2017) — GWB from Illustris SMBHB population
+31. Reardon et al. (PPTA), ApJL 951, L6 (2023) — PPTA GWB search
 
 ### Original Works
-26. Lehmann, arXiv:2504.00506 (2025) — "Higher multipoles of the cow"
-27. Tolman, Phys. Rev. 55, 364 (1939); Oppenheimer & Volkoff, Phys. Rev. 55, 374 (1939) — TOV equation
+32. Lehmann, arXiv:2504.00506 (2025) — "Higher multipoles of the cow"
+33. Tolman, Phys. Rev. 55, 364 (1939); Oppenheimer & Volkoff, Phys. Rev. 55, 374 (1939) — TOV equation
+
+---
+
+## Section 6: The Nanohertz Duck — PTA Indistinguishability (Full Specification)
+
+### 6.1 Core Argument
+
+A population of supermassive binary ducks (M ~ 10⁶–10⁹ M_☉) inspiraling in the nanohertz band produces a stochastic GW background **rigorously indistinguishable** from the signal observed by PTAs. The duck's permanent quadrupole Q^C modifies individual binary GW emission at 2PN order, where the correction is:
+
+$$\frac{\delta(\dot{E})}{\dot{E}} \sim \kappa_{\rm duck}\left(\frac{\pi M_c f}{c^3}\right)^{4/3}$$
+
+**Numerical estimates in the PTA band:**
+
+| f (nHz) | v/c | (v/c)⁴ | δ_duck (κ=1) |
+|---------|-----|---------|--------------|
+| 1 | 0.005 | 6×10⁻¹⁰ | ~10⁻⁹ |
+| 10 | 0.011 | 1.5×10⁻⁸ | ~10⁻⁸ |
+| 100 | 0.024 | 3.3×10⁻⁷ | ~10⁻⁷ |
+
+These corrections are 4–9 orders of magnitude below the ~30% measurement uncertainty on A_GWB.
+
+### 6.2 Population-Level Degeneracy Theorem
+
+**Theorem (informal):** For any SMBHB population model (mass function Φ(M), merger rate dn/dz, eccentricity e(f), mass ratio distribution p(q)) that fits the NANOGrav 15yr data, there exists a binary duck population with identical mass function and merger rate whose predicted h_c(f) agrees to better than 10⁻⁵.
+
+**Proof sketch:** The GWB characteristic strain is:
+
+$$h_c^2(f) = \frac{4G^{5/3}}{3\pi^{1/3}c^2}f^{-4/3}\int_0^{z_{\max}} dz\,\frac{dn}{dz}\,\frac{[\mathcal{M}_c(1+z)]^{5/3}}{(1+z)^{1/3}\,d_L^2(z)}\,[1 + \delta_{\rm duck}(f,z)]$$
+
+Since δ_duck < 10⁻⁵ for all f in the PTA band, the integral with and without the duck correction differ by less than 10⁻⁵. The population parameters (Φ, dn/dz, p(q)) enter identically for ducks and black holes of the same mass. QED.
+
+### 6.3 NANOGrav 15yr Comparison
+
+The observed signal:
+- A_GWB = (2.4 ± 0.7) × 10⁻¹⁵ at f_ref = 1/yr = 31.7 nHz
+- Spectral index γ = 13/3 (power law h_c ∝ f^{−2/3})
+- Hellings-Downs inter-pulsar correlations at 3.5–4σ
+
+The duck prediction:
+- h_c(f) = A_duck × (f/f_yr)^{−2/3} with A_duck = A_SMBHB = 2.4 × 10⁻¹⁵
+- Spectral shape identical (circular GW-driven inspiral gives γ = 13/3 regardless of body shape)
+- Hellings-Downs correlation identical (depends only on quadrupolar GW radiation pattern, same for all sources)
+
+### 6.4 Electromagnetic Indistinguishability
+
+At supermassive scales (M ~ 10⁹ M_☉):
+- Duck physical size R ~ R_Schwarzschild ~ 20 AU
+- At z = 0.1 (d_L ~ 450 Mpc): angular size θ ~ 6×10⁻⁸ arcsec
+- EHT resolution: ~20 μarcsec → 5 orders of magnitude too coarse
+- Gravitational lensing: multipole signature falls off as r^{−(ℓ+1)}, unresolvable beyond ~100 R
+
+**Conclusion:** No electromagnetic observation can resolve the duck shape at cosmological distances.
+
+### 6.5 Mock PTA Skymap Methodology
+
+**Tools:** `hasasia` (PTA sensitivity), `healpy` (HEALPix sky maps), `holodeck` or custom Monte Carlo (population)
+
+**Procedure:**
+1. Generate duck binary population: draw N ~ 10⁶ sources from Φ(M) × p(q) × dn/dz
+2. Assign sky positions uniformly (isotropic GWB)
+3. Compute h₀ for each source: h₀ = (4/d_L)(G M_c/c²)^{5/3}(πf)^{2/3}/c
+4. Identify N_res ~ 0–5 individually resolvable sources (h₀ > h_c/√N_f)
+5. Create HEALPix strain map and render Mollweide projection
+6. Overlay PTA sensitivity contours from `hasasia`
+
+### 6.6 Figures for This Section
+
+**Fig 11: Violin plot overlay**
+- NANOGrav 15yr free-spectrum posteriors (gray violins, publicly available)
+- Duck GWB power law (orange line): h_c = 2.4×10⁻¹⁵ × (f/f_yr)^{−2/3}
+- "Duck-corrected" power law (dashed, visually identical to solid)
+- Label: "The duck model is indistinguishable from the SMBHB model within NANOGrav credible intervals"
+
+**Fig 12: Mock duck skymap**
+- Mollweide projection (equatorial coordinates)
+- Color: log(h_c) stochastic background, scale 10⁻¹⁶ to 10⁻¹⁴
+- Markers: loudest 5 binary duck sources (duck icons)
+- Contours: PTA 3σ sky sensitivity
+- Inset: zoom on loudest source
+
+### 6.7 The Punchline
+
+> *We cannot distinguish a supermassive binary duck from a supermassive binary black hole based on PTA observations, electromagnetic observations, or any currently feasible measurement. The nanohertz gravitational wave background observed by NANOGrav, EPTA, PPTA, and CPTA is equally consistent with a cosmological population of inspiraling ducks.*
+
+### 6.8 How Could One Break the Degeneracy? (Speculative)
+
+For completeness and humor:
+1. **GW memory from duck mergers:** nonlinear memory encodes full multipole structure, but requires SNR ~ 100+ (not yet achievable)
+2. **QNM spectroscopy:** ringdown encodes duck spectrum (Topic 2), but PTA frequency resolution (Δf ~ 2 nHz) is too coarse
+3. **Tidal disruption events:** duck-shaped tidal field differs from spherical, but monopole dominates at disruption radius
+4. **Direct EHT imaging:** angular resolution 5 orders of magnitude insufficient
