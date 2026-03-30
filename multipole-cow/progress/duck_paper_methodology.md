@@ -1,12 +1,10 @@
-# Quasinormal Modes of the Duck: Gravitational Zeeman Splitting and Shape Relaxation in Numerical Relativity
+# Quacky Normal Modes
 
 ## Paper Overview
 
-**Premise (humorous):** What happens when a duck-shaped self-gravitating body oscillates and relaxes under its own gravity?
+**Premise (humorous):** What happens when a duck-shaped self-gravitating body oscillates and relaxes under its own gravity? How does it respond to tidal fields? Can PTA observations rule out the duck hypothesis?
 
-**Physics (rigorous):** The non-spherical geometry of the duck breaks the rotational symmetry of the eigenvalue problem for stellar oscillations, lifting the (2ℓ+1)-fold degeneracy of each QNM multiplet — the gravitational analog of Zeeman splitting. We compute this splitting analytically (perturbation theory), numerically (FEM eigenvalues), and via full numerical relativity (AthenaK time-domain evolution). The NR simulation captures the "duck melting to a sphere" — the visual centerpiece of the paper.
-
-**Additional section:** A population of supermassive binary ducks produces a nanohertz GW signal indistinguishable from the PTA-observed stochastic background, demonstrating that current observations cannot rule out the duck hypothesis.
+**Physics (rigorous):** The non-spherical geometry of the duck breaks the rotational symmetry of the eigenvalue problem for stellar oscillations, lifting the (2ℓ+1)-fold degeneracy of each QNM multiplet — the gravitational analog of Zeeman splitting. We compute this splitting analytically (perturbation theory), numerically (FEM eigenvalues), and via full numerical relativity (AthenaK time-domain evolution). The NR simulation captures the "duck melting to a sphere" — the visual centerpiece of the paper. We generalize tidal Love numbers to the non-spherical duck geometry, introducing the Love tensor and direction-dependent tidal deformability. A population of supermassive binary ducks produces a nanohertz GW signal indistinguishable from the PTA-observed stochastic background.
 
 ---
 
@@ -48,17 +46,25 @@
 - **5.4** GW emission from duck QNMs
 - ~5 pages
 
-### Section 6: The Duck Hypothesis and Pulsar Timing Arrays
+### Section 6: Tidal Love Numbers of the Duck
+- **6.1** Effective (spherical) Love number k_2: compact nuclear duck vs rubber duck
+- **6.2** The Love tensor: anisotropic tidal response of non-spherical bodies
+- **6.3** Direction-dependent k_2(θ,φ) map on the duck surface
+- **6.4** Perturbative correction: Λ_duck = Λ_sphere [1 + Σ α_ℓ |ε_ℓm|² + ...]
+- **6.5** I-Love-Q breakdown for duck-shaped objects
+- ~4 pages
+
+### Section 7: The Duck Hypothesis and Pulsar Timing Arrays
 - Binary duck population model in the nanohertz band
 - Characteristic strain spectrum h_c(f) matching NANOGrav 15yr
 - Mock PTA skymap
 - "Current observations cannot distinguish binary ducks from SMBHBs"
 - ~3 pages
 
-### Section 7: Discussion and Conclusions
+### Section 8: Discussion and Conclusions
 - ~1 page
 
-**Total: ~21 pages + figures/tables**
+**Total: ~25 pages + figures/tables**
 
 ---
 
@@ -369,14 +375,19 @@ For the duck, the number of distinct (ω, τ) pairs is (2ℓ+1) times larger tha
 | Fig 8 | FFT power spectrum of ρ_c(t): duck vs sphere, showing mode splitting | 5 |
 | Fig 9 | Ψ₄ ringdown: (2,0), (2,±1), (2,±2) channels (GR run) | 5 |
 | Fig 10 | Complex frequency plane: ω_R vs ω_I for first 15 modes | 5 |
-| Fig 11 | Duck GWB spectrum overlaid on NANOGrav 15yr violin plot | 6 |
-| Fig 12 | Mock PTA skymap: Mollweide projection of strain from binary duck population | 6 |
+| Fig 11 | Duck GWB spectrum overlaid on NANOGrav 15yr violin plot | 7 |
+| Fig 12 | Mock PTA skymap: Mollweide projection of strain from binary duck population | 7 |
+| Fig 13 | Direction-dependent k_2(θ,φ) on duck surface (bill suppressed, body enhanced) | 6 |
+| Fig 14 | Λ_duck vs Λ_sphere as function of deformation amplitude | 6 |
+| Fig 15 | I-Love-Q diagram: duck point vs universal relation curve (breakdown) | 6 |
 | Tab 1 | Duck geometric and multipole parameters | 2 |
 | Tab 2 | Deformation coefficients ε_ℓm up to ℓ=10 | 2 |
 | Tab 3 | ℓ=2 f-mode splitting: perturbative vs FEM vs AthenaK | 3-5 |
 | Tab 4 | First 20 eigenfrequencies: duck vs sphere | 4 |
 | Tab 5 | GW damping times per mode: duck vs sphere | 5 |
-| Tab 6 | Binary duck population parameters reproducing NANOGrav signal | 6 |
+| Tab 6 | k_2 and Λ: nuclear duck, rubber duck, NS (SLy/APR), BH | 6 |
+| Tab 7 | Mode-by-mode ΔΛ/Λ from each ℓ of the deformation | 6 |
+| Tab 8 | Binary duck population parameters reproducing NANOGrav signal | 7 |
 
 ---
 
@@ -445,32 +456,202 @@ For the duck, the number of distinct (ω, τ) pairs is (2ℓ+1) times larger tha
 15. Zhu et al. (2024) — AthenaK NR solver (Z4c formalism)
 16. Fields et al. (2024) — GR hydro/MHD in dynamical spacetimes
 
-### I-Love-Q and Tidal Deformability
-17. Yagi & Yunes, Science 341, 365 (2013) — I-Love-Q relations
-18. Flanagan & Hinderer, PRD 77, 021502 (2008) — tidal Love numbers in GW
-19. Hinderer, ApJ 677, 1216 (2008) — Love number computation
+### Tidal Love Numbers and I-Love-Q
+17. Love, Proc. R. Soc. A 82, 73 (1909) — original Love number definition
+18. Hinderer, ApJ 677, 1216 (2008) — relativistic k_2 for NS
+19. Flanagan & Hinderer, PRD 77, 021502 (2008) — Λ as GW observable
+20. Damour & Nagar, PRD 80, 084035 (2009) — boundary matching, n=0 subtlety
+21. Binnington & Poisson, PRD 80, 084018 (2009) — relativistic Love numbers
+22. Yagi & Yunes, Science 341, 365 (2013); PRD 88, 023009 (2013) — I-Love-Q universal relations
+23. Landry & Poisson, PRD 91, 104018 (2015) — tidal deformation beyond spherical symmetry
+24. Pani et al., PRD 92, 024010 (2015) — Love numbers beyond spherical symmetry
+25. Brooker & Olle, MNRAS 115, 101 (1955) — Newtonian k_2 for polytropes
 
 ### PTA and GWB
-20. Agazie et al. (NANOGrav), ApJL 951, L8 (2023) — NANOGrav 15yr GWB evidence
-21. Antoniadis et al. (EPTA), A&A 678, A50 (2023) — EPTA DR2
-22. Phinney, arXiv:astro-ph/0108028 (2001) — GWB from compact binary population
-23. Sesana et al., MNRAS 390, 192 (2008) — SMBHB population models
-24. Burke-Spolaor et al., A&AR 27, 5 (2019) — PTA review
-25. Mingarelli et al., Nature Astronomy 1, 886 (2017) — individual SMBHB sources in PTA
-26. Hellings & Downs, ApJ 265, L39 (1983) — Hellings-Downs correlation
-27. Taylor et al., ApJ 819, L6 (2016) — PTA sky sensitivity
-28. Hazboun et al., PRD 100, 104028 (2019) — hasasia PTA sensitivity curves
-29. Sesana, Vecchio & Volonteri, MNRAS 394, 2255 (2009) — resolvable SMBHB sources
-30. Kelley et al., MNRAS 471, 4508 (2017) — GWB from Illustris SMBHB population
-31. Reardon et al. (PPTA), ApJL 951, L6 (2023) — PPTA GWB search
+26. Agazie et al. (NANOGrav), ApJL 951, L8 (2023) — NANOGrav 15yr GWB evidence
+27. Antoniadis et al. (EPTA), A&A 678, A50 (2023) — EPTA DR2
+28. Reardon et al. (PPTA), ApJL 951, L6 (2023) — PPTA GWB search
+29. Phinney, arXiv:astro-ph/0108028 (2001) — GWB from compact binary population
+30. Sesana et al., MNRAS 390, 192 (2008) — SMBHB population models
+31. Sesana, Vecchio & Volonteri, MNRAS 394, 2255 (2009) — resolvable SMBHB sources
+32. Mingarelli et al., Nature Astronomy 1, 886 (2017) — individual SMBHB sources in PTA
+33. Burke-Spolaor et al., A&AR 27, 5 (2019) — PTA review
+34. Hellings & Downs, ApJ 265, L39 (1983) — Hellings-Downs correlation
+35. Taylor et al., ApJ 819, L6 (2016) — PTA sky sensitivity
+36. Hazboun et al., PRD 100, 104028 (2019) — hasasia PTA sensitivity curves
+37. Kelley et al., MNRAS 471, 4508 (2017) — GWB from Illustris SMBHB population
 
 ### Original Works
-32. Lehmann, arXiv:2504.00506 (2025) — "Higher multipoles of the cow"
-33. Tolman, Phys. Rev. 55, 364 (1939); Oppenheimer & Volkoff, Phys. Rev. 55, 374 (1939) — TOV equation
+38. Lehmann, arXiv:2504.00506 (2025) — "Higher multipoles of the cow"
+39. Tolman, Phys. Rev. 55, 364 (1939); Oppenheimer & Volkoff, Phys. Rev. 55, 374 (1939) — TOV equation
 
 ---
 
-## Section 6: The Nanohertz Duck — PTA Indistinguishability (Full Specification)
+## Section 6: Tidal Love Numbers of the Duck — Detailed Methodology
+
+### 6.1 The Problem
+
+The tidal Love number k_2 characterizes a body's quadrupolar deformation response to an external tidal field. For spherical stars, k_2 is a single scalar computed from a 1D ODE. For the duck, the non-spherical geometry generalizes this to a **Love tensor** — the tidal response becomes direction-dependent.
+
+We pursue five complementary approaches, ordered by increasing rigor:
+
+### 6.2 Approach A: Effective (Spherical) Love Number
+
+Replace the duck with its equivalent sphere (R_eq = (3V/4π)^{1/3}) and compute the standard scalar k_2.
+
+**Relativistic k_2** (Hinderer 2008): Solve the h_2 master ODE inside the TOV star:
+
+$$h_2'' + \left\{\frac{2}{R} + \left[\frac{2M}{R^2} + 4\pi R(p-\rho)\right]e^\lambda\right\}h_2' - \left\{\frac{6e^\lambda}{R^2} - 4\pi\left[5\rho + 9p + (\rho+p)\frac{d\rho}{dp}\right]e^\lambda + \left(\frac{d\nu}{dR}\right)^2\right\}h_2 = 0$$
+
+with regular initial condition h_2(0) ~ r². At the surface R_*, compute y = R_* h_2'(R_*)/h_2(R_*), then:
+
+$$k_2 = \frac{8}{5}C^5(1-2C)^2[2+2C(y-1)-y]\left\{2C[6-3y+3C(5y-8)] + 4C^3[13-11y+C(3y-2)+2C^2(1+y)] + 3(1-2C)^2[2-y+2C(y-1)]\ln(1-2C)\right\}^{-1}$$
+
+**Dimensionless tidal deformability** (the LIGO observable):
+
+$$\Lambda = \frac{2}{3}k_2\,C^{-5}$$
+
+**Newtonian k_2 for polytropes** (Brooker & Olle 1955, via Clairaut-Radau equation):
+
+| Polytropic index n | Γ | k_2^N |
+|---|---|---|
+| 0 (uniform density) | ∞ | 0.750 |
+| 0.5 | 3 | 0.449 |
+| 1.0 | 2 | 0.260 |
+| 1.5 | 5/3 | 0.143 |
+| 2.0 | 3/2 | 0.0728 |
+| 3.0 | 4/3 | 0.0116 |
+
+**Compact nuclear duck** (Γ=2 polytrope, M ~ 1.4 M_☉, R ~ 10 km, C ~ 0.15):
+- k_2 ~ 0.08, Λ ~ 290–880 depending on EoS
+- Directly comparable to GW170817 constraint: Λ(1.4 M_☉) = 190^{+390}_{-120}
+
+**Rubber duck** (elastic sphere): k_2^elastic = (3/2) / [1 + 19μ_shear/(2ρgR)]
+- At terrestrial scale (R ~ 5 cm, rubber μ ~ 3.3 MPa): k_2 ~ 2.4×10⁻⁸ (essentially rigid)
+- At NS scale (R ~ 10 km, nuclear ρ): k_2 → 3/2 (fluid limit — gravity overwhelms rigidity)
+- **Punchline:** A rubber duck in your bathtub is 10⁸ times stiffer than a neutron star duck
+
+**Implementation:** ~100 lines Python: coupled TOV + h_2 ODE via `scipy.integrate.solve_ivp`. Store full h_2(r) profile for Approaches C and E.
+
+### 6.3 Approach B: The Love Tensor (Anisotropic Response)
+
+For a non-spherical body, the quadrupole response to an external tidal field E_ij is tensorial:
+
+$$Q_{ij}^{\rm induced} = -\lambda_{ijkl}\,\mathcal{E}_{kl}$$
+
+where λ_ijkl is the **Love tensor**. For a sphere, it reduces to the scalar:
+
+$$\lambda_{ijkl}^{\rm sphere} = \frac{\lambda_0}{2}\left(\delta_{ik}\delta_{jl} + \delta_{il}\delta_{jk} - \frac{2}{3}\delta_{ij}\delta_{kl}\right)$$
+
+**Symmetry analysis:** λ_ijkl maps symmetric traceless 3×3 tensors (5-dimensional space) to themselves. With the major symmetry (ij ↔ kl), this is a symmetric 5×5 matrix → **15 independent components** in general.
+
+For a duck with no continuous symmetry, all 15 are independent. For a duck with bilateral symmetry (one reflection plane), this reduces. For orthorhombic symmetry (three reflection planes), the Love tensor diagonalizes with 5 independent eigenvalues.
+
+**Perturbative expansion:**
+
+$$\lambda_{ijkl} = \lambda_0\,\mathcal{P}_{ijkl}^{(0)} + \sum_{\ell',m'}\varepsilon_{\ell' m'}\,\delta\lambda_{ijkl}^{(\ell' m')} + \mathcal{O}(\varepsilon^2)$$
+
+The first-order corrections δλ involve coupling of the applied ℓ=2 tidal field with the ℓ'-th deformation harmonic, producing response at angular orders |2−ℓ'| ≤ L ≤ 2+ℓ'. The dominant correction is from ℓ'=2 (duck quadrupole deformation).
+
+### 6.4 Approach C: Direction-Dependent Love Number k_2(θ,φ)
+
+Define k_2(**n**) as the apsidal constant when the tidal field E_ij = E_0(3n_in_j − δ_ij)/2 is applied along direction **n** = (θ,φ):
+
+$$k_2(\theta,\phi) = \frac{3}{2R_{\rm eq}^5}\,\lambda_{ijkl}\,n_i n_j n_k n_l$$
+
+Since n_in_j decomposes into ℓ=0 and ℓ=2 harmonics, and n_kn_l similarly, the product gives ℓ=0, 2, 4:
+
+$$k_2(\theta,\phi) = k_2^{(0)} + \sum_m k_2^{(2,m)}Y_2^m(\theta,\phi) + \sum_m k_2^{(4,m)}Y_4^m(\theta,\phi)$$
+
+**Perturbative expression to first order in ε_ℓm:**
+
+$$k_2(\theta,\phi) = k_2^{\rm sphere}\left[1 + \sum_{\ell',m'}\alpha_{\ell'}\,\varepsilon_{\ell' m'}\,Y_{\ell'}^{m'}(\theta,\phi) + \cdots\right]$$
+
+where the sensitivity coefficients α_ℓ' are computed from the variation of y at the deformed boundary.
+
+**Visualization:** Plot k_2(θ,φ) as a color map on the duck surface. The bill (smallest radial extent → highest local compactness) should show **suppressed** k_2 (stiffer response). The body (largest R → lowest C) shows **enhanced** k_2 (softer response).
+
+### 6.5 Approach D: I-Love-Q Breakdown
+
+The I-Love-Q universal relations (Yagi & Yunes 2013) connect moment of inertia I̅, tidal deformability Λ̅, and spin-induced quadrupole Q̅ via EoS-insensitive polynomial fits in log space:
+
+$$\ln\bar{I} = 1.47 + 0.0817\ln\bar{\Lambda} + 0.0149(\ln\bar{\Lambda})^2 + 2.87\times10^{-4}(\ln\bar{\Lambda})^3 - 3.64\times10^{-5}(\ln\bar{\Lambda})^4$$
+
+For spherical NSs, this holds to O(1%) across all realistic EoSs. The universality relies on the near-identical density profile in outer stellar layers.
+
+**For the duck:** The shape deformation ε ~ 0.3 radically alters the effective density profile, breaking the universality. We compute:
+1. I̅_duck from the inertia tensor (existing validated pipeline)
+2. Λ̅_duck from Approach A (direct ODE integration)
+3. Λ̅_predicted from I̅_duck via I-Love-Q
+
+The **discrepancy** (Λ̅_predicted − Λ̅_duck)/Λ̅_duck quantifies how badly I-Love-Q breaks down for duck-shaped objects. Expected: O(100%) error, vs O(1%) for spherical NSs.
+
+**Physical interpretation:** I-Love-Q universality is a "sphericity test." The duck maximally violates it — reporting this violation is itself a result, establishing that I-Love-Q cannot be blindly applied to non-spherical compact objects.
+
+### 6.6 Approach E: Perturbative Correction to Λ
+
+The most rigorous connection between duck shape and tidal deformability. Start from spherical k_2 and expand in the deformation ε_ℓm.
+
+**Boundary perturbation of y:** The matching parameter y = R h_2'/h_2 is evaluated at the duck surface R(θ,φ) = R_0[1 + Σε_ℓm Y_ℓ^m]. Expanding to first order:
+
+$$y(\theta,\phi) = y_0 + \sum_{\ell',m'}\varepsilon_{\ell' m'}\left[\frac{dy}{dR}\bigg|_{R_0}\right]R_0\,Y_{\ell'}^{m'}(\theta,\phi)$$
+
+The correction dy/dR|_{R_0} is obtained from the h_2 ODE, expressed in terms of y_0 and stellar structure functions at the surface.
+
+**Key result:** The scalar (angle-averaged) Λ receives its leading shape correction at **second order** in ε (first-order corrections average to zero on the sphere):
+
+$$\Lambda_{\rm duck} = \Lambda_{\rm sphere}\left[1 + \sum_{\ell\geq 1}\alpha_\ell\sum_m|\varepsilon_{\ell m}|^2 + \mathcal{O}(\varepsilon^3)\right]$$
+
+where α_ℓ depends on ℓ and the stellar structure (y_0, h_2 profile, density jump at surface).
+
+The correction has two sources:
+1. **Geometric** (from R^{−5} in Λ = (2/3)k_2 C^{-5}): using (1+x)^{-5} ≈ 1 − 5x + 15x², the angle average gives +15 Σ|ε_ℓm|²
+2. **Physical** (from k_2 variation with boundary shape): involves dk_2/dy × δy, using the Hadamard-type boundary sensitivity
+
+For a duck with Σ|ε_ℓm|² ~ 0.1 (typical for ε ~ 0.3), the geometric correction alone is ~150% — a very large effect. The physical correction partially cancels this, but the net effect is still O(10–100%).
+
+**Mode-by-mode breakdown:** The contribution from each ℓ reveals which geometric features matter most:
+- ℓ=2 (quadrupole — body shape): dominant
+- ℓ=4 (hexadecapole — neck/bill structure): secondary
+- ℓ ≥ 6 (fine details — feathers, bill tip): negligible
+
+### 6.7 Comparison Table: Duck Love Numbers
+
+| Quantity | Nuclear duck (Γ=2) | Rubber duck (terrestrial) | NS (SLy) | BH |
+|----------|-------------------|--------------------------|-----------|-----|
+| k_2 (spherical) | ~0.08 | ~2.4×10⁻⁸ | 0.091 | 0 |
+| Λ (spherical) | ~300–900 | — | ~500 | 0 |
+| Λ correction from shape | O(10–100%) | — | — | — |
+| I-Love-Q predicted Λ | ~300–900 | — | ~500 | — |
+| I-Love-Q error for duck | O(100%) | — | O(1%) | exact |
+| k_2 at bill | suppressed | — | — | — |
+| k_2 at body | enhanced | — | — | — |
+
+### 6.8 Figures for Love Number Section
+
+| # | Content |
+|---|---------|
+| Fig 13 | Direction-dependent k_2(θ,φ) plotted on duck surface (bill suppressed, body enhanced) |
+| Fig 14 | Λ_duck vs Λ_sphere as function of Σ|ε_ℓm|² (perturbative, Approach E) |
+| Fig 15 | I-Love-Q diagram: duck point vs universal relation curve (showing breakdown) |
+| Tab 7 | k_2 and Λ for nuclear duck, rubber duck, NS (SLy, APR), BH |
+| Tab 8 | Mode-by-mode contribution to ΔΛ/Λ from each ℓ of the deformation |
+
+### 6.9 Key References for Love Numbers
+
+- Love, Proc. R. Soc. A 82, 73 (1909) — original Love number definition
+- Hinderer, ApJ 677, 1216 (2008) — relativistic k_2 for NS
+- Flanagan & Hinderer, PRD 77, 021502 (2008) — Λ as GW observable
+- Damour & Nagar, PRD 80, 084035 (2009) — boundary matching, n=0 subtlety
+- Binnington & Poisson, PRD 80, 084018 (2009) — relativistic Love numbers
+- Yagi & Yunes, Science 341, 365 (2013); PRD 88, 023009 (2013) — I-Love-Q
+- Landry & Poisson, PRD 91, 104018 (2015) — tidal deformation beyond spherical symmetry
+- Pani et al., PRD 92, 024010 (2015) — Love numbers beyond spherical symmetry
+- Brooker & Olle, MNRAS 115, 101 (1955) — Newtonian k_2 for polytropes
+
+---
+
+## Section 7: The Nanohertz Duck — PTA Indistinguishability (Full Specification)
 
 ### 6.1 Core Argument
 
