@@ -1,10 +1,17 @@
 """
-Render the gradual transition from a sphere to the cow mesh
+Render the gradual transition from a sphere to any mesh
 at increasing multipole (spherical harmonic) order.
+
+Usage:
+    python render_sphere_to_cow.py              # default: cow
+    python render_sphere_to_cow.py cow
+    python render_sphere_to_cow.py bunny
+    python render_sphere_to_cow.py /path/to/mesh.off
 """
 
 import sys
 import os
+import argparse
 import numpy as np
 from scipy.special import sph_harm_y
 import matplotlib
@@ -44,9 +51,7 @@ def compute_sh_coefficients(r, theta, phi, areas, l_max):
     coeffs = {}
     for ell in range(l_max + 1):
         for m in range(-ell, ell + 1):
-            # Y_l^m(theta, phi) — sph_harm_y returns complex values
             Ylm = sph_harm_y(ell, m, theta, phi)
-            # c_l^m = sum_i f_r(theta_i, phi_i) * conj(Y_l^m(theta_i, phi_i)) * A_i
             coeffs[(ell, m)] = np.sum(r * np.conj(Ylm) * areas)
     return coeffs
 
@@ -72,22 +77,10 @@ def spherical_to_cartesian(r, theta, phi):
 
 def render_mesh(ax, V, F, title, elev=25, azim=-60,
                 global_range=None, global_rmin=None, global_rmax=None):
-    """Render a triangulated surface on a 3D axis.
-
-    Parameters
-    ----------
-    global_range : float, optional
-        If given, use this as the axis limit for all three axes.
-    global_rmin, global_rmax : float, optional
-        If given, use these as the colormap normalization bounds.
-    """
-    # Compute radial distance for coloring
+    """Render a triangulated surface on a 3D axis."""
     r = np.linalg.norm(V, axis=1)
-
-    # Face colors: average radius of face vertices
     face_r = (r[F[:, 0]] + r[F[:, 1]] + r[F[:, 2]]) / 3.0
 
-    # Normalize for colormap
     vmin = global_rmin if global_rmin is not None else r.min()
     vmax = global_rmax if global_rmax is not None else r.max()
     if vmax - vmin < 1e-10:
@@ -96,13 +89,11 @@ def render_mesh(ax, V, F, title, elev=25, azim=-60,
     norm = plt.Normalize(vmin=vmin, vmax=vmax)
     face_colors = cmap(norm(face_r))
 
-    # Build polygon collection
     triangles = V[F]
     poly = Poly3DCollection(triangles, facecolors=face_colors,
                             edgecolors='k', linewidths=0.05, alpha=1.0)
     ax.add_collection3d(poly)
 
-    # Set axis limits
     max_range = global_range if global_range is not None else np.abs(V).max() * 1.1
     ax.set_xlim(-max_range, max_range)
     ax.set_ylim(-max_range, max_range)
@@ -114,99 +105,126 @@ def render_mesh(ax, V, F, title, elev=25, azim=-60,
     ax.set_box_aspect([1, 1, 1])
 
 
-def main():
-    base_dir = os.path.dirname(os.path.dirname(__file__))
-    mesh_path = os.path.join(base_dir, 'data', 'cow.off')
-    results_dir = os.path.join(base_dir, 'results')
+def render_transition(mesh_path, mesh_name, results_dir, l_max_full=30,
+                      l_max_values=None, elev=25, azim=-60):
+    """Render sphere-to-mesh transition for any mesh.
+
+    Args:
+        mesh_path: path to .off file
+        mesh_name: short name (e.g. 'cow', 'bunny') for file naming
+        results_dir: output directory for images
+        l_max_full: maximum SH order for coefficient computation
+        l_max_values: list of ℓ_max values for reconstruction panels
+        elev, azim: viewing angles
+    """
     os.makedirs(results_dir, exist_ok=True)
+
+    if l_max_values is None:
+        l_max_values = [0, 1, 2, 4, 8, 16]
 
     # Load and center mesh
     V, F = load_off(mesh_path)
     com = compute_center_of_mass(V, F)
     V_centered = V - com
 
-    print(f"Mesh: {len(V)} vertices, {len(F)} faces")
-    print(f"Center of mass: {com}")
+    print(f"Mesh '{mesh_name}': {len(V)} vertices, {len(F)} faces")
+    print(f"  Center of mass: {com}")
 
     # Spherical coordinates
     r, theta, phi = cartesian_to_spherical(V_centered)
-    print(f"Radial range: [{r.min():.4f}, {r.max():.4f}]")
+    print(f"  Radial range: [{r.min():.4f}, {r.max():.4f}]")
 
-    # Compute solid angles on the unit sphere for each vertex.
-    # Project vertices onto unit sphere, compute face areas there,
-    # then use 1/3 of incident face solid angles as vertex weights.
+    # Solid-angle weights on the unit sphere
     V_unit = V_centered / np.linalg.norm(V_centered, axis=1, keepdims=True)
     areas = compute_voronoi_areas(V_unit, F)
-    # These should sum to ~4*pi for a closed mesh projected onto the sphere
-    print(f"Total solid angle (vertex weights): {areas.sum():.4f} (4*pi = {4*np.pi:.4f})")
-    # Normalize to exactly 4*pi
     areas = areas * (4 * np.pi / areas.sum())
+    print(f"  Solid angle weights normalized to 4*pi")
 
-    # Compute SH coefficients up to high l_max
-    l_max_full = 30
-    print(f"Computing SH coefficients up to l_max = {l_max_full}...")
+    # Compute SH coefficients
+    print(f"  Computing SH coefficients up to l_max = {l_max_full}...")
     coeffs = compute_sh_coefficients(r, theta, phi, areas, l_max_full)
     print(f"  Number of coefficients: {len(coeffs)}")
 
-    # Reconstruction orders
-    l_max_values = [0, 1, 2, 4, 8, 16]
+    # Reconstruct at each ℓ_max
     labels = [f"$\\ell_{{\\max}} = {l}$" for l in l_max_values] + ["Full mesh"]
-
-    # Reconstruct vertex positions for each l_max
     reconstructions = []
     for lm in l_max_values:
         r_recon = reconstruct_radii(coeffs, theta, phi, lm)
-        # Clamp to avoid negative radii
         r_recon = np.maximum(r_recon, 0.01 * r.mean())
         V_recon = spherical_to_cartesian(r_recon, theta, phi)
         reconstructions.append(V_recon)
-        print(f"  l_max={lm:3d}: r range [{r_recon.min():.4f}, {r_recon.max():.4f}]")
-
-    # Add full mesh (original centered vertices)
+        print(f"    l_max={lm:3d}: r range [{r_recon.min():.4f}, {r_recon.max():.4f}]")
     reconstructions.append(V_centered)
 
-    # Compute global axis range and color bounds across all reconstructions
+    # Global bounds
     global_range = max(np.abs(V_rec).max() for V_rec in reconstructions) * 1.1
     all_radii = [np.linalg.norm(V_rec, axis=1) for V_rec in reconstructions]
     global_rmin = min(rad.min() for rad in all_radii)
     global_rmax = max(rad.max() for rad in all_radii)
-    print(f"Global axis range: {global_range:.4f}, color range: [{global_rmin:.4f}, {global_rmax:.4f}]")
 
-    render_kw = dict(elev=25, azim=-60, global_range=global_range,
+    render_kw = dict(elev=elev, azim=azim, global_range=global_range,
                      global_rmin=global_rmin, global_rmax=global_rmax)
 
-    # --- Multi-panel figure ---
+    # --- Multi-panel composite ---
     n_panels = len(reconstructions)
     fig = plt.figure(figsize=(4 * n_panels, 4.5))
     for i, (V_rec, label) in enumerate(zip(reconstructions, labels)):
         ax = fig.add_subplot(1, n_panels, i + 1, projection='3d')
         render_mesh(ax, V_rec, F, label, **render_kw)
 
-    fig.suptitle("Sphere-to-Cow Transition via Spherical Harmonic Expansion",
-                 fontsize=16, fontweight='bold', y=0.98)
+    title = f"Sphere-to-{mesh_name.capitalize()} Transition via Spherical Harmonic Expansion"
+    fig.suptitle(title, fontsize=16, fontweight='bold', y=0.98)
     plt.tight_layout(rect=[0, 0, 1, 0.93])
-    out_path = os.path.join(results_dir, 'sphere_to_cow_transition.png')
+    out_path = os.path.join(results_dir, f'sphere_to_{mesh_name}_transition.png')
     fig.savefig(out_path, dpi=300, bbox_inches='tight', facecolor='white')
     plt.close(fig)
-    print(f"Saved: {out_path}")
+    print(f"  Saved: {out_path}")
 
-    # --- Individual high-res images ---
+    # --- Individual renders ---
     for i, (V_rec, label) in enumerate(zip(reconstructions, labels)):
         fig = plt.figure(figsize=(6, 6))
         ax = fig.add_subplot(111, projection='3d')
-        lm_val = l_max_values[i] if i < len(l_max_values) else 'full'
         render_mesh(ax, V_rec, F, label, **render_kw)
         plt.tight_layout()
-        if lm_val == 'full':
-            fname = 'cow_lmax_full.png'
+        if i < len(l_max_values):
+            fname = f'{mesh_name}_lmax_{l_max_values[i]:03d}.png'
         else:
-            fname = f'cow_lmax_{int(lm_val):03d}.png'
+            fname = f'{mesh_name}_lmax_full.png'
         out_path = os.path.join(results_dir, fname)
         fig.savefig(out_path, dpi=300, bbox_inches='tight', facecolor='white')
         plt.close(fig)
-        print(f"Saved: {out_path}")
+        print(f"  Saved: {out_path}")
 
-    print("Done!")
+    print(f"Done rendering {mesh_name}!")
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Render sphere-to-mesh SH transition")
+    parser.add_argument('mesh', nargs='?', default='cow',
+                        help='Mesh name (cow, bunny) or path to .off file')
+    parser.add_argument('--lmax', type=int, default=30,
+                        help='Maximum SH order for coefficients (default: 30)')
+    parser.add_argument('--elev', type=float, default=25, help='Elevation angle')
+    parser.add_argument('--azim', type=float, default=-60, help='Azimuth angle')
+    args = parser.parse_args()
+
+    base_dir = os.path.dirname(os.path.dirname(__file__))
+    results_dir = os.path.join(base_dir, 'results')
+    data_dir = os.path.join(base_dir, 'data')
+
+    # Resolve mesh path and name
+    if os.path.isfile(args.mesh):
+        mesh_path = args.mesh
+        mesh_name = os.path.splitext(os.path.basename(args.mesh))[0]
+    else:
+        mesh_name = args.mesh.lower()
+        mesh_path = os.path.join(data_dir, f'{mesh_name}.off')
+        if not os.path.isfile(mesh_path):
+            print(f"Error: mesh file not found: {mesh_path}")
+            sys.exit(1)
+
+    render_transition(mesh_path, mesh_name, results_dir,
+                      l_max_full=args.lmax, elev=args.elev, azim=args.azim)
 
 
 if __name__ == '__main__':

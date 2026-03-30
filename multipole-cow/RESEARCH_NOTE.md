@@ -113,7 +113,7 @@ $$Q_{ij}^C = \int \mathrm{d}^3\mathbf{x}\, \rho(\mathbf{x})\, (3 x_i x_j - r^2 \
 
 `[PRELIMINARY]` Spherical Q_ℓ^m: surface-integral method has normalization offset vs paper convention. The `√(4π/(2ℓ+1))` factor in the potential formula suggests the paper absorbs this into Q_ℓ^m. Cartesian Q^C (convention-independent) validates correctly.
 
-`[PRELIMINARY]` 3D sphere-to-cow transition rendered at ℓ_max = 0, 1, 2, 4, 8, 16, full. Progression clearly shows increasing detail from sphere to recognizable cow. See `results/sphere_to_cow_transition.png`.
+`[SOLID]` 3D sphere-to-mesh transition rendered for both cow and bunny at ℓ_max = 0, 1, 2, 4, 8, 16, full. Progression clearly shows increasing detail from sphere to recognizable shape. See `results/sphere_to_cow_transition.png` and `results/sphere_to_bunny_transition.png`. The rendering script (`code/render_sphere_to_cow.py`) is mesh-agnostic and accepts any .off file.
 
 `[FUTURE: surface map methods]` Gradient flow and harmonic map methods (Sec IV Tables II/III) are stubbed but not yet producing validated coefficients. These require more complex mesh processing (SDF computation, cotangent Laplacian, stereographic projection).
 
