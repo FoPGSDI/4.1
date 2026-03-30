@@ -82,6 +82,8 @@ multipole-cow/
 - `tests/test_validation.py` -- 17/17 tests passing
 - `results/sphere_to_cow_transition.png` -- 3D cow multipole reconstruction (7 panels)
 - `results/sphere_to_bunny_transition.png` -- 3D bunny multipole reconstruction (7 panels)
+- `results/sphere_to_duck_transition.png` -- 3D duck multipole reconstruction (7 panels)
 - `results/cow_lmax_*.png` -- individual cow renders at each ℓ_max
 - `results/bunny_lmax_*.png` -- individual bunny renders at each ℓ_max
+- `results/duck_lmax_*.png` -- individual duck renders at each ℓ_max
 - `results/references.md` -- auto-extracted bibliography
