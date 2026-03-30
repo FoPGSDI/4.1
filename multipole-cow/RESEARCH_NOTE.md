@@ -117,6 +117,34 @@ $$Q_{ij}^C = \int \mathrm{d}^3\mathbf{x}\, \rho(\mathbf{x})\, (3 x_i x_j - r^2 \
 
 `[FUTURE: surface map methods]` Gradient flow and harmonic map methods (Sec IV Tables II/III) are stubbed but not yet producing validated coefficients. These require more complex mesh processing (SDF computation, cotangent Laplacian, stereographic projection).
 
+### April 1st Paper: Gravitational Wave Physics of the Duck
+
+`[HYPOTHESIS]` Three research threads extending the multipole framework to a rubber duck mesh (DASSL duck, 4732 vertices, 9460 faces, converted from OBJ via trimesh). Full specification in `progress/duck_gw_specification.md`.
+
+**Topic 1: Binary Duck on Post-Newtonian Orbits**
+- Quadrupole-monopole interaction U_QM = −(GM_B/2r³) Q^C_ij n_i n_j modifies orbital dynamics at effective 2PN order (Poisson & Will Ch. 9)
+- System quadrupole includes orbital + body permanent quadrupole → power decomposition P_orb + P_body + P_cross
+- Phase evolution δΨ_Q enters at 2PN in SPA; measurable dephasing across LIGO (stellar) and LISA (supermassive) bands
+- Duck tidal deformability Λ and shape-induced quadrupole κ_duck — compare with GW170817 constraints
+- `[FUTURE: implement binary_duck.py, binary_gw.py, duck_waveform.py]`
+
+**Topic 2: Quasinormal Modes of a Self-Gravitating Duck**
+- Stellar mass (1–3 M_☉): full GR via AthenaK Z4c + GR hydro, based on existing `pgen/dyngr_tov.cpp`
+- Supermassive (10⁶+ M_☉): Newtonian via AthenaK multigrid Poisson, based on existing polytropic star setup
+- Duck shape lifts (2ℓ+1)-fold QNM degeneracy — gravitational Zeeman splitting
+- Three-tier verification: AthenaK time-domain (Tier A), FEM Helmholtz eigenvalues (Tier B), perturbative splitting via Wigner 3j (Tier C)
+- Anisotropic GW emission: broken symmetry gives m-dependent damping rates
+- `[FUTURE: implement duck_star pgen in AthenaK, duck_helmholtz.py, duck_mode_splitting.py]`
+
+**Topic 3: Equation of State of Duck Matter**
+- Local compactness C(θ,φ) = GM/R(θ,φ)c² varies over duck surface; bill collapses first (highest C)
+- TOV analysis with multiple EoS families (SLy, APR, MIT bag, polytrope, radiation)
+- The "duck matter problem": maintaining duck shape at NS density requires anisotropic stress ~10⁵× nuclear σ_break (ε_duck ~ 0.3 vs ε_NS_max ~ 10⁻⁶)
+- Supermassive duck: radiation-supported, directional Eddington limit (bill blows off first), GR instability at Γ_crit = 4/3 + O(C)
+- `[FUTURE: implement duck_compactness.py, duck_tov.py, duck_anisotropic.py, duck_supermassive.py]`
+
+**Cross-topic connections:** Duck relaxation to sphere = QNM excitation (Topic 2↔3); GW signal encodes both shape κ_duck and EoS Λ (Topics 1↔3); a sufficiently sensitive detector could distinguish a duck from a cow.
+
 ---
 
 ## Appendix

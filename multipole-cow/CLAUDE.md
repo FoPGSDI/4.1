@@ -67,6 +67,11 @@ multipole-cow/
   RESEARCH_NOTE.md
 ```
 
+**Research specification (April 1st paper):** See `progress/duck_gw_specification.md` for the full research plan:
+- Topic 1: Binary duck on PN orbits (all mass scales, quadrupole-monopole interaction, phase evolution)
+- Topic 2: QNMs of duck-shaped star (AthenaK full GR for stellar mass, Newtonian for supermassive, + FEM + perturbative)
+- Topic 3: EoS of duck matter (compactness, TOV, anisotropic stress, supermassive duck fate)
+
 **Key numerical targets to reproduce (from paper, benchmark units):**
 - Monopole mass moment: Q_0^0 = 0.0539
 - Cartesian quadrupole tensor (3x3 matrix, Eq. in Sec III) -- VALIDATED within 1.2%
