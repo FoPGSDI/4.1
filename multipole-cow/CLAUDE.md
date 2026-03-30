@@ -67,10 +67,12 @@ multipole-cow/
   RESEARCH_NOTE.md
 ```
 
-**Research specification (April 1st paper):** See `progress/duck_gw_specification.md` for the full research plan:
+**Research specification (April 1st paper):** See `progress/duck_gw_specification.md` for the full topic survey and `progress/duck_paper_methodology.md` for the focused paper methodology:
 - Topic 1: Binary duck on PN orbits (all mass scales, quadrupole-monopole interaction, phase evolution)
 - Topic 2: QNMs of duck-shaped star (AthenaK full GR for stellar mass, Newtonian for supermassive, + FEM + perturbative)
 - Topic 3: EoS of duck matter (compactness, TOV, anisotropic stress, supermassive duck fate)
+- Focused paper: "QNMs of the Duck" — Zeeman splitting + duck melting + PTA indistinguishability
+- AthenaK spec for Hengrui Zhu: duck-shaped TOV pgen based on dyngr_tov.cpp
 
 **Key numerical targets to reproduce (from paper, benchmark units):**
 - Monopole mass moment: Q_0^0 = 0.0539
