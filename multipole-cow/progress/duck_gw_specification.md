@@ -614,3 +614,57 @@ Topic 3 (EoS)           Topic 2 (QNMs)            Topic 1 (Binary)
 
 **Original work:**
 26. Lehmann, arXiv:2504.00506 (2025) — "Higher multipoles of the cow"
+
+---
+
+## Fun Ratings
+
+### Topic 1: Binary Duck on PN Orbits
+
+| Sub-topic | Fun | Notes |
+|-----------|-----|-------|
+| Quadrupole-monopole interaction | 6/10 | Solid physics, but essentially textbook PN with Q^C plugged in. The duck adds flavor but the math is Poisson & Will chapter 9 verbatim. |
+| Tidally locked vs precessing orientations | 7/10 | Imagining two ducks tidally locked bill-to-bill on a circular orbit is delightful. The precessing case ("tumbling ducks") is even better. |
+| GW power decomposition (P_orb + P_body + P_cross) | 7/10 | The cross-term P_cross being *negative* (destructive interference between the duck's body and its orbit) is a genuinely fun result to compute. |
+| Phase dephasing across LIGO/LISA bands | 5/10 | Important for the paper's rigor, but it's a standard SPA integral. Less visually amusing. |
+| Duck tidal deformability / Love number | 9/10 | Comparing a rubber duck's Lambda to GW170817 NS constraints is peak April 1st energy. "The rubber duck is 10^12 times more deformable than a neutron star" is a line that writes itself. |
+| **Topic 1 overall** | **7/10** | Good backbone for the paper. Rigorous and publishable, moderate fun. The Love number comparison is the highlight. |
+
+### Topic 2: Quasinormal Modes of a Self-Gravitating Duck
+
+| Sub-topic | Fun | Notes |
+|-----------|-----|-------|
+| "Gravitational Zeeman splitting" framing | 10/10 | This analogy is *beautiful*. The duck shape as a symmetry-breaking field lifting QNM degeneracy --- this alone could be a talk title. |
+| AthenaK full GR evolution of a duck-shaped star | 9/10 | Running a production NR code on a duck is inherently absurd and wonderful. The density snapshots (Fig 7) will be iconic. |
+| Watching the duck relax to a sphere | 10/10 | The AthenaK simulation of a duck losing its duckness --- bill smoothing out, tail disappearing --- is the most visually compelling result in the entire paper. *The duck melts under its own gravity.* |
+| FEM Helmholtz eigenvalues (Tier B) | 4/10 | Technically clean but not funny. It's just a Laplacian eigenvalue problem on a funny domain. |
+| Perturbative splitting via Wigner 3j (Tier C) | 6/10 | Elegant physics, but the fun is abstract. The "which duck features drive the splitting" angle (bill vs tail vs body) saves it. |
+| Grotrian diagram (Fig 10) | 8/10 | A Grotrian energy-level diagram for a *duck* is an instant classic figure for talks. |
+| m-dependent damping rates | 7/10 | "The duck rings down at different rates depending on which direction you poke it" is a nice punchline. |
+| **Topic 2 overall** | **8.5/10** | The strongest topic for visual impact, talk material, and genuine novelty. The Zeeman analogy and the melting duck simulation are the stars. |
+
+### Topic 3: Equation of State of Duck Matter
+
+| Sub-topic | Fun | Notes |
+|-----------|-----|-------|
+| "Bill collapse" --- the bill violates Buchdahl first | 9/10 | The local compactness map with the bill glowing red as the first region to collapse is hilarious and rigorous. |
+| The "duck matter problem" (sigma ~ 10^5 x nuclear) | 10/10 | This is THE punchline of the paper. "Maintaining a duck shape at nuclear density requires matter 100,000 times stronger than anything in the known universe." Instant classic. |
+| Exotic resolutions (cosmic strings, crystalline color superconductor) | 9/10 | Deadpan enumeration of increasingly exotic matter models that *still can't hold a duck together* is comedic gold. |
+| TOV analysis with EoS families | 4/10 | Necessary scaffolding, but it's standard NS structure calculation with a duck label. |
+| Mass-radius diagram with duck locus | 6/10 | Nice figure, but M-R diagrams are so ubiquitous in NS physics that even a duck on one feels routine. |
+| Supermassive duck: "the bill blows off first" | 10/10 | The directional Eddington limit causing the bill to ablate under radiation pressure is *perfect*. The Mollweide projection (Fig 18) showing the bill highlighted as the weak point is a top-tier figure. |
+| GR instability of a radiation-supported duck | 7/10 | Chandrasekhar meets Anatidae. Solid but the Gamma = 4/3 + O(C) story is well-trodden. |
+| **Topic 3 overall** | **8/10** | The duck matter problem and bill-blows-off-first are both potential paper-title-level results. Strong comedic payoff. |
+
+### Overall Rankings
+
+| Rank | Topic | Fun | Why |
+|------|-------|-----|-----|
+| 1 | **Topic 2: QNMs** | 8.5/10 | Gravitational Zeeman splitting + watching the duck melt in AthenaK = unbeatable combo of novelty and visual impact |
+| 2 | **Topic 3: EoS** | 8/10 | "Duck matter problem" is the best single punchline; bill collapse and bill-blows-off are runner-ups |
+| 3 | **Topic 1: Binary** | 7/10 | Most rigorous and publishable, but less inherently funny. The Love number comparison is the standout moment |
+
+**Best single result across all topics:** The duck matter problem (Topic 3, section 3.4) --- sigma_required / sigma_nuclear ~ 3 x 10^5. It's quantitative, surprising, and the deadpan exotic-matter discussion elevates it.
+
+**Best visual:** AthenaK duck melting to a sphere (Topic 2, Fig 7). A time-lapse of a self-gravitating duck losing its features under its own gravity is the figure that gets shared on social media.
+
