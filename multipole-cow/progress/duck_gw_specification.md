@@ -16,10 +16,6 @@ April 1st paper extending Lehmann (2025, arXiv:2504.00506) "Higher Multipoles of
 | Duck mesh | `data/duck.off` | 4732 verts, 9460 faces, watertight, unit scale |
 | AthenaK (main) | `/data/haiyangw/athenak/` | GR hydro (Z4c NR), Newtonian hydro, multigrid Poisson self-gravity |
 | AthenaK (oscillation) | `/data/haiyangw/claude/oscillation/single-star/` | Polytropic star oscillations, Lane-Emden IC, validated FMG convergence |
-| SpECTRE | `/data/haiyangw/nr/spectre/` | Spectral GR, ringdown extraction pipeline |
-| JAX-NR | `/data/haiyangw/nr/JAX_NR/` | BSSN evolution, Ψ₄ extraction, spin-weighted SH |
-| Lean-GR | `/data/haiyangw/claude/Lean-GR/` | Formal Regge-Wheeler/Teukolsky proofs (0 sorries) |
-| EinFields | `/data/haiyangw/nr/EinFields/` | Neural implicit metric, automatic differentiation for curvature |
 
 ---
 
