@@ -315,30 +315,85 @@ def plot_grotrian(all_results, epsilon_dict, outpath="results/grotrian_diagram.p
     plt.close()
 
 
+def load_epsilon_file(filepath):
+    """Load duck deformation coefficients from a .dat file.
+
+    File format:
+        # header lines starting with #
+        ell  m  epsilon_real  epsilon_imag
+
+    Returns:
+        epsilon_dict: {(ell, m): complex} -- only even-ell entries
+                      relevant for QNM splitting
+        metadata: dict with R0, R_eq, scale_factor if present
+    """
+    epsilon_dict = {}
+    metadata = {}
+
+    with open(filepath, "r") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            if line.startswith("#"):
+                # Parse metadata from comments
+                if "R_0 =" in line:
+                    metadata["R0"] = float(line.split("=")[1].strip())
+                elif "R_eq =" in line:
+                    metadata["R_eq"] = float(line.split("=")[1].strip())
+                elif "Scale factor:" in line:
+                    metadata["scale_factor"] = float(line.split(":")[1].strip())
+                continue
+            parts = line.split()
+            if len(parts) < 4:
+                continue
+            ell = int(parts[0])
+            m = int(parts[1])
+            eps_real = float(parts[2])
+            eps_imag = float(parts[3])
+            epsilon_dict[(ell, m)] = complex(eps_real, eps_imag)
+
+    return epsilon_dict, metadata
+
+
 def main():
-    """Run the QNM splitting calculation with sample duck coefficients."""
-    # Sample deformation coefficients from duck SH fit
-    epsilon_dict = {
-        (2, 0): -0.3,
-        (2, 2): 0.15,
-        (4, 0): 0.05,
+    """Run the QNM splitting calculation with real duck coefficients."""
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Load real duck epsilon data at different scalings
+    eps_files = {
+        "0.1": os.path.join(script_dir, "duck_epsilon_0.1.dat"),
+        "0.3": os.path.join(script_dir, "duck_epsilon_0.3.dat"),
+        "full": os.path.join(script_dir, "duck_epsilon.dat"),
     }
 
-    # Add conjugate coefficients for real-valuedness:
-    # eps_{ell,-m} = (-1)^m * eps_{ell,m}^* (for real SH expansion)
-    conjugates = {}
-    for (lp, mp), val in epsilon_dict.items():
-        if mp != 0:
-            conjugates[(lp, -mp)] = ((-1) ** mp) * np.conj(val)
-    epsilon_dict.update(conjugates)
+    for label, filepath in eps_files.items():
+        if not os.path.exists(filepath):
+            print(f"Skipping {label}: {filepath} not found")
+            continue
 
-    # Compute and print results
-    all_results = print_results(epsilon_dict, ells=(2, 3, 4))
+        print(f"\n{'#' * 72}")
+        print(f"# Duck epsilon scale: {label}")
+        print(f"# File: {os.path.basename(filepath)}")
+        print(f"{'#' * 72}")
 
-    # Generate Grotrian diagram
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    outpath = os.path.join(script_dir, "results", "grotrian_diagram.png")
-    plot_grotrian(all_results, epsilon_dict, outpath=outpath)
+        epsilon_dict, metadata = load_epsilon_file(filepath)
+        R0 = metadata.get("R0", 1.0)
+
+        # Filter to even ell only (selection rule for splitting)
+        eps_even = {k: v for k, v in epsilon_dict.items() if k[0] % 2 == 0}
+
+        print(f"\nMetadata: R0={R0:.6f}, R_eq={metadata.get('R_eq', 'N/A')}")
+        print(f"Total coefficients loaded: {len(epsilon_dict)}")
+        print(f"Even-ell coefficients (active for splitting): {len(eps_even)}")
+
+        # Compute and print results
+        all_results = print_results(eps_even, ells=(2, 3, 4), R0=R0)
+
+        # Generate Grotrian diagram
+        outpath = os.path.join(script_dir, "results",
+                               f"grotrian_diagram_{label}.png")
+        plot_grotrian(all_results, eps_even, outpath=outpath)
 
 
 if __name__ == "__main__":

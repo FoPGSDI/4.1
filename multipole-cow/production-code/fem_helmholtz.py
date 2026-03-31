@@ -27,7 +27,11 @@ import sys
 import numpy as np
 from scipy import sparse
 from scipy.sparse.linalg import eigsh
-from scipy.special import spherical_jn, sph_harm
+from scipy.special import spherical_jn
+try:
+    from scipy.special import sph_harm
+except ImportError:
+    from scipy.special import sph_harm_y as sph_harm
 
 import matplotlib
 matplotlib.use("Agg")
@@ -70,37 +74,30 @@ def bessel_zero(ell, n, num_points=10000, r_max=50.0):
 # Tetrahedralization
 # ---------------------------------------------------------------------------
 
-def tetrahedralize_meshpy(V, F):
-    """Generate a volumetric tet mesh using meshpy.tet (TetGen wrapper).
+def tetrahedralize_tetgen(V, F):
+    """Generate a volumetric tet mesh using the tetgen package + pyvista.
 
     Returns:
         tet_verts: (N, 3) array of vertex coordinates
         tets: (T, 4) array of tet vertex indices
         boundary_verts: set of vertex indices on the boundary
     """
-    from meshpy.tet import MeshInfo, build
+    import tetgen
+    import pyvista as pv
 
-    mesh_info = MeshInfo()
-    mesh_info.set_points(V.tolist())
+    faces_pv = np.column_stack([np.full(len(F), 3), F]).ravel()
+    mesh = pv.PolyData(V, faces_pv)
 
-    # Build facets from triangular faces
-    facets = []
-    for f in F:
-        facets.append([list(f)])
-    mesh_info.set_facets(facets)
+    tg = tetgen.TetGen(mesh)
+    tg.tetrahedralize(order=1, mindihedral=10, minratio=1.5)
+    grid = tg.grid
 
-    # Estimate a reasonable max volume from bounding box
-    bbox_vol = np.prod(V.max(axis=0) - V.min(axis=0))
-    max_vol = bbox_vol / 5000.0  # target ~5000 tets
+    tet_verts = np.array(grid.points, dtype=np.float64)
+    # Extract tet connectivity from unstructured grid
+    cells = grid.cells.reshape(-1, 5)  # [4, v0, v1, v2, v3] per tet
+    tets = cells[:, 1:].astype(np.int64)
 
-    mesh = build(mesh_info, max_volume=max_vol,
-                 options=MeshInfo.Options(switches="pq"))
-
-    tet_verts = np.array(mesh.points, dtype=np.float64)
-    tets = np.array(mesh.elements, dtype=np.int64)
-
-    # Boundary vertices: those from the original surface mesh
-    # (first len(V) vertices are preserved by TetGen)
+    # Boundary vertices: original surface vertices (first len(V) are preserved)
     boundary_verts = set(range(len(V)))
 
     return tet_verts, tets, boundary_verts
@@ -123,13 +120,7 @@ def tetrahedralize_fallback(V, F, com):
 # ---------------------------------------------------------------------------
 
 def assemble_fem_matrices(tet_verts, tets):
-    """Assemble global P1 FEM stiffness K and mass M matrices.
-
-    For each tetrahedron with vertices v0, v1, v2, v3:
-      - Volume = |det([v1-v0, v2-v0, v3-v0])| / 6
-      - Basis function gradients from inverse Jacobian
-      - K_local[i,j] = Volume * (grad phi_i . grad phi_j)
-      - M_local[i,j] = Volume * (1/10 if i==j, 1/20 if i!=j)
+    """Assemble global P1 FEM stiffness K and mass M matrices (vectorized).
 
     Returns:
         K: sparse stiffness matrix (N x N)
@@ -138,111 +129,111 @@ def assemble_fem_matrices(tet_verts, tets):
     n_verts = len(tet_verts)
     n_tets = len(tets)
 
-    # Pre-allocate COO data
-    # Each tet contributes 4x4 = 16 entries to both K and M
-    rows = np.zeros(n_tets * 16, dtype=np.int64)
-    cols = np.zeros(n_tets * 16, dtype=np.int64)
-    K_data = np.zeros(n_tets * 16, dtype=np.float64)
-    M_data = np.zeros(n_tets * 16, dtype=np.float64)
-
-    # Reference gradients of P1 basis on reference tet
-    # phi_0 = 1 - xi - eta - zeta
-    # phi_1 = xi, phi_2 = eta, phi_3 = zeta
-    # grad_ref = [[-1,-1,-1], [1,0,0], [0,1,0], [0,0,1]]
+    # Reference gradients: grad_ref[i] for basis i on reference tet
     grad_ref = np.array([[-1., -1., -1.],
                          [1., 0., 0.],
                          [0., 1., 0.],
-                         [0., 0., 1.]])
+                         [0., 0., 1.]])  # (4, 3)
 
-    # Mass matrix template for P1 tet (consistent mass)
-    # M_local[i,j] = Vol * (1/10 if i==j, 1/20 if i!=j)
+    # Mass template
     M_template = np.full((4, 4), 1.0 / 20.0)
     np.fill_diagonal(M_template, 1.0 / 10.0)
 
-    for e in range(n_tets):
-        idx = tets[e]  # 4 vertex indices
-        v = tet_verts[idx]  # (4, 3)
+    # Vectorized Jacobians: J[e, k, :] = v[k+1] - v[0]
+    v = tet_verts[tets]  # (n_tets, 4, 3)
+    J = v[:, 1:, :] - v[:, 0:1, :]  # (n_tets, 3, 3)
 
-        # Jacobian: J[k, :] = v[k+1] - v[0]  for k=0,1,2
-        J = np.array([v[1] - v[0], v[2] - v[0], v[3] - v[0]])  # (3, 3)
-        det_J = np.linalg.det(J)
-        vol = abs(det_J) / 6.0
+    det_J = np.linalg.det(J)  # (n_tets,)
+    vol = np.abs(det_J) / 6.0  # (n_tets,)
 
-        if vol < 1e-20:
-            continue  # degenerate tet
+    # Filter degenerate tets
+    valid = vol > 1e-20
+    if not np.all(valid):
+        print(f"  Warning: {np.sum(~valid)} degenerate tets removed")
 
-        # Inverse transpose of J for gradient transformation
-        # grad phi_i (physical) = J^{-T} . grad_ref[i]
-        J_inv_T = np.linalg.inv(J).T  # (3, 3)
+    # Inverse transpose for all tets: J_inv_T[e] = inv(J[e]).T
+    J_inv_T = np.linalg.inv(J).transpose(0, 2, 1)  # (n_tets, 3, 3)
 
-        # Physical gradients: (4, 3)
-        grad_phys = grad_ref @ J_inv_T  # (4, 3)
+    # Physical gradients: grad_phys[e, i, :] = grad_ref[i] @ J_inv_T[e]
+    # = (4,3) @ (n_tets,3,3) -> need einsum
+    grad_phys = np.einsum("ij,ejk->eik", grad_ref, J_inv_T)  # (n_tets, 4, 3)
 
-        # Local stiffness: K_local[i,j] = vol * (grad_phys[i] . grad_phys[j])
-        K_local = vol * (grad_phys @ grad_phys.T)  # (4, 4)
+    # Local stiffness: K_local[e, i, j] = vol[e] * grad_phys[e,i] . grad_phys[e,j]
+    K_local = np.einsum("eik,ejk->eij", grad_phys, grad_phys)  # (n_tets, 4, 4)
+    K_local *= vol[:, None, None]
 
-        # Local mass
-        M_local = vol * M_template
+    # Local mass
+    M_local = vol[:, None, None] * M_template[None, :, :]  # (n_tets, 4, 4)
 
-        # Scatter into global arrays
-        offset = e * 16
-        k = 0
-        for i in range(4):
-            for j in range(4):
-                rows[offset + k] = idx[i]
-                cols[offset + k] = idx[j]
-                K_data[offset + k] = K_local[i, j]
-                M_data[offset + k] = M_local[i, j]
-                k += 1
+    # Zero out degenerate tets
+    K_local[~valid] = 0
+    M_local[~valid] = 0
 
-    K = sparse.coo_matrix((K_data, (rows, cols)),
+    # Build COO indices: (n_tets, 4, 4) -> flat
+    ii = np.repeat(tets[:, :, None], 4, axis=2)  # (n_tets, 4, 4) row indices
+    jj = np.repeat(tets[:, None, :], 4, axis=1)  # (n_tets, 4, 4) col indices
+
+    K = sparse.coo_matrix((K_local.ravel(), (ii.ravel(), jj.ravel())),
                           shape=(n_verts, n_verts)).tocsr()
-    M = sparse.coo_matrix((M_data, (rows, cols)),
+    M = sparse.coo_matrix((M_local.ravel(), (ii.ravel(), jj.ravel())),
                           shape=(n_verts, n_verts)).tocsr()
 
     return K, M
 
 
 def apply_dirichlet_bc(K, M, boundary_verts, n_verts):
-    """Apply Dirichlet BCs by zeroing rows/cols and setting diagonal to 1.
+    """Apply Dirichlet BCs by eliminating boundary DOFs.
 
-    This shifts boundary eigenvalues to omega^2 = 1 and decouples them
-    from interior modes.
+    Instead of zeroing rows/cols (slow for large matrices), extract
+    the interior-interior block of K and M.
 
-    Returns modified K, M as CSR matrices.
+    Returns:
+        K_int, M_int: sparse matrices for interior DOFs only
+        interior_indices: array mapping interior DOF index -> global index
     """
-    K = K.tolil()
-    M = M.tolil()
+    all_verts = set(range(n_verts))
+    interior = sorted(all_verts - boundary_verts)
+    interior_indices = np.array(interior, dtype=np.int64)
 
-    for v in boundary_verts:
-        K[v, :] = 0
-        K[:, v] = 0
-        K[v, v] = 1.0
-        M[v, :] = 0
-        M[:, v] = 0
-        M[v, v] = 1.0
+    K = K.tocsc()
+    M = M.tocsc()
 
-    return K.tocsr(), M.tocsr()
+    # Extract interior-interior submatrix
+    K_int = K[interior_indices][:, interior_indices]
+    M_int = M[interior_indices][:, interior_indices]
+
+    return K_int.tocsr(), M_int.tocsr(), interior_indices
 
 
 # ---------------------------------------------------------------------------
 # Eigenvalue solver
 # ---------------------------------------------------------------------------
 
-def solve_eigenvalues(K, M, k=30, sigma=0.0):
+def solve_eigenvalues(K, M, k=30, sigma=1.0):
     """Solve K psi = omega^2 M psi using shift-invert eigsh.
 
     Returns:
         eigenvalues: (k,) array of omega^2 values, sorted ascending
         eigenvectors: (N, k) array
     """
+    # Regularize M to handle zero-mass DOFs from degenerate tets
+    diag_M = np.array(M.diagonal()).ravel()
+    zero_mass = diag_M < 1e-20
+    if np.any(zero_mass):
+        n_zero = np.sum(zero_mass)
+        print(f"  Regularizing {n_zero} zero-mass DOFs in M")
+        eps = 1e-12 * np.max(diag_M)
+        reg = sparse.diags(np.where(zero_mass, eps, 0.0))
+        M = M + reg
+
     try:
         eigenvalues, eigenvectors = eigsh(K, k=k, M=M, sigma=sigma,
                                          which="LM")
     except Exception as e:
-        print(f"  eigsh with shift-invert failed: {e}")
-        print("  Falling back to standard eigsh (smallest eigenvalues)...")
-        eigenvalues, eigenvectors = eigsh(K, k=k, M=M, which="SM")
+        print(f"  eigsh with sigma={sigma} failed: {e}")
+        print("  Trying with larger sigma...")
+        eigenvalues, eigenvectors = eigsh(K, k=k, M=M, sigma=100.0,
+                                         which="LM")
 
     # Sort by eigenvalue
     order = np.argsort(eigenvalues)
@@ -257,15 +248,26 @@ def solve_eigenvalues(K, M, k=30, sigma=0.0):
 # ---------------------------------------------------------------------------
 
 def classify_modes(eigenvectors, tet_verts, boundary_verts, com, l_max=6):
-    """Project eigenvectors onto Y_l^m basis at surface vertices.
+    """Project eigenvectors onto Y_l^m basis at interior vertices.
+
+    Uses interior vertices (where ψ ≠ 0) for angular decomposition.
 
     Returns:
         dominant_ell: list of dominant ell for each mode
         power_spectra: list of P_l arrays for each mode
     """
-    # Get boundary vertex positions relative to COM
-    bv_list = sorted(boundary_verts)
-    positions = tet_verts[bv_list] - com
+    all_verts = set(range(len(tet_verts)))
+    interior = sorted(all_verts - boundary_verts)
+
+    # Use a subsample of interior vertices for speed
+    max_sample = 5000
+    if len(interior) > max_sample:
+        rng = np.random.RandomState(42)
+        sample_idx = np.array(sorted(rng.choice(interior, max_sample, replace=False)))
+    else:
+        sample_idx = np.array(interior)
+
+    positions = tet_verts[sample_idx] - com
 
     # Convert to spherical coordinates
     r = np.linalg.norm(positions, axis=1)
@@ -273,20 +275,19 @@ def classify_modes(eigenvectors, tet_verts, boundary_verts, com, l_max=6):
     theta = np.arccos(np.clip(positions[:, 2] / r, -1, 1))
     phi = np.arctan2(positions[:, 1], positions[:, 0])
 
-    # Approximate solid angle weights (uniform for simplicity)
-    d_omega = np.ones(len(bv_list)) * 4.0 * np.pi / len(bv_list)
+    # Approximate volume weights (uniform for simplicity)
+    d_omega = np.ones(len(sample_idx)) / len(sample_idx)
 
     dominant_ell = []
     power_spectra = []
 
     n_modes = eigenvectors.shape[1]
     for alpha in range(n_modes):
-        psi = eigenvectors[bv_list, alpha]
+        psi = eigenvectors[sample_idx, alpha]
 
         P_l = np.zeros(l_max + 1)
         for ell in range(l_max + 1):
             for m in range(-ell, ell + 1):
-                # sph_harm uses (m, ell, phi, theta) convention
                 Ylm = sph_harm(m, ell, phi, theta)
                 a_lm = np.sum(psi * np.conj(Ylm) * d_omega)
                 P_l[ell] += abs(a_lm) ** 2
@@ -335,7 +336,7 @@ def plot_eigenvalue_spectrum(duck_eigenvalues, duck_dominant_ell,
     # Filter out boundary eigenvalues (omega^2 ~ 1 from Dirichlet BC)
     mask = duck_eigenvalues > 1e-3
     # Also filter out eigenvalues that are exactly 1.0 (BC artifacts)
-    mask &= np.abs(duck_eigenvalues - 1.0) > 0.01
+    # No BC artifacts since we solve on interior DOFs only
     duck_omega2 = duck_eigenvalues[mask]
     duck_omega = np.sqrt(np.maximum(duck_omega2, 0))
     duck_ell_filtered = [duck_dominant_ell[i] for i, m in enumerate(mask) if m]
@@ -432,20 +433,36 @@ def plot_eigenvalue_spectrum(duck_eigenvalues, duck_dominant_ell,
 
 def plot_mode_shapes(eigenvectors, tet_verts, boundary_verts,
                      duck_eigenvalues, outpath):
-    """Visualize the first few mode shapes on the duck surface."""
+    """Visualize mode shapes using a thin shell of interior vertices."""
     try:
         from mpl_toolkits.mplot3d import Axes3D
-        from mpl_toolkits.mplot3d.art3d import Poly3DCollection
     except ImportError:
         print("  3D visualization requires mpl_toolkits; skipping mode shapes.")
         return
 
     bv_list = sorted(boundary_verts)
-    positions = tet_verts[bv_list]
+    bv_pos = tet_verts[bv_list]
+
+    # Find interior vertices close to the surface (within 10% of R_eq)
+    all_verts = set(range(len(tet_verts)))
+    interior = sorted(all_verts - boundary_verts)
+
+    from scipy.spatial import cKDTree
+    tree = cKDTree(bv_pos)
+    int_pos = tet_verts[interior]
+    dists, _ = tree.query(int_pos)
+    # Select near-surface interior vertices
+    R_eq = (np.max(bv_pos, axis=0) - np.min(bv_pos, axis=0)).mean() / 2
+    shell_mask = dists < 0.08 * R_eq
+    shell_idx = np.array(interior)[shell_mask]
+
+    if len(shell_idx) < 100:
+        # Fallback: use all interior
+        shell_idx = np.array(interior)
+    positions = tet_verts[shell_idx]
 
     # Filter valid modes
     mask = duck_eigenvalues > 1e-3
-    mask &= np.abs(duck_eigenvalues - 1.0) > 0.01
     valid_indices = np.where(mask)[0]
 
     n_modes = min(6, len(valid_indices))
@@ -458,30 +475,133 @@ def plot_mode_shapes(eigenvectors, tet_verts, boundary_verts,
     for panel in range(n_modes):
         ax = fig.add_subplot(2, 3, panel + 1, projection="3d")
         mode_idx = valid_indices[panel]
-        psi = eigenvectors[bv_list, mode_idx]
+        psi = eigenvectors[shell_idx, mode_idx]
         omega2 = duck_eigenvalues[mode_idx]
         omega = np.sqrt(max(omega2, 0))
 
-        # Normalize for color mapping
         psi_norm = psi / (np.max(np.abs(psi)) + 1e-15)
 
-        scatter = ax.scatter(positions[:, 0], positions[:, 1],
-                            positions[:, 2],
-                            c=psi_norm, cmap="RdBu_r",
-                            vmin=-1, vmax=1, s=1, alpha=0.8)
+        ax.scatter(positions[:, 0], positions[:, 1],
+                   positions[:, 2],
+                   c=psi_norm, cmap="RdBu_r",
+                   vmin=-1, vmax=1, s=2, alpha=0.8)
         ax.set_title(f"Mode {panel+1}\n$\\omega = {omega:.3f}$",
                      fontsize=10)
         ax.set_xticks([])
         ax.set_yticks([])
         ax.set_zticks([])
 
-    fig.suptitle("Duck FEM Eigenmode Shapes (surface vertex values)",
+    fig.suptitle("Duck FEM Eigenmode Shapes (near-surface interior vertices)",
                  fontsize=14, fontweight="bold")
     plt.tight_layout()
     os.makedirs(os.path.dirname(outpath), exist_ok=True)
     plt.savefig(outpath, dpi=150, bbox_inches="tight")
     print(f"Mode shapes saved to {outpath}")
     plt.close()
+
+
+# ---------------------------------------------------------------------------
+# Deformed sphere for cross-validation with perturbation theory
+# ---------------------------------------------------------------------------
+
+def make_deformed_sphere(R0, epsilon_dict, n_subdiv=20):
+    """Create a deformed sphere mesh R(theta,phi) = R0 * [1 + sum eps_lm Y_lm].
+
+    Returns V, F as numpy arrays (OFF-compatible).
+    """
+    # Create icosphere by subdividing an icosahedron
+    import trimesh
+    sphere = trimesh.creation.icosphere(subdivisions=n_subdiv, radius=R0)
+    V = np.array(sphere.vertices, dtype=np.float64)
+    F = np.array(sphere.faces, dtype=np.int64)
+
+    # Compute spherical coordinates
+    r = np.linalg.norm(V, axis=1)
+    r = np.maximum(r, 1e-15)
+    theta = np.arccos(np.clip(V[:, 2] / r, -1, 1))
+    phi = np.arctan2(V[:, 1], V[:, 0])
+
+    # Compute deformation
+    deform = np.zeros(len(V))
+    for (ell, m), eps in epsilon_dict.items():
+        Ylm = sph_harm(m, ell, phi, theta)
+        deform += np.real(eps * Ylm)
+
+    # Deform radially: R(theta,phi) = R0 * (1 + sum eps Y)
+    scale = 1.0 + deform
+    V *= scale[:, None]
+
+    return V, F
+
+
+def cross_validate_perturbative(R0, epsilon_dict, results_dir, label="0.1"):
+    """Run FEM on a deformed sphere and compare with perturbative splitting.
+
+    This is the key cross-validation: for small epsilon, the FEM eigenvalue
+    shifts should match the Hadamard perturbation matrix eigenvalues.
+    """
+    print(f"\n{'=' * 72}")
+    print(f"Cross-validation: FEM on deformed sphere (eps × {label})")
+    print(f"{'=' * 72}")
+
+    # Filter to even ell for the perturbation matrix
+    eps_even = {k: v for k, v in epsilon_dict.items() if k[0] % 2 == 0}
+
+    # Create deformed sphere mesh
+    print("Creating deformed sphere mesh...")
+    V, F = make_deformed_sphere(R0, epsilon_dict, n_subdiv=4)
+    print(f"  Vertices: {len(V)}, Faces: {len(F)}")
+
+    # Tetrahedralize
+    print("Tetrahedralizing...")
+    tet_verts, tets, boundary_verts = tetrahedralize_tetgen(V, F)
+    n_interior = len(tet_verts) - len(boundary_verts)
+    print(f"  Tet vertices: {len(tet_verts)}, Interior: {n_interior}")
+
+    # Assemble and solve
+    print("Assembling FEM matrices...")
+    K, M = assemble_fem_matrices(tet_verts, tets)
+    K_int, M_int, interior_indices = apply_dirichlet_bc(
+        K, M, boundary_verts, len(tet_verts)
+    )
+
+    n_modes = min(30, len(interior_indices) - 2)
+    print(f"Solving eigenvalue problem (k={n_modes})...")
+    eigenvalues, eigvecs_int = solve_eigenvalues(K_int, M_int, k=n_modes)
+
+    # Sphere analytical eigenvalues for reference
+    sphere_eigs = sphere_eigenvalues(R0, n_max=2, l_max=4)
+
+    # Group FEM eigenvalues near each sphere level
+    print(f"\n{'Sphere level':>15s}  {'FEM eigenvalues (omega)':>40s}  {'Perturbative delta(w^2)':>30s}")
+    print("-" * 90)
+
+    from qnm_splitting import compute_splitting
+
+    for omega_s, n, ell, deg in sphere_eigs[:6]:
+        omega_s_sq = omega_s ** 2
+
+        # Find FEM eigenvalues near this sphere level
+        fem_omega = np.sqrt(np.maximum(eigenvalues, 0))
+        nearby = np.where(np.abs(fem_omega - omega_s) / omega_s < 0.3)[0]
+
+        # Perturbative splitting
+        try:
+            omega0_p, dw2_p, split_w_p = compute_splitting(
+                ell, eps_even, n=n, R0=R0
+            )
+        except Exception:
+            split_w_p = np.array([omega_s])
+            dw2_p = np.array([0.0])
+
+        fem_str = ", ".join(f"{fem_omega[i]:.4f}" for i in nearby[:deg+2])
+        pert_str = ", ".join(f"{dw:.6f}" for dw in dw2_p[:5])
+
+        print(f"  n={n} l={ell} ({deg}x) w={omega_s:.4f}  |  FEM: [{fem_str}]  |  dw2: [{pert_str}]")
+
+    print("-" * 90)
+
+    return eigenvalues
 
 
 # ---------------------------------------------------------------------------
@@ -513,40 +633,28 @@ def main():
     # =========================================================================
     # (c) Generate volumetric tet mesh
     # =========================================================================
-    use_meshpy = False
+    use_tetgen = False
     try:
-        import meshpy.tet
-        use_meshpy = True
+        import tetgen
+        import pyvista
+        use_tetgen = True
     except ImportError:
-        print("  meshpy not available. Attempting pip install...")
-        try:
-            import subprocess
-            subprocess.check_call([sys.executable, "-m", "pip", "install",
-                                   "meshpy", "--quiet"])
-            import meshpy.tet
-            use_meshpy = True
-            print("  meshpy installed successfully.")
-        except Exception as e:
-            print(f"  Could not install meshpy: {e}")
-            print("  Falling back to fan tetrahedralization.")
+        print("  tetgen/pyvista not available.")
 
-    if use_meshpy:
-        print("Generating volumetric tet mesh with meshpy (TetGen)...")
+    if use_tetgen:
+        print("Generating volumetric tet mesh with tetgen...")
         try:
-            tet_verts, tets, boundary_verts = tetrahedralize_meshpy(V, F)
+            tet_verts, tets, boundary_verts = tetrahedralize_tetgen(V, F)
             print(f"  Tet vertices: {len(tet_verts)}, Tets: {len(tets)}")
         except Exception as e:
-            print(f"  meshpy tetrahedralization failed: {e}")
-            print("  Falling back to fan tetrahedralization.")
-            use_meshpy = False
+            print(f"  tetgen tetrahedralization failed: {e}")
+            use_tetgen = False
 
-    if not use_meshpy:
+    if not use_tetgen:
         print("Using fan tetrahedralization (fallback)...")
         tet_verts, tets, boundary_verts = tetrahedralize_fallback(V, F, com)
         print(f"  Tet vertices: {len(tet_verts)}, Tets: {len(tets)}")
-        print("  NOTE: Fan tetrahedralization is a crude approximation.")
-        print("        Results are qualitative only. Install meshpy for")
-        print("        accurate FEM eigenvalues.")
+        print("  WARNING: Fan fallback has ~1 interior vertex; results meaningless.")
 
     n_total_verts = len(tet_verts)
     n_boundary = len(boundary_verts)
@@ -565,26 +673,34 @@ def main():
     # =========================================================================
     # (e) Apply Dirichlet BCs
     # =========================================================================
-    print("Applying Dirichlet boundary conditions...")
-    K, M = apply_dirichlet_bc(K, M, boundary_verts, n_total_verts)
+    print("Applying Dirichlet boundary conditions (extracting interior block)...")
+    K_int, M_int, interior_indices = apply_dirichlet_bc(
+        K, M, boundary_verts, n_total_verts
+    )
+    print(f"  Interior DOF count: {len(interior_indices)}")
+    print(f"  K_int shape: {K_int.shape}, nnz: {K_int.nnz}")
 
     # =========================================================================
     # (f) Solve eigenvalue problem
     # =========================================================================
-    n_modes = min(30, n_interior - 1) if n_interior > 1 else 5
+    n_modes = min(50, len(interior_indices) - 2)
     n_modes = max(n_modes, 5)
     print(f"Solving generalized eigenvalue problem (k={n_modes})...")
 
     try:
-        eigenvalues, eigenvectors = solve_eigenvalues(K, M, k=n_modes)
+        eigenvalues, eigvecs_int = solve_eigenvalues(K_int, M_int, k=n_modes)
         print(f"  Found {len(eigenvalues)} eigenvalues.")
     except Exception as e:
         print(f"  Eigenvalue solve failed: {e}")
         print("  Attempting with fewer modes...")
-        n_modes = min(10, n_interior - 1) if n_interior > 1 else 3
-        n_modes = max(n_modes, 3)
-        eigenvalues, eigenvectors = solve_eigenvalues(K, M, k=n_modes)
+        n_modes = min(20, len(interior_indices) - 2)
+        n_modes = max(n_modes, 5)
+        eigenvalues, eigvecs_int = solve_eigenvalues(K_int, M_int, k=n_modes)
         print(f"  Found {len(eigenvalues)} eigenvalues.")
+
+    # Map eigenvectors back to global indices (boundary = 0)
+    eigenvectors = np.zeros((n_total_verts, eigvecs_int.shape[1]))
+    eigenvectors[interior_indices, :] = eigvecs_int
 
     # =========================================================================
     # (g) Classify modes by SH projection
@@ -607,9 +723,8 @@ def main():
     print("FEM Helmholtz Eigenvalue Results: Duck vs Sphere")
     print("=" * 80)
 
-    # Filter duck eigenvalues (remove BC artifacts)
+    # Filter near-zero eigenvalues
     mask = eigenvalues > 1e-3
-    mask &= np.abs(eigenvalues - 1.0) > 0.01
     valid_idx = np.where(mask)[0]
 
     print(f"\n{'Mode':>5s}  {'omega^2_duck':>14s}  {'omega_duck':>12s}  "
@@ -678,6 +793,21 @@ def main():
         print(f"  Mode shape visualization failed: {e}")
 
     print("\n=== FEM Helmholtz analysis complete ===")
+
+    # =========================================================================
+    # (l) Cross-validation: FEM on deformed sphere vs perturbation theory
+    # =========================================================================
+    try:
+        from qnm_splitting import load_epsilon_file
+        eps_file_01 = os.path.join(script_dir, "duck_epsilon_0.1.dat")
+        if os.path.exists(eps_file_01):
+            eps_01, meta_01 = load_epsilon_file(eps_file_01)
+            R0_val = meta_01.get("R0", R_eq)
+            cross_validate_perturbative(R0_val, eps_01, results_dir, label="0.1")
+    except Exception as e:
+        print(f"\nCross-validation failed: {e}")
+        import traceback
+        traceback.print_exc()
 
 
 if __name__ == "__main__":
