@@ -132,13 +132,13 @@ and correspondingly harder to deform, so $k_2$ decreases monotonically.
 
 **Compact nuclear duck** ($\Gamma = 2$, $K = 100$,
 $\rho_c = 1.28\times 10^{-3}$).  The TOV integration yields
-$M_* \simeq 1.4\,M_\odot$, $R_* \simeq 14.2\;\mathrm{km}$,
-$C \simeq 0.145$.  The coupled $h_2$ integration gives $y \simeq 1.25$
+$M_* \simeq 1.40\,M_\odot$, $R_* \simeq 9.6$ (in geometric units),
+$C \simeq 0.146$.  The coupled $h_2$ integration gives $y \simeq 0.87$
 and
 
 $$
-k_2 \simeq 0.08\,,\qquad
-\Lambda \simeq 290\text{--}880\,,
+k_2 \simeq 0.074\,,\qquad
+\Lambda \simeq 740\,,
 $$
 
 the range in $\Lambda$ reflecting the sensitivity to central density
@@ -152,20 +152,20 @@ $$
 k_2^{\rm elastic} = \frac{3/2}{1 + \dfrac{19\,\mu_{\rm shear}}{2\,\rho\,g\,R}}\,.
 $$
 
-Taking the shear modulus of rubber $\mu_{\rm shear} \simeq 10^6\;\mathrm{Pa}$,
-mean density $\rho \simeq 1.2\times 10^3\;\mathrm{kg\,m^{-3}}$, surface
+Taking the shear modulus of PVC (the actual material of bath ducks)
+$\mu_{\rm shear} \simeq 3\times 10^9\;\mathrm{Pa}$,
+mean density $\rho \simeq 1.3\times 10^3\;\mathrm{kg\,m^{-3}}$, surface
 gravity $g \simeq 9.8\;\mathrm{m\,s^{-2}}$, and radius
 $R \simeq 0.04\;\mathrm{m}$:
 
 $$
-k_2^{\rm rubber} \simeq \frac{1.5}{1 + \frac{19\times 10^6}{2\times 1200\times 9.8\times 0.04}}
-\simeq 2.4\times 10^{-8}\,.
+k_2^{\rm rubber} \simeq \frac{1.5}{1 + \frac{19\times 3\times 10^9}{2\times 1300\times 9.8\times 0.04}}
+\simeq 2.7\times 10^{-8}\,.
 $$
 
 The denominator is dominated by the rigidity-to-gravity ratio
-$19\mu/(2\rho g R) \simeq 6.2\times 10^7$.  Punchline: *a bathtub duck
-is $10^8$ times stiffer (relative to self-gravity) than a neutron star
-duck.*
+$19\mu/(2\rho g R) \simeq 5.6\times 10^7$.  Punchline: *a bathtub duck
+is $10^9$ times less deformable than a neutron star duck.*
 
 
 ## 4.2 The Love Tensor
@@ -456,9 +456,9 @@ deformability $\Lambda$ for selected objects.
 
 | Object | $C = M/R$ | $k_2$ | $\Lambda$ | Notes |
 |:-------|:---------:|:-----:|:---------:|:------|
-| Nuclear duck ($\Gamma=2$, $C\simeq 0.145$) | 0.145 | 0.080 | $\sim 580$ | TOV + $h_2$ integration |
+| Nuclear duck ($\Gamma=2$, $C\simeq 0.146$) | 0.146 | 0.074 | $\sim 740$ | TOV + $h_2$ integration |
 | Nuclear duck (range) | 0.10--0.20 | 0.06--0.10 | 290--880 | Varying $\rho_c$ |
-| Rubber duck (bath toy) | $\sim 10^{-25}$ | $2.4\times 10^{-8}$ | --- | Elastic formula; $\Lambda$ not meaningful |
+| Rubber duck (bath toy) | $\sim 10^{-25}$ | $2.7\times 10^{-8}$ | --- | Elastic formula (PVC); $\Lambda$ not meaningful |
 | NS --- SLy EoS (1.4 $M_\odot$) | 0.176 | 0.091 | 306 | Hinderer et al.\ (2010) |
 | NS --- APR EoS (1.4 $M_\odot$) | 0.170 | 0.085 | 261 | Hinderer et al.\ (2010) |
 | NS --- GW170817 | $\sim 0.16$ | --- | $190^{+390}_{-120}$ | Abbott et al.\ (2018) |

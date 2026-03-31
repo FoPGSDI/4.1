@@ -342,8 +342,9 @@ def main():
     # -----------------------------------------------------------------------
     # 3. Elastic k_2 for rubber duck
     # -----------------------------------------------------------------------
-    mu_rubber = 1.0e6       # Pa
-    rho_rubber = 1.2e3      # kg/m^3
+    # PVC (polyvinyl chloride), the actual material of bath ducks
+    mu_rubber = 3.0e9       # Pa (shear modulus of rigid PVC)
+    rho_rubber = 1.3e3      # kg/m^3
     g_earth = 9.8           # m/s^2
     R_duck = 0.04           # m
 
