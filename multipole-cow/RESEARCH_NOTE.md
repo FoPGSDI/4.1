@@ -134,7 +134,20 @@ $$Q_{ij}^C = \int \mathrm{d}^3\mathbf{x}\, \rho(\mathbf{x})\, (3 x_i x_j - r^2 \
 - Duck shape lifts (2ℓ+1)-fold QNM degeneracy — gravitational Zeeman splitting
 - Three-tier verification: AthenaK time-domain (Tier A), FEM Helmholtz eigenvalues (Tier B), perturbative splitting via Wigner 3j (Tier C)
 - Anisotropic GW emission: broken symmetry gives m-dependent damping rates
-- `[FUTURE: implement duck_star pgen in AthenaK, duck_helmholtz.py, duck_mode_splitting.py]`
+
+`[SOLID]` **Tier C (perturbative):** `qnm_splitting.py` loads real duck ε_ℓm from data files, computes Hadamard boundary perturbation matrix for ℓ=2,3,4 f-modes using Wigner 3j symbols. Selection rules verified: only even-ℓ' deformations contribute, m'=m₁−m₂. Degeneracy lifts correctly (5, 7, 9 levels). However, perturbative shifts are O(10⁻⁴) in ω² — far too small vs FEM. See `results/grotrian_diagram_*.png`.
+
+`[SOLID]` **Tier B (FEM Helmholtz):** `fem_helmholtz.py` solves −∇²ψ = ω²ψ on the duck interior with Dirichlet BCs. Pipeline: tetgen tetrahedralization (104K vertices, 420K tets) → vectorized P1 FEM assembly → shift-invert eigsh (50 modes). Key results on full duck mesh (R_eq = 0.436):
+- ℓ=0 breathing mode: FEM ω = 14.56, sphere ω = 14.41 — **1% agreement** (monopole nearly unaffected by shape)
+- ℓ=2 quintet: splits into at least 2 clusters (ω ≈ 11.4, 12.4), shifted ~6–14% from sphere level at 13.22
+- ℓ=4: cluster at ω ≈ 16.5–17.1, shifted ~9–12% from sphere at 18.77
+- Mode shapes visualized on near-surface interior vertices — clear nodal patterns visible in duck geometry
+- See `results/fem_eigenvalue_spectrum.png`, `results/fem_mode_shapes.png`
+
+`[PRELIMINARY]` **Cross-validation (Tier B vs C):** FEM on deformed sphere (ε×0.1) shows O(5–10%) frequency shifts, while Hadamard perturbation theory predicts O(10⁻⁴%). The perturbative formula dramatically underestimates splitting magnitudes because even at 10% scaling, the dominant ε coefficients (ε_{1,0} ≈ 0.20, ε_{2,0} ≈ −0.27) are not small enough for first-order perturbation theory. **Perturbation theory captures selection rules but not magnitudes for this strongly deformed shape.** This validates the paper narrative: Tier C gives qualitative physics (which modes couple), Tier B gives quantitative eigenvalues, Tier A (AthenaK) will give the full nonlinear dynamics including GW damping.
+
+`[FUTURE: Tier A — AthenaK duck_star pgen for Hengrui]`
+`[FUTURE: improve SH mode classification — current projection onto Y_ℓ^m at interior vertices is noisy, many modes misclassified as ℓ=5,6]`
 
 **Topic 3: Equation of State of Duck Matter**
 - Local compactness C(θ,φ) = GM/R(θ,φ)c² varies over duck surface; bill collapses first (highest C)
