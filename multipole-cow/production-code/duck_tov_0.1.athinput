@@ -1,0 +1,105 @@
+# Quacky Normal Modes: Duck-shaped TOV star (10% deformation)
+# Linear perturbative regime — for comparison with analytical QNM splitting
+# Based on Gamma=2 polytrope, M~1.4 Msun, R~9.6 km
+
+<comment>
+problem  = Duck-shaped TOV star (10% deformation)
+
+<job>
+basename = duck_tov_0.1
+
+<mesh>
+nghost = 4
+nx1    = 128
+x1min  = -51.2
+x1max  = 51.2
+ix1_bc = outflow
+ox1_bc = outflow
+
+nx2    = 128
+x2min  = -51.2
+x2max  = 51.2
+ix2_bc = outflow
+ox2_bc = outflow
+
+nx3    = 128
+x3min  = -51.2
+x3max  = 51.2
+ix3_bc = outflow
+ox3_bc = outflow
+
+<mesh_refinement>
+refinement = adaptive
+num_levels = 4
+refine_interval = 1
+
+<meshblock>
+nx1  = 16
+nx2  = 16
+nx3  = 16
+
+<time>
+evolution  = dynamic
+integrator = rk3
+cfl_number = 0.4
+nlim       = -1
+tlim       = 10000
+ndiag      = 1
+
+<coord>
+general_rel = true
+m           = 0.0
+a           = 0.0
+excise      = false
+
+<z4c>
+diss        = 0.1
+chi_div_floor = 0.1
+
+<mhd>
+eos         = ideal
+dyn_eos     = ideal
+dyn_error   = reset_floor
+reconstruct = ppmx
+rsolver     = hlle
+dfloor      = 1.0e-10
+tfloor      = 1.0e-8
+dthreshold  = 1.02
+gamma       = 2.0
+dyn_scratch = 1
+fofc        = true
+
+<adm>
+
+<problem>
+rhoc              = 1.28e-3
+kappa             = 100.0
+npoints           = 10000
+dr                = 1e-3
+b_norm            = 0.0
+pcut              = 1e-6
+magindex          = 1
+user_hist         = true
+v_pert            = -0.01
+duck_lmax         = 10
+duck_epsilon_file = duck_epsilon_0.1.dat
+duck_amplitude    = 1.0
+
+<output1>
+file_type   = rst
+dt          = 1000.0
+
+<output2>
+file_type   = hst
+dt          = 0.1
+data_format = %20.15e
+
+<output3>
+file_type   = bin
+variable    = mhd_w
+dt          = 10.0
+
+<output4>
+file_type   = bin
+variable    = z4c
+dt          = 100.0
