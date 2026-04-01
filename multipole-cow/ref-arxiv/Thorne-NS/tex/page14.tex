@@ -1,0 +1,39 @@
+% Thorne & Campolattaro 1967, ApJ 149, 591
+% Page 14 (p. 604) transcription
+
+\begin{equation}
+H_0(r,t) =
+\begin{cases}
+0 & \text{if} \quad i < r + 2M \ln r \,, \\[6pt]
+-2\pi_r \bigl|dC^{(1)}/du\bigr|_{\omega} \exp\bigl[-\bigl(t - r - 2M\ln r\bigr)/\tau_r\bigr]
+\sin\bigl[\omega_r\bigl(t - r - 2M\ln r\bigr) + \delta\bigr] & \\[2pt]
+& \text{if} \quad i > r + 2M \ln r \,.
+\end{cases}
+\tag{34b}
+\end{equation}
+
+Here $\delta + \pi/2$ is the phase of $[dC^{(1)}/du]_{\omega}$.
+
+Note that in the wave zone ($r \gg 2M$, beyond the wave front) there is no gravitational radiation; information that the equilibrium configuration was perturbed has not yet had time to reach radius $r$. However, immediately behind the wave front ($r > r + 2M$ in the original), an observer will measure gravitational waves corresponding to the $\omega$ quasi-normal mode of pulsation of harmonic $(l,\, M = 0,\, \tau \equiv [-\frac{1}{2}])$ (cf.\ eqs.\ [23] with eqs.\ [34]).
+
+\section*{V. METHODS FOR CALCULATING THE COMPLEX OUTGOING NORMAL MODES}
+
+In \S~IV we have outlined the key role played in real, physical pulsations by the outgoing normal modes. We next turn to the question of, given a general-relativistic stellar model, how might one go about calculating numerically the eigenfrequencies and functions of the outgoing modes.
+
+In our present state of ignorance about analytic properties of the normal modes, the only computational method possible is iterative trial and error. One specifies once and for all the spherical-harmonic index, $l$, and the pulsation amplitude, $B$ (eq.\ [15a]), at the center of the star. One then specifies successive trial values for the complex frequency, $\omega$; and for each trial frequency one integrates the eigenequations (14), subject to the boundary conditions (15), to obtain that unique eigenfunction which is well-behaved at both the center and the surface of the star. The resultant eigenfunction for each value of $\omega$ has a particular amplitude, $C_\omega^{(1)}$, for incoming gravitational waves. The purely outgoing normal modes for which one is searching are those for which the ratio
+%
+\begin{equation}
+\frac{C_\omega^{(1)}}{B} =
+\left(\frac{\text{incoming wave amplitude}}{\text{central pulsation amplitude}}\right)
+\tag{35}
+\end{equation}
+%
+vanishes. Hence, one chooses one trial value of $\omega$ after another in search of the zeros of $C_\omega^{(1)}/B$.
+
+In practice, this technique should not require very many iterations. One can use, as initial trial frequency, values obtained from the linearized theory of gravitation (see Wheeler 1962; Zee and Wheeler 1967; Chau 1967) and from the theory of radial pulsations (RSSD, chaps.\ iv and vii); and one can devise efficient predictor-corrector techniques for choosing successive trial frequencies in the search for zeros of $C_\omega^{(1)}/B$.
+
+\section*{VI. WHERE DO WE GO FROM HERE?}
+
+This paper is just a modest introduction to a story which promises to be long, complicated, and fascinating. There are two main directions in which one must now proceed to develop the story further:
+
+1. One needs badly an analysis of the analytic properties of the complex eigenfunctions. Can the eigenproblem be put into a self-adjoint form? If so, can one identify the terms in the Lagrangian with kinetic and potential energy? Can one find decompositions analogous to those for radial pulsations (RSSD), which relate the structures of the various eigenfunctions to each other and to the eigenfunctions? Answers to such questions would be of great help in understanding the nature of non-radial pulsations and in computing numerically the outgoing normal modes of particular stellar models.

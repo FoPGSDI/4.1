@@ -1,0 +1,89 @@
+% Thorne & Campolattaro 1967, ApJ 149, 591
+% Page 7 (p. 597) transcription
+
+\subsection*{a) Eigenequations}
+
+We concentrate our attention on normal modes which belong to a particular even-parity
+spherical harmonic $(l,\, M = 0,\, \varpi = [-1]^{l})$ and which have a particular complex
+frequency,
+\begin{equation}
+  \omega = \sigma + i/\tau \;.
+\label{eq:11}
+\end{equation}
+
+These normal modes can be characterized by their complex radial eigenfunctions $H(r)$,
+$K(r)$, $W(r)$, $V(r)$
+\begin{equation}
+  \begin{aligned}
+    H_{0}(r,t) &= H(r)e^{i\omega t} \;, & K(r,t) &= K(r)e^{i\omega t} \;, \\
+    W(r,t)     &= W(r)e^{i\omega t} \;, & V(r,t) &= V(r)e^{i\omega t} \;.
+  \end{aligned}
+\label{eq:12}
+\end{equation}
+
+As a matter of convention we restrict ourselves to modes with
+\begin{equation}
+  \sigma \geq 0 \;.
+\label{eq:13}
+\end{equation}
+
+The remaining modes can be obtained from these by complex conjugation.
+
+Here and throughout the remainder of this paper we ignore the auxiliary,
+``non-dynamical'' functions $H_{1}$ and $H_{2}$ of the perturbed metric (7b). They can be
+computed at any time from the initial-value equations (8).
+
+The differential equations which the eigenfunctions $H$, $K$, $W$, $V$ satisfy are obtained
+by substituting expressions (12) into the unsolved initial-value equation (8a) and into
+the propagation equations (9):
+\begin{align}
+  H' + r^{-1}e^{\lambda}\bigl[l(l+1)/2 + 1 + 4\pi r^{2}(p - \rho)\bigr]H
+  &= r K'' \notag \\
+  &\quad + e^{\lambda}(3 - 5m/r - 4\pi r^{2}\rho)K
+     - r^{-1}e^{\lambda}\bigl[l(l+1)/2 - 1 \notag \\
+  &\quad + 8\pi r^{2}(\rho + p)\bigr]K
+     + 8\pi r^{-1}(\rho + p)e^{\lambda/2}W'
+     + 8\pi r^{-1}\rho' e^{\lambda/2}W \notag \\
+  &\quad + 8\pi l(l+1)r^{-1}(\rho + p)e^{\lambda}V \;,
+\label{eq:14a} \tag{14a}
+\\[6pt]
+  {}-e^{\nu-\lambda}K''
+  + 2r^{-1}e^{\nu}\bigl[-1 + m/r + 2\pi r^{2}(\rho - p)\bigr]K'
+  - \omega^{2}K
+  &\notag \\
+  + r^{-2}e^{\nu}\bigl[l(l+1) - 2 + 8\pi r^{2}(\rho + p - \gamma p)\bigr]K
+  &\notag \\
+  + r^{-2}e^{\nu}\bigl[2e^{-\lambda} - 4\pi r^{2}(\rho + p + \gamma p)\bigr]H
+  &\notag \\
+  - 8\pi r^{-2}e^{\nu-\lambda/2}(\rho + p - \gamma p)W'
+  - 8\pi r^{-2}e^{\nu-\lambda/2}(\rho' - p')W
+  &\notag \\
+  - 8\pi l(l+1)r^{-2}e^{\nu}(\rho + p - \gamma p)V
+  &= 0 \;,
+\label{eq:14b} \tag{14b}
+\\[6pt]
+  {}-\bigl\{\gamma p e^{\nu/2}\bigl[r^{-2}e^{-\lambda/2}W'
+    + l(l+1)r^{-2}V - H/2 - K\bigr]\bigr\}'
+  &\notag \\
+  - \omega^{2}r^{-2}e^{(\lambda-\nu)/2}(\rho + p)W
+  + \tfrac{1}{2}(\rho + p)e^{\nu/2}(r^{-2}e^{-\lambda/2}\nu')'W
+  &\notag \\
+  - l(l+1)r^{-2}(\rho + p)(e^{\nu/2})'V
+  - \tfrac{1}{2}(\rho + p)e^{-\nu}(He^{3\nu/2})'
+  &\notag \\
+  + (\rho + p)(Ke^{\nu/2})'
+  &= 0 \;,
+\label{eq:14c} \tag{14c}
+\\[6pt]
+  {}-\omega^{2}e^{-\nu}(\rho + p)V
+  + l(l+1)r^{-2}\gamma p V
+  + r^{-2}\gamma p e^{-\lambda/2}W'
+  + r^{-2}p' e^{-\lambda/2}W
+  &\notag \\
+  - \tfrac{1}{2}(\rho + p + \gamma p)H - \gamma p K
+  &= 0 \;.
+\label{eq:14d} \tag{14d}
+\end{align}
+
+Of these eigenequations, only the three propagation equations (14b)--(14d) involve the
+eigenfrequency, $\omega$. Note that the real and imaginary parts of the eigenfunctions are

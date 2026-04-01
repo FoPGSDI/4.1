@@ -1,0 +1,77 @@
+are simplified considerably by making a particular choice of ``gauge''---the Regge-Wheeler
+choice---for the gravitational field. Making such a choice of gauge corresponds to removing
+the coordinate arbitrariness in $(t, r, \theta, \phi)$, which arbitrariness is of the same
+size as the perturbation, $h_{\mu\nu}$, in the geometry of spacetime.
+
+The equations of motion can be simplified still further by restricting one's attention
+to spherical harmonics with $M = 0$. Once these are understood, the spherical-harmonic
+motions ($l$, $M \neq 0$, $r$) can be obtained from $(l$, $M = 0$, $r)$ by suitable rotations about
+the center of the star.
+
+Having specialized to a particular spherical harmonic ($l$, $M$, $r$), having made the
+Regge-Wheeler choice of gauge for that spherical harmonic, and having restricted attention
+to $M = 0$, we obtain the following vastly simplified forms for the fluid displacement,
+$\xi$, and the metric perturbation, $h_{\mu\nu}$ (see Appendix~A for derivation):
+
+If $r = (-1)^{l+1}$---``odd parity''; ``magnetic-type'' perturbations---then the covariant
+components of the fluid-displacement vector take the form
+\begin{equation}
+  \xi_{t} = \xi_{r} = 0 \;, \qquad
+  \xi_{\theta} = U(r,t)\,\sin\theta\,\partial_{\phi} P_{l}(\cos\theta) \;;
+\label{eq:6a}\tag{6a}
+\end{equation}
+and the only non-vanishing components of the metric perturbation are
+\begin{align}
+  h_{t\phi} &= h_{\phi t} = h_{0}(r,t)\,\sin\theta\,\partial_{\theta} P_{l}(\cos\theta) \;,\notag\\
+  h_{r\phi} &= h_{\phi r} = h_{1}(r,t)\,\sin\theta\,\partial_{\theta} P_{l}(\cos\theta) \;.
+\label{eq:6b}\tag{6b}
+\end{align}
+
+If $r = (-1)^{l}$---``even parity''; ``electric-type'' perturbations---then the contravariant
+components of the fluid displacement vector take the form
+\begin{equation}
+  \xi^{r} = r^{-2} e^{-\lambda/2} V(r,t)\, P_{l}(\cos\theta) \;, \qquad
+  \xi^{\theta} = -r^{-2} W(r,t)\,\partial_{\theta} P_{l}(\cos\theta) \;, \qquad
+  \xi^{\phi} = 0 \;;
+\label{eq:7a}\tag{7a}
+\end{equation}
+and the metric perturbation takes the form
+\begin{equation}
+  h_{\mu\nu} =
+  \left(
+  \begin{array}{c|cccc}
+     & t & r & \theta & \phi \\
+    \hline
+    t & H_{0} e^{\nu} & H_{1} & 0 & 0 \\
+    r & H_{1} & H_{2} e^{\lambda} & 0 & 0 \\
+    \theta & 0 & 0 & r^{2} K & 0 \\
+    \phi & 0 & 0 & 0 & r^{2} \sin^{2}\!\theta\, K
+  \end{array}
+  \right)
+  P_{l}(\cos\theta) \;.
+\label{eq:7b}\tag{7b}
+\end{equation}
+
+Here $V$, $W$, $H_{0}$, $H_{1}$, $H_{2}$, and $K$ are functions of $r$ and $t$.
+
+For odd-parity perturbations the equations of motion are a set of coupled equations for
+the fluid-displacement function $U(r,t)$ and the metric perturbation functions $h_{0}(r,t)$,
+$h_{1}(r,t)$ of equations~(6). For even-parity perturbations the equations of motion are a set
+of coupled equations for the fluid-displacement functions $V(r,t)$, $W(r,t)$ and the metric
+perturbation functions $H_{0}(r,t)$, $H_{1}(r,t)$, $H_{2}(r,t)$, $K(r,t)$ of equations~(7). The odd and even
+cases are considered separately in the next two sections.
+
+\subsection*{(c) Odd-Parity Motions}
+
+In Appendix~B the Einstein field equations are calculated and discussed for the odd-parity
+case. From that discussion one learns that the odd-parity motions of a star are not
+characterized by pulsations which emit gravitational waves; rather, they are characterized
+by a stationary, differential rotation of the fluid inside the star and by gravitational
+waves which do not couple to the star at all.
+
+This result should not be surprising. Pulsations can occur only if the perturbation
+causes a change in the star's internal density and pressure, $\rho$ and $p$. However, $\rho$ and $p$
+are scalar fields; and all \textit{scalar} spherical harmonics are of even parity. (Only vector and
+tensor spherical harmonics can have odd parity.) Therefore, a perturbation of odd
+tensor spherical harmonics cannot change the star's density or pressure distributions and therefore cannot
+cause the star to pulsate.

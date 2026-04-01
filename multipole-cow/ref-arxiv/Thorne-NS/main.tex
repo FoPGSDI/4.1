@@ -1,0 +1,1522 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{hyperref}
+\usepackage{natbib}
+\bibliographystyle{aasjournal}
+
+\begin{document}
+
+% Thorne & Campolattaro 1967, ApJ 149, 591
+
+\title{NON-RADIAL PULSATION OF GENERAL-RELATIVISTIC STELLAR MODELS.
+I. ANALYTIC FUNCTIONS FOR $l \geq 2$\,\footnote{* Supported in part by the Office of Naval Research (Nonr-220(47)) and in part by the National Science Foundation (GP-3391).}}
+
+\author{Kip S. Thorne\footnote{\dag\ Alfred P. Sloan Foundation Research Fellow.}\\
+\textit{California Institute of Technology, Pasadena}\\
+\and
+Alfonso Campolattaro\\
+\textit{University of California, Irvine}}
+
+\date{Received February 21, 1967}
+
+\maketitle
+
+\begin{abstract}
+The theory of small, adiabatic, non-radial perturbations of a star away from hydrostatic equilibrium
+is developed within the framework of general relativity. The unperturbed equilibrium configurations are
+an arbitrary, non-rotating, general-relativistic stellar model. The departures from equilibrium are
+analyzed into tensorial spherical harmonics and then into complex normal modes with various mixtures
+of incoming and outgoing gravitational waves. A discussion is given of the expansion of real, physical
+pulsations in terms of gravitational radiation in terms of the complex normal modes. Criteria
+are developed for stability against non-radial pulsations; and methods are devised for computing numerically the pulsation frequencies, eigenfunctions, and gravitational radiation damping times of the stable,
+real quasi-normal modes of pulsation.
+\end{abstract}
+
+\section{Motivation}
+
+In the last four years astronomical discoveries and theoretical considerations have
+motivated a detailed development of the general-relativistic theory of stellar structure
+and dynamics. The discovery of galactic X-ray sources and the development of detailed
+hydrodynamic models for supernovae have given impetus to theoretical research on neutron
+stars, while supermassive stars have been studied in connection with quasi-stellar radio
+sources (QSS's).
+
+One of us (Thorne 1966, 1967) has recently written a detailed review of the general-relativistic
+theory of stellar structure and dynamics as it has been developed to date in response to the current
+interest in neutron stars and supermassive stars. As was emphasized in that review, one of the most
+important next steps in the development of the theory is the analysis of non-radial pulsations of
+relativistic stellar models. In this paper we present such an analysis.
+
+Non-radial pulsations are of interest for a number of reasons: If, as current theory suggests,
+neutron stars are formed in some supernova explosions by the collapse of the core of a star which is
+near the end point of thermonuclear evolution, then, when first formed, a neutron star will pulsate
+wildly. The initial energy of pulsation will be of the order of the kinetic energy of collapse, which
+will be between $\sim 0.01$ and $\sim 0.2$ of the rest mass-energy of the star.
+\cite{Hoyle1964}, \cite{Narikiar1964}, \cite{Cameron1965a}, \cite{Cameron1965b}, and \cite{Finzi1965}
+have argued that the gradual transfer of this huge pulsation energy to the supernova envelope which surrounds the collapsing core may have important observational consequences.
+(See \cite{Wheeler1966}; \cite{Meltzer1966}; \cite{Thorne1966}; \cite{Finzi1966}; and
+\cite{Tsuruta1966} and \cite{Cameron1966} for critiques of and further developments of these ideas.)
+In order to evaluate such suggestions and make them more concrete, one needs an understanding of the
+theory of both radial and non-radial pulsations of relativistic stellar models.
+
+The non-radial pulsations of neutron stars are of interest also because of their intimate connection
+with gravitational radiation. Rough estimates by \cite{Zee1966} and \cite{Wheeler1966}
+(1967) (for summary, see Wheeler 1966), by Misner and Zapolsky (1967), and by Chau
+(1967) suggest that the non-radial pulsations of a neutron star should damp out due
+to the emission of gravitational waves in a time $\tau \lesssim 1$ sec, and that, consequently, the
+gravitational waves emitted by a neutron star that is formed in a supernova explosion in
+our own Galaxy might be detectable by the apparatus of Joseph Weber (see Weber
+1964, 1967). In order to make these rough estimates of the gravitational-radiation flux
+from a neutron star more precise, one needs the detailed theory of non-radial pulsations
+of relativistic stellar models.
+
+The theory of non-radial pulsations is important not only because of its astrophysical
+implications but also because of its key status within the framework of the theory of
+gravitational radiation. We know of no self-consistent analysis to date, within the
+framework of the full theory of relativity, of the emission of gravitational waves by a
+dynamical system---and of the consequent damping of that system's motion. When completed,
+numerical computations based upon the equations derived here will provide
+such an analysis.
+
+The presentation of the theory of non-radial pulsations is divided into six sections.
+In \S~II perturbations with arbitrary time dependences are analyzed into tensorial
+spherical harmonics, and the equations of motion and of radiation, governing evolution of
+the perturbations, are derived and discussed. Pulsation is absent in perturbations of
+``odd parity,'' so the subsequent analysis is confined to ``even-parity'' perturbations. In
+\S~III the even-parity perturbations are analyzed into complex normal modes with various
+mixtures of incoming and outgoing gravitational radiation. The eigenproblems---including
+differential equations and boundary conditions---is formulated for the complex
+normal modes with spherical harmonic index $l \geq 2$; and the form of the gravitational
+waves far from the star is discussed. Section~IV contains a discussion of the relationship
+between the complex normal modes and the real pulsations of a relativistic stellar model.
+Real, ``quasi-normal'' pulsations which are initiated at a particular moment of time---
+and only pump outgoing gravitational waves with a sharp wave front---are expanded in
+terms of complex normal modes. The frequencies, eigenfunctions, and damping times of
+the complex normal solutions are related to properties of the complex normal mode with
+purely outgoing radiation. Section~V is a description of methods for calculating numerically
+the frequencies and eigenfunctions of the complex normal modes with purely
+outgoing radiation; and \S~VI is a discussion of the directions in which this analysis
+should be pushed further. In order to make the paper readable, we have confined to
+appendices the derivations of most of the equations.
+
+Some of the results presented in this paper have been derived independently but not
+published by S.\ Chandrasekhar and by H.\ Zapolsky.
+
+\section{ARBITRARY, SMALL PERTURBATIONS}
+
+\subsection*{(a) The Equilibrium Configuration}
+
+Throughout this paper we shall use the conventions and notation of Thorne (1966,
+1967), ``Relativistic Stellar Structure and Dynamics''; cited henceforth as RSSD) except
+that we shall adopt geometrized units ($c = G = 1$). We shall omit the
+asterisks ($*$) used in RSSD for geometrized quantities, and we shall use the symbol $\nu$ in
+place of $2\Phi$ for $\ln g_{tt}$.
+
+As is discussed in RSSD, a relativistic equilibrium configuration can be described by a
+coordinate system $(t, r, \theta, \phi)$, with respect to which the geometry of spacetime is given
+by the line element
+\begin{equation}
+  ds^{2} = (ds^2)_0 \equiv e^{\nu}\,dt^{2} - e^{\lambda}\,dr^{2} - r^{2}(d\theta^{2} + \sin^{2}\theta\,d\phi^{2})\;.
+\label{eq:1}
+\end{equation}
+
+Here $\nu$ and $\lambda$ are functions of the radius $r$, and $m(r)$ is defined as the ``interior
+mass'' $m(r)$, by
+\begin{equation}
+  e^{-\lambda} = 1 - 2m/r\;.
+\label{eq:2}
+\end{equation}
+
+In order to specify the hydrodynamic structure of an equilibrium configuration, one
+generally gives---in addition to the ``gravitational potential,'' $\nu(r)$, and the mass inside
+radius $r$, $m(r)$---also the total density of mass-energy, $\rho$, and the pressure, $p$, as functions
+of $r$. The quantities $r$, $m$, $\rho$, and $p$ are related to each other by the mass equation,
+\begin{equation}
+  m = \int_0^r 4\pi r^2 \rho \, dr \;,
+\label{eq:3a}
+\end{equation}
+the Tolman-Oppenheimer-Volkoff equation of hydrostatic equilibrium,
+\begin{equation}
+  \frac{dp}{dr} = -\frac{(\rho + p)(m + 4\pi r^3 p)}{r(r - 2m)} \;,
+\label{eq:3b}
+\end{equation}
+the source equation for $\nu$,
+\begin{equation}
+  d\nu/dr = -2(\rho + p)^{-1}(dp/dr) \;,
+\label{eq:3c}
+\end{equation}
+and an equation of state,
+\begin{equation}
+  p = p(\rho, Z_1, \ldots, Z_N) \;.
+\label{eq:3d}
+\end{equation}
+
+Here $s$ is the entropy per baryon and $Z_1, \ldots, Z_N$ are the fractional abundances of the
+various nuclear species. The adiabatic index, $\gamma \equiv \Gamma_1$ in the notation of RSSD---which
+governs the response of the stellar material to adiabatic compressions is related to the
+equation of state by
+\begin{equation}
+  \gamma = \bigl[(\rho + p)/p\bigr](\partial p/\partial \rho)_{s,\, Z_1,\, \ldots,\, Z_N} \;.
+\label{eq:4}
+\end{equation}
+
+In order to construct a relativistic stellar model, one solves equations~(\ref{eq:3a}--\ref{eq:3d}),
+together with certain equations of thermal structure and with gas characteristic equations
+outlined in RSSD. (We do not write down here the remaining structure equations because
+they play no role in the theory of pulsation.) Throughout the remainder of this
+paper we assume that somebody has given us an equilibrium configuration in which
+the structure parameters $r$, $m$, $\rho$, and $p$ satisfy equations~(\ref{eq:3a}--\ref{eq:3d}), and we examine the behavior of that configuration under non-radial perturbations.
+
+\subsection*{(b) Fluid Displacement and Perturbation in the Geometry of Spacetime}
+
+The small-amplitude motion of our perturbed configuration is described by the 3-vector
+displacement, $\xi(t, r, \theta, \phi)$, of the fluid with respect to the equilibrium coordinate system $(t, r, \theta, \phi)$.
+As a result of the fluid motion, the geometry of spacetime around and inside the equilibrium configuration is no longer described by the line element~(\ref{eq:1}). Rather, the
+geometry fluctuates in a manner described by ten functions, $h_{\mu\nu} \equiv h_{\mu\nu}$, of $(t, r, \theta, \phi) = (x^0, x^1, x^2, x^3)$:
+\begin{equation}
+  ds^2 = (g_{\mu\nu}^{(0)} + h_{\mu\nu})\,dx^\mu\,dx^\nu \;.
+\label{eq:5}
+\end{equation}
+
+The entire theory of non-radial pulsations consists of the study of the ``equations of
+motion'' which govern the thirteen functions, $\xi_i$ and $h_{\mu\nu}$, of $(t, r, \theta, \phi)$.
+
+In order to make the equations of motion as simple as possible, we analyze $\xi_i$ and
+$h_{\mu\nu}$ into vectorial and tensorial spherical harmonics in a manner first employed by Regge
+and Wheeler (1957). (See Appendix~A for details.) Each spherical harmonic is characterized
+by the usual indices $l$ and $M$, and by a parity which can be $(-1)^l$ or
+$(-1)^{l+1}$. Group-theoretic considerations---or, alternatively, an analysis of the equations
+of motion---reveal that for small-amplitude motions there is no coupling between the
+various harmonics $(l, m)$. Consequently, we can confine our attention to the various harmonics individually.
+
+For small-amplitude motion in a given spherical harmonic, the equations of motion
+are simplified considerably by making a particular choice of ``gauge''---the Regge-Wheeler
+choice---for the gravitational field. Making such a choice of gauge corresponds to removing
+the coordinate arbitrariness in $(t, r, \theta, \phi)$, which arbitrariness is of the same
+size as the perturbation, $h_{\mu\nu}$, in the geometry of spacetime.
+
+The equations of motion can be simplified still further by restricting one's attention
+to spherical harmonics with $M = 0$. Once these are understood, the spherical-harmonic
+motions ($l$, $M \neq 0$, $r$) can be obtained from $(l$, $M = 0$, $r)$ by suitable rotations about
+the center of the star.
+
+Having specialized to a particular spherical harmonic ($l$, $M$, $r$), having made the
+Regge-Wheeler choice of gauge for that spherical harmonic, and having restricted attention
+to $M = 0$, we obtain the following vastly simplified forms for the fluid displacement,
+$\xi$, and the metric perturbation, $h_{\mu\nu}$ (see Appendix~A for derivation):
+
+If $r = (-1)^{l+1}$---``odd parity''; ``magnetic-type'' perturbations---then the covariant
+components of the fluid-displacement vector take the form
+\begin{equation}
+  \xi_{t} = \xi_{r} = 0 \;, \qquad
+  \xi_{\theta} = U(r,t)\,\sin\theta\,\partial_{\phi} P_{l}(\cos\theta) \;;
+\label{eq:6a}\tag{6a}
+\end{equation}
+and the only non-vanishing components of the metric perturbation are
+\begin{align}
+  h_{t\phi} &= h_{\phi t} = h_{0}(r,t)\,\sin\theta\,\partial_{\theta} P_{l}(\cos\theta) \;,\notag\\
+  h_{r\phi} &= h_{\phi r} = h_{1}(r,t)\,\sin\theta\,\partial_{\theta} P_{l}(\cos\theta) \;.
+\label{eq:6b}\tag{6b}
+\end{align}
+
+If $r = (-1)^{l}$---``even parity''; ``electric-type'' perturbations---then the contravariant
+components of the fluid displacement vector take the form
+\begin{equation}
+  \xi^{r} = r^{-2} e^{-\lambda/2} V(r,t)\, P_{l}(\cos\theta) \;, \qquad
+  \xi^{\theta} = -r^{-2} W(r,t)\,\partial_{\theta} P_{l}(\cos\theta) \;, \qquad
+  \xi^{\phi} = 0 \;;
+\label{eq:7a}\tag{7a}
+\end{equation}
+and the metric perturbation takes the form
+\begin{equation}
+  h_{\mu\nu} =
+  \left(
+  \begin{array}{c|cccc}
+     & t & r & \theta & \phi \\
+    \hline
+    t & H_{0} e^{\nu} & H_{1} & 0 & 0 \\
+    r & H_{1} & H_{2} e^{\lambda} & 0 & 0 \\
+    \theta & 0 & 0 & r^{2} K & 0 \\
+    \phi & 0 & 0 & 0 & r^{2} \sin^{2}\!\theta\, K
+  \end{array}
+  \right)
+  P_{l}(\cos\theta) \;.
+\label{eq:7b}\tag{7b}
+\end{equation}
+
+Here $V$, $W$, $H_{0}$, $H_{1}$, $H_{2}$, and $K$ are functions of $r$ and $t$.
+
+For odd-parity perturbations the equations of motion are a set of coupled equations for
+the fluid-displacement function $U(r,t)$ and the metric perturbation functions $h_{0}(r,t)$,
+$h_{1}(r,t)$ of equations~(6). For even-parity perturbations the equations of motion are a set
+of coupled equations for the fluid-displacement functions $V(r,t)$, $W(r,t)$ and the metric
+perturbation functions $H_{0}(r,t)$, $H_{1}(r,t)$, $H_{2}(r,t)$, $K(r,t)$ of equations~(7). The odd and even
+cases are considered separately in the next two sections.
+
+\subsection*{(c) Odd-Parity Motions}
+
+In Appendix~B the Einstein field equations are calculated and discussed for the odd-parity
+case. From that discussion one learns that the odd-parity motions of a star are not
+characterized by pulsations which emit gravitational waves; rather, they are characterized
+by a stationary, differential rotation of the fluid inside the star and by gravitational
+waves which do not couple to the star at all.
+
+This result should not be surprising. Pulsations can occur only if the perturbation
+causes a change in the star's internal density and pressure, $\rho$ and $p$. However, $\rho$ and $p$
+are scalar fields; and all \textit{scalar} spherical harmonics are of even parity. (Only vector and
+tensor spherical harmonics can have odd parity.) Therefore, a perturbation of odd
+tensor spherical harmonics cannot change the star's density or pressure distributions and therefore cannot
+cause the star to pulsate.
+
+This explanation for the non-existence of odd-parity pulsations can be restated in
+more physical terms as follows: Odd-parity gravitational waves are ``transverse'' waves
+in the sense that they only couple to stars which can support anisotropic stresses.
+(Anisotropic stresses are characterized by tensors, whose spherical harmonics can have
+odd parity.) Consequently, by idealizing our equilibrium configurations as made of a
+perfect fluid (purely isotropic stress, $-p$), we rule out, ab initio, the possibility of
+odd-parity pulsations and of the generation of odd-parity gravitational waves.
+
+Because odd-parity pulsations are non-existent, we shall confine our analysis to
+even-parity motions throughout the remainder of this paper.
+
+\subsection*{(d) Even-Parity Motions}
+
+The equations of motion which govern the time evolution of even-parity motions are
+derived from Einstein's field equations in Appendix~C\@. For a given harmonic
+$(l,\,M=0,\,s=(-1)^{l})$ these equations of motion are a set of coupled equations in the
+fluid displacement functions $V(r,t)$, $W(r,t)$ and for the metric perturbation functions
+$H_0(r,t)$, $H_1(r,t)$, $H_2(r,t)$, $K(r,t)$ (cf.\ eqs.\ [3]). Initial-value equations, which
+determine the time evolution of $K$, $W$, $V$ from initial data, have been specified; and
+propagation equations, which determine the time evolution of $K$, $W$, $V$. For $l\geq 2$
+the \emph{initial-value equations} are (cf.\ Appendix~C)
+
+\begin{equation}
+\begin{split}
+H_0' + r^{-1}e^{\lambda}\bigl[l(l+1)/2 + 1 + 4\pi r^2(\rho-p)\bigr]H_0 \\
+\quad = rK'' + e^{\lambda}(3-5m/r-4\pi r^2 p)K'
+  - r^{-1}e^{\lambda}\bigl[l(l+1)/2 - 1 \\
+\qquad + 8\pi r^2(\rho+p)\bigr]K
+  + 8\pi r^{-1}(\rho+p)e^{\lambda/2}W' \\
+\qquad + 8\pi r^{-1}\rho'\,e^{\lambda/2}W
+  + 8\pi l(l+1)r^{-1}(\rho+p)e^{\nu}V \;,
+\end{split}
+\tag{8a}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+l(l+1)H_1 = 2r^2 K'_{,t} - 2re^{\lambda}(-1+3m/r+4\pi r^2 p)K_{,t}
+  - 2rH_{0,t} \\
+  + 16\pi(\rho+p)e^{\lambda/2}W_{,t} \;,
+\end{split}
+\tag{8b}
+\end{equation}
+
+\begin{equation}
+H_{1,t} = e^{\nu}H_0' + r^{-1}e^{\lambda+\nu}(2m/r+8\pi r^2 p)H_0 - e^{\nu}K' \;,
+\tag{8c}
+\end{equation}
+
+\begin{equation}
+H_2 = H_0 \;,
+\tag{8d}
+\end{equation}
+
+and the time derivatives of equations (8a) and (8d). For $l\geq 2$ the \emph{propagation
+equations} are
+
+\begin{equation}
+\begin{split}
+K_{,tt} - e^{-\lambda}K'' + 2r^{-1}e^{-\lambda}\bigl[-1+m/r+2\pi r^2(\rho-p)\bigr]K' \\
++ r^{-2}e^{\nu}\bigl[l(l+1)-2+8\pi r^{-2}(\rho+p-\gamma p)\bigr]K
+  + r^{-2}e^{\nu}\bigl[2e^{-\lambda}-4\pi r^2(\rho+p+\gamma p)\bigr]H_0 \\
+- 8\pi r^{-2}(\rho+p-\gamma p)e^{\nu-\lambda/2}W'
+  - 8\pi r^{-2}(\rho'-p')e^{\nu-\lambda/2}W \\
+- 8\pi l(l+1)r^{-2}(\rho+p-\gamma p)e^{\nu}V = 0 \;,
+\end{split}
+\tag{9a}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+r^{-2}(\rho+p)e^{(\lambda-\nu)/2}W_{,tt}
+  = \bigl\{\gamma p e^{\nu/2}\bigl[r^{-2}e^{-\lambda/2}W'
+    + l(l+1)r^{-2}V - \tfrac{1}{2}H_0 - K\bigr]\bigr\}' \\
++ \tfrac{1}{2}(\rho+p)e^{\nu/2}(r^{-2}e^{-\lambda/2}\nu')'W
+  - l(l+1)r^{-2}(\rho+p)(e^{\nu/2})'V \\
+- \tfrac{1}{2}(\rho+p)e^{-\nu}(H_0 e^{3\nu/2})'
+  + (\rho+p)(Ke^{\nu/2})' = 0 \;,
+\end{split}
+\tag{9b}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+e^{-\nu}(\rho+p)V_{,tt} + l(l+1)r^{-2}\gamma p V
+  + r^{-2}\gamma p\,e^{-\lambda/2}W' + r^{-2}p'\,e^{-\lambda/2}W \\
+- \tfrac{1}{2}(p+\rho+\gamma p)H_0 - \gamma p K = 0 \;.
+\end{split}
+\tag{9c}
+\end{equation}
+
+Here and throughout this paper primes denote radial derivatives, and commas followed
+by $t$'s denote time derivatives: $X' \equiv \partial X/\partial r$, $X'' \equiv \partial^{2}X/\partial r^{2}$,
+$X_{,t} \equiv \partial X/\partial t$, and $X_{,tt} \equiv \partial^{2}X/\partial t^{2}$.
+
+In deriving equations (8) and (9) we have assumed at several points that $l \neq 0$ and
+$l \neq 1$; and \textit{we shall maintain this assumption throughout the remainder of the paper}. This
+assumption is not a serious limitation on our analysis, since we are interested primarily
+in the emission of gravitational waves by pulsating stars, and gravitational waves must
+have $l \geq 2$.
+
+The structure of the equations of motion (8) and (9) reflects the fact that even-parity
+motions have three degrees of freedom---two, $W$ and $V$, associated with the motion of
+the fluid; and one, $K$, associated with the gravitational waves.\footnote{If one specifies at an
+initial moment of coordinate time the radial distributions of $W$, $V$, $K$ and $W_{,t}$, $V_{,t}$, $K_{,t}$,
+then one can use the three propagation equations (9)---plus the initial value equation
+(8a) with the boundary condition
+\begin{equation}
+  H_0 = K \quad \text{at } r = 0
+\label{eq:10}
+\end{equation}
+(cf.\ eq.\ [15a])---to propagate $W$, $V$, $K$ and $K_{,t}$. At any moment of coordinate
+time the functions $H_0$, $H_1$, and $H_2$, which are needed to fix completely the perturbed
+geometry of spacetime, are determined from $W$, $V$, $K$, $V_{,t}$, $K_{,t}$ by the initial-value
+equations (8).
+
+The dynamical evolution problem (eqs.\ [9]) would be much simpler if one could solve
+the initial-value equations (8a) for $H_2$ as a linear combination of $K'$, $K$, $K_{,t}$, $W'$, $W$,
+$V''$, $V'$, $V$, and then use that solution, plus equation (8a) itself, to eliminate $H_0$ and $H_2$
+from the dynamical equations (9). Unfortunately, equations (8a) cannot be so inverted
+and, therefore, equation (8a) is needed along with equations (9) to fix the dynamical
+propagation of the three degrees of freedom. The only way one can incorporate equation
+(8a) into the propagation equations (9) directly is by increasing equations (9) from
+second-order partial differential equations to third-order partial differential equations. We
+prefer not to do this.}
+
+\section{EVEN-PARITY NORMAL MODES OF PULSATION}
+
+The study of the even-parity pulsations of the equilibrium configuration is simplified
+considerably by analyzing the pulsations into normal modes. For pulsations the only pulsations
+one expects to occur in nature are pulsations which generate outgoing gravitational
+waves; and these are damped primarily (but not entirely) in models in which the
+gravitational radiation is purely outgoing. Because of radiation damping, such normal
+modes will not have real frequencies and eigenvalues; rather, their eigenfrequencies
+and frequencies will be complex. However, assuming completeness of the set of
+complex eigenfunctions with outgoing waves, any real pulsation with purely outgoing
+radiation can be expressed as a linear combination of the complex normal modes.
+
+In this section we shall discuss the eigenvalue equations and the boundary conditions
+which determine the normal modes of even parity---including real normal modes (standing
+gravitational waves), as well as complex normal modes with various mixtures of
+outgoing and incoming gravitational radiation. All discussion of the relationship between the normal modes and the real pulsations of an equilibrium configuration will
+be delayed until \S~IV.
+
+\subsection*{a) Eigenequations}
+
+We concentrate our attention on normal modes which belong to a particular even-parity
+spherical harmonic $(l,\, M = 0,\, \varpi = [-1]^{l})$ and which have a particular complex
+frequency,
+\begin{equation}
+  \omega = \sigma + i/\tau \;.
+\label{eq:11}
+\end{equation}
+
+These normal modes can be characterized by their complex radial eigenfunctions $H(r)$,
+$K(r)$, $W(r)$, $V(r)$
+\begin{equation}
+  \begin{aligned}
+    H_{0}(r,t) &= H(r)e^{i\omega t} \;, & K(r,t) &= K(r)e^{i\omega t} \;, \\
+    W(r,t)     &= W(r)e^{i\omega t} \;, & V(r,t) &= V(r)e^{i\omega t} \;.
+  \end{aligned}
+\label{eq:12}
+\end{equation}
+
+As a matter of convention we restrict ourselves to modes with
+\begin{equation}
+  \sigma \geq 0 \;.
+\label{eq:13}
+\end{equation}
+
+The remaining modes can be obtained from these by complex conjugation.
+
+Here and throughout the remainder of this paper we ignore the auxiliary,
+``non-dynamical'' functions $H_{1}$ and $H_{2}$ of the perturbed metric (7b). They can be
+computed at any time from the initial-value equations (8).
+
+The differential equations which the eigenfunctions $H$, $K$, $W$, $V$ satisfy are obtained
+by substituting expressions (12) into the unsolved initial-value equation (8a) and into
+the propagation equations (9):
+\begin{align}
+  H' + r^{-1}e^{\lambda}\bigl[l(l+1)/2 + 1 + 4\pi r^{2}(\rho - p)\bigr]H
+  &= r K'' \notag \\
+  &\quad + e^{\lambda}(3 - 5m/r - 4\pi r^{2}p)K'
+     - r^{-1}e^{\lambda}\bigl[l(l+1)/2 - 1 \notag \\
+  &\quad + 8\pi r^{2}(\rho + p)\bigr]K
+     + 8\pi r^{-1}(\rho + p)e^{\lambda/2}W'
+     + 8\pi r^{-1}\rho' e^{\lambda/2}W \notag \\
+  &\quad + 8\pi l(l+1)r^{-1}(\rho + p)e^{\nu}V \;,
+\label{eq:14a} \tag{14a}
+\\[6pt]
+  {}-e^{\nu-\lambda}K''
+  + 2r^{-1}e^{\nu}\bigl[-1 + m/r + 2\pi r^{2}(\rho - p)\bigr]K'
+  - \omega^{2}K
+  &\notag \\
+  + r^{-2}e^{\nu}\bigl[l(l+1) - 2 + 8\pi r^{2}(\rho + p - \gamma p)\bigr]K
+  &\notag \\
+  + r^{-2}e^{\nu}\bigl[2e^{-\lambda} - 4\pi r^{2}(\rho + p + \gamma p)\bigr]H
+  &\notag \\
+  - 8\pi r^{-2}e^{\nu-\lambda/2}(\rho + p - \gamma p)W'
+  - 8\pi r^{-2}e^{\nu-\lambda/2}(\rho' - p')W
+  &\notag \\
+  - 8\pi l(l+1)r^{-2}e^{\nu}(\rho + p - \gamma p)V
+  &= 0 \;,
+\label{eq:14b} \tag{14b}
+\\[6pt]
+  {}-\bigl\{\gamma p e^{\nu/2}\bigl[r^{-2}e^{-\lambda/2}W'
+    + l(l+1)r^{-2}V - H/2 - K\bigr]\bigr\}'
+  &\notag \\
+  - \omega^{2}r^{-2}e^{(\lambda-\nu)/2}(\rho + p)W
+  + \tfrac{1}{2}(\rho + p)e^{\nu/2}(r^{-2}e^{-\lambda/2}\nu')'W
+  &\notag \\
+  - l(l+1)r^{-2}(\rho + p)(e^{\nu/2})'V
+  - \tfrac{1}{2}(\rho + p)e^{-\nu}(He^{3\nu/2})'
+  &\notag \\
+  + (\rho + p)(Ke^{\nu/2})'
+  &= 0 \;,
+\label{eq:14c} \tag{14c}
+\\[6pt]
+  {}-\omega^{2}e^{-\nu}(\rho + p)V
+  + l(l+1)r^{-2}\gamma p V
+  + r^{-2}\gamma p e^{-\lambda/2}W'
+  + r^{-2}p' e^{-\lambda/2}W
+  &\notag \\
+  - \tfrac{1}{2}(\rho + p + \gamma p)H - \gamma p K
+  &= 0 \;.
+\label{eq:14d} \tag{14d}
+\end{align}
+
+Of these eigenequations, only the three propagation equations (14b)--(14d) involve the
+eigenfrequency, $\omega$. Note that the real and imaginary parts of the eigenfunctions are
+coupled in the eigenequations (14) only by means of the squared eigenfrequency $\omega^2$.
+This permits the existence of purely real, standing-wave eigenfunctions.
+
+The eigenequations (14) comprise a fifth-order differential system; for any given
+choice of the complex frequency, $\omega$, there are five linearly independent, complex solutions
+to equations (14). Physical boundary conditions outlined in the next two sections
+make four of the five solutions unacceptable. The remaining solution is physically acceptable for all choices of $\omega$, providing one permits arbitrary admixtures of ingoing and
+outgoing radiation. The restriction to purely outgoing radiation restricts $\omega$ to take on a
+discrete set of values, as we shall see in \S~IIIc.
+
+\subsection*{b) Boundary Conditions at the Star's Center and Surface}
+
+By expanding the eigenequations (14) about $r = 0$ one finds that only two of the
+five independent solutions are physically acceptable at the center of the star. (See
+Appendix~D for analysis.) The two acceptable solutions have the form:
+\begin{equation}
+  K = Ar^l + \cdots, \qquad
+  H = Ar^l + \cdots, \qquad
+  W = Br^{l+1} + \cdots,
+\label{eq:15a}
+\end{equation}
+\begin{equation}
+  V = -(B/l)r^l + \cdots, \qquad \text{near } r = 0\;.
+\notag
+\end{equation}
+
+Here $A$ and $B$ are independent, freely specifiable constants. These acceptable solutions
+are characterized by small fluid motions and by small perturbations in the density, the
+pressure, and the geometry of spacetime. The unacceptable solutions---which are discussed in Appendix~D---are characterized by perturbations in the density, the pressure,
+and/or the geometry of spacetime which diverge as $r = 0$.
+
+An expansion of the eigenequations (14) about $r = R$ (surface of star) reveals that
+four of the five independent solutions are physically acceptable there. (See Appendix~D
+for analysis.) The acceptable solutions have the following expansion upon $(R - r)$:
+\begin{align}
+  K &= k_0 + k_1(R-r) + \cdots, &
+  H &= h_0 + h_1(R-r) + \cdots, \notag \\
+  W &= w_0 + w_1(R-r) + \cdots, &
+  V &= v_0 + v_1(R-r) + \cdots,
+\label{eq:15b}
+\end{align}
+near $r = R$.
+
+Of the constants which enter into this expansion only four are freely specifiable. The
+remaining constants are fixed by the asymptotic form of the eigenequations and by the
+demand that the Lagrangian perturbation in the pressure vanish at the star's surface:
+\begin{equation}
+  \Delta p \equiv \lim_{r \to R^-} \gamma p \left[
+    \frac{e^{-\lambda/2}}{r^2} W' - \frac{l(l+1)}{r} V
+    + \frac{1}{2} H_1 + K
+  \right] P_l(\cos\theta) = 0\;.
+\label{eq:16}
+\end{equation}
+
+For example, if the pressure-density relation near the star's surface is polytropic and the
+adiabatic index behaves smoothly,
+\begin{equation}
+  p = \rho^{1+1/n} + \cdots, \qquad \mu = \bar{\mu}(R-r)^n + \cdots,
+\label{eq:17a}
+\end{equation}
+\begin{equation}
+  \gamma = \gamma_1 + \gamma_2(R-r) + \cdots,
+\notag
+\end{equation}
+then the four constants $k_0$, $h_0$, $w_0$ and $w_0$ are freely specifiable in the acceptable solutions
+(15b). The eigenequation (14d) fixes $v_0$ in terms of these four arbitrary constants
+\begin{equation}
+  \omega^2 R(R - 2M)^{-1} v_0 = R^{-1}(1 - 2M/R)^{1/2} (N+1) w_0\;,
+\label{eq:17b}
+\end{equation}
+and the eigenequations (14a)--(14d) all conspire to fix the remaining constants in the
+ascending power series. Here $M \equiv m(r = R)$ is the total mass of the star. (In this paper
+$M$ is used both as the star's total mass and as the spherical harmonic projection index.)
+
+In general, the one physically unacceptable solution at the star's surface is that
+solution for which the Lagrangian change in the pressure does not vanish. For the
+example of a polytropic pressure-density relation (eq.~[17a]) this unacceptable solution has
+fluid displacements which diverge at the star's surface ($W \sim V \sim [R - r]^{-8}$); see
+Appendix~D for details.
+
+For any arbitrary choice of the complex pulsation frequency, $\omega$, there will be just one
+solution to the eigenequations~(14) which is well-behaved both at the center of the star
+and at the surface. That solution is the unique linear mixture of the two solutions
+well behaved at the center, which contains none of the solution unacceptable at the
+surface. Henceforth we confine our attention to that unique solution, for any given
+choice of $\omega$, which is acceptable both at the center and surface.
+
+\subsection*{c) Behavior of the Physically Acceptable Eigensolution at $r = \infty$}
+
+For any given choice of $\omega$ the physically acceptable eigensolution will be
+characterized by the behavior it takes on outside the star by some particular mixture of
+ingoing and outgoing gravitational radiation. As is shown in Appendix~E, the gravitational
+waves have the asymptotic form (solution to eigenqs.~[14a] for large $r$):
+\begin{align}
+K &= C^{(\mathrm{I})} g_l^{(+)}(r)\, e^{-i(\omega t + \text{SM}\ln r)} + C^{(\mathrm{O})} g_l^{(-)}(r)\, e^{-i(\omega t - \text{SM}\ln r)} \notag \\
+H &= i a C^{(\mathrm{I})} g_l^{(+)}(r)\, e^{-i(\omega t + \text{SM}\ln r)} - i a C^{(\mathrm{O})} g_l^{(-)}(r)\, e^{-i(\omega t - \text{SM}\ln r)} \notag \\
+&\quad \text{for } r \gg M \text{ and } \{R \to r\}^{-1} \notag
+\end{align}
+\begin{equation}
+\label{eq:18}
+\tag{18}
+\end{equation}
+Here $C^{(\mathrm{I})}$ and $C^{(\mathrm{O})}$ are complex constants which are fixed by the demand that the
+external perturbation in the geometry of spacetime join smoothly at the star's surface
+to the internal perturbation
+
+\begin{equation}
+K,\; K',\; H \text{ and } H \text{ continuous at } r = R \;.
+\label{eq:19}
+\tag{19}
+\end{equation}
+
+Since the time dependence of the normal modes is $e^{i\omega t}$ (cf.\ eq.~[12]), \textit{the constant $C^{(\mathrm{I})}$
+is the amplitude for incoming gravitational waves, while $C^{(\mathrm{O})}$ is the amplitude for outgoing
+gravitational waves}. For any given choice of the complex eigenfrequency, $\omega$, and of the
+spherical harmonic index, $l$, one has a uniquely determined ratio of outgoing amplitude
+to incoming amplitude:
+
+\begin{equation}
+C^{(\mathrm{O})}/C^{(\mathrm{I})} \text{ is a unique function of } \omega \text{ and } l \;.
+\label{eq:20}
+\tag{20}
+\end{equation}
+
+From previous experience with one-dimensional analyses one expects this---that, for
+any given choice of $l$, there should be a discrete spectrum of complex eigenfrequencies
+for which $C^{(\mathrm{O})}/C^{(\mathrm{I})}$ is infinite. These eigenfrequencies and the corresponding eigenfunctions make up normal modes with purely outgoing radiation. Similarly, those discrete
+eigenfrequencies and functions for which $C^{(\mathrm{O})}/C^{(\mathrm{I})}$ is zero are normal modes with
+purely incoming radiation. Finally, those normal modes with real eigenfrequencies
+($r = \omega$ in eq.~[11]) have real eigenfunctions (cf.\ eqs.~[14]) and represent physically
+acceptable, standing waves with equal inward and outward fluxes.
+
+Most of the eigenfunctions~(18) far from the star might appear at first sight to be
+physically unacceptable. In general, they contain a divergence in the metric perturbation
+tensor (eqs.~[5], [7b], and [12]) which diverges at large $r$ rather than having the $1/r$
+behavior that one expects of a radiation field. The divergence of the metric perturbation
+at large $r$ arises from two sources:
+
+1. There is an exponential divergence associated with the imaginary part, $i/r$, of $\omega$.
+This exponential divergence is physically acceptable. For $r > 0$ the divergence occurs in the outgoing-wave term and is a result of the exponential damping of stable pulsations of the star.
+For $r < 0$ the divergence occurs in the incoming-wave term and is associated with an
+input of energy from infinity which increases exponentially with time.
+
+2. There is also a divergence of order $r$ in the amplitude of the metric perturbation
+(18). This divergence, which is present even for standing waves ($r = \infty$), has its origin
+in the Regge-Wheeler choice of gauge. It is a coordinate-dependent divergence which
+can be removed by an infinitesimal coordinate transformation (change of gauge) and,
+consequently, it is \textit{a divergence with no physical reality}. We have verified that it has no
+physical reality by calculating---using a computer program of Thorne and Zimmerman
+(1967)---the Riemann curvature invariants for the metric perturbation (18). We find
+that, aside from exponential divergences associated with the damping time, $\tau$, the
+perturbation in the curvature invariants has the acceptable form
+\begin{equation}
+  \delta R_I \sim 1/r \;.
+\end{equation}
+
+Edelstein (1967), in studying non-radial perturbations of the Schwarzschild geometry,
+has independently verified that the divergence of order $r$ in $\delta g_{\mu\nu}/g_{\mu\nu}$ is non-physical. His
+approach was to exhibit explicitly a coordinate transformation (change of gauge)
+which made the amplitude of the exterior eigenfunctions go to zero for large $r$. We
+shall not have need of this change of gauge in the present paper, but it is comforting
+to know of its existence.
+
+Summarizing the results of \S~III: To each choice of the complex eigenfrequency,
+$\omega_n$, there is a unique eigenfunction which is physically acceptable at both $r = 0$ and
+the surface of the star. That eigenfunction has the form (18) far from the star, which
+is always a physically acceptable form if one allows for the possibility of both incoming
+and outgoing gravitational waves.
+
+\section{THE REAL PULSATIONS OF A RELATIVISTIC STELLAR MODEL}
+
+The physical pulsations of a relativistic stellar model are \textit{real} linear combinations of
+the complex normal modes discussed above and of their complex conjugates. We shall
+describe these physical pulsations, first in words, and then in terms of the mathematics
+of complex normal modes.
+
+When an equilibrium configuration is perturbed, all of the perturbation energy is
+concentrated initially in the motion of the fluid; there is no gravitational radiation.
+However, as time passes the pulsation energy is gradually converted to gravitational
+waves and radiated away. At any particular moment of time during the radiating phase,
+the external gravitational waves have an amplitude which increases with radius until the
+wave front is reached and which vanishes (no gravitational radiation) beyond the wave
+front. The wave front moves forward with the speed of light carrying information about
+the existence of the perturbation with it.
+
+The mathematical description which accompanies these words is conveniently divided
+into two regions: The region far behind the wave front both in distance and time, where
+a very simple mathematical description suffices; and the region near the wave front,
+where a more complicated description is necessary.
+
+\subsection*{a) \textit{The Region Far behind the Wave Front}}
+
+Far behind the wave front the pulsation and the gravitational waves consist of a
+linear combination of discrete, complex normal modes with purely outgoing waves
+(``\textit{outgoing normal modes}''):
+\begin{equation}
+  K(r,t) = \sum_n A_n \bigl[ K_n^{(0)}(r)\, e^{i\omega_n t} + K_n^{(0)*}(r)\, e^{-i\omega_n^* t} \bigr]
+  \quad \text{and similarly for } H_0, W, V \;.
+\label{eq:21}
+\end{equation}
+
+Here $K_n^{(0)}$ is the eigenfunction for the $n$th outgoing normal mode, $\omega_n$ is the
+corresponding eigenfrequency, $A_n$ is a real amplitude, and the sum is over complex
+conjugate pairs. Note that the pulsations described by equation (21) are far from the
+most general ones possible: They are restricted to a particular spherical harmonic
+$l$, $M \neq 0$, $\tau =$
+$[-1]^l$). In order to construct the most general pulsation, one must: (1) combine these
+individual harmonic pulsations with those for $M \neq 0$, which are obtained from these by
+rotations about the center of the star; (2) transform the resultant harmonic pulsations
+for each value of $l$ to some common gauge (recall that the Regge-Wheeler gauge depends
+upon $l$); (3) take linear combinations of the transformed harmonic pulsations.
+
+\subsubsection*{i) \textit{Quasi-normal Modes}}
+
+Of considerable interest are the ``quasi-normal modes'' of pulsation which, far behind
+the wave front, are constructed from one single outgoing complex normal mode
+\begin{equation}
+  K_n(r,t) = K_n^{(0)}(r)\, e^{i\omega_n t} + K_n^{(0)*}(r)\, e^{-i\omega_n^* t}
+  = \bigl[ K_n^{(0)}(r)\, e^{i\sigma_n t} + K_n^{(0)*}(r)\, e^{-i\sigma_n t} \bigr] e^{-t/\tau_n}
+\label{eq:22}
+\end{equation}
+and similarly for $H_0, W, V$.
+
+In the wave zone, but still far behind the wave front, the gravitational waves from such
+a quasi-normal pulsation have the form (cf.\ eq.\ [15]):
+\begin{align}
+  K(r,t) &= 2 |C_n^{(0)}| \exp\bigl[-(t - r - 2M\ln r)/\tau_n\bigr]
+             \cos\bigl[\sigma_n(t - r - 2M\ln r) + \delta_n\bigr] \notag \\
+  H(r,t) &= -2\sigma_n |C_n^{(0)}| r \exp\bigl[-(t - r - 2M\ln r)/\tau_n\bigr]
+             \sin\bigl[\sigma_n(t - r - 2M\ln r) + \delta_n\bigr]
+             \quad \text{for } r \gg M \text{ and } r \gg 1/\sigma_n \;.
+\label{eq:23}
+\end{align}
+Here $\delta_n$ is the phase of $C_n^{(0)}$.
+
+Let us examine some of the properties of the quasi-normal modes (22) and (23).
+
+\subsubsection*{ii) \textit{Stability of the Quasi-normal Modes}}
+
+It is clear from equations (22) and (23) that the imaginary part, $1/\tau_n$, of the complex
+eigenfrequency of the outgoing complex normal mode becomes, for the physical
+quasi-normal mode, the damping rate or growth rate of pulsations. If $\tau_n$ is positive, the
+quasi-normal pulsations are damped by the emission of gravitational waves. But if $\tau_n$
+is negative, the quasi-normal ``pulsations'' are unstable, and the perturbation grows
+exponentially in time. Stability versus instability is thus determined by where in the
+complex plane $\omega_n$ lies: The region below the real axis is unstable; the region above the
+real axis is stable.
+
+It is actually more useful to restate this criterion in terms of $\omega_n{}^2$---the quantity appearing in the eigenequations (14). Since we have adopted the convention that $\sigma_n \geq 0$
+(eq.\ [13]), there is a one-to-one relation between $\omega_n$ and $\omega_n{}^2$, and there is no ambiguity
+about stability in the complex $\omega^2$ plane: \textit{For any complex outgoing normal mode} ($C_n^{(0)} \neq 0$),
+\textit{the corresponding quasi-normal pulsation is stable if $\omega_n{}^2$ lies on the positive real axis
+or in the upper half of the complex plane; it is unstable if $\omega_n{}^2$ lies on the negative real axis
+or in the lower half of the complex plane.}
+
+\subsubsection*{iii) \textit{Gravitational Radiation from the Quasi-normal Modes}}
+
+Turn now from stability to the form of the gravitational waves of the quasi-normal
+pulsations. From equation (23) it is clear that the gravitational radiation emitted by
+the $n$th quasi-normal mode has, as seen by a man at radius $r$, the frequency
+\begin{equation}
+  f(r) = \frac{\sigma_n}{2\pi\,(1 - 2M/r)^{1/2}}
+         \quad \text{as} \quad r \to \infty \;.
+\label{eq:24}
+\end{equation}
+The same gravitational redshift is present here as for $r \to \infty$. Note that the logarithmic
+term in the sinusoidal part of the gravitational waves (23) is unrelated to the gravitational redshift; it is related instead to the coordinate-time delay for the propagation of radiation through the Schwarzschild geometry.
+
+The power radiated in gravitational waves by the quasi-normal pulsations is equal
+to the time rate of change of the fluid's pulsation energy. (Here we refer to energies
+measured at infinity with the energy redshift effect taken into account; cf.\ Harrison,
+Thorne, Wakano, and Wheeler [1965], pp.\ 19--21; also RSSD \S~3.1.2.) It is easy to
+write down an expression for the kinetic energy of fluid motion but very difficult to
+construct an expression for the compressional and gravitational potential energy.
+Therefore, we shall calculate only the kinetic energy, and we shall then argue that the
+potential energy must be equal to the kinetic energy but must pulsate out of phase with
+it.
+
+\subsubsection{(iv) Pulsation Energy and Power Radiated}
+
+The kinetic energy of pulsation is given by (cf.\ RSSD, eq.\ [4.26'])
+%
+\begin{equation}
+E_{\rm kin} = \int_{\rm star}
+\underbrace{\left(\rho + p\right)}_{\text{inertial mass}\atop\text{per unit volume}}
+\underbrace{\left(\frac{1}{2}v^2\right)}_{\text{physical velocity}\atop\text{of fluid}}
+\underbrace{e^{(\nu - \lambda)/2}}_{\text{gravitational}\atop\text{redshift}}
+\underbrace{d\mathcal{V}}_{\text{proper}\atop\text{volume}}
+= \int_0^R \frac{1}{4}(\rho+p)\,e^{(\lambda-\nu)/2}\bigl[r^{-2}\xi_r^2(r) + (r^{-1}\xi_\perp(r))^2\bigr]\,e^{\nu/2}\,4\pi r^2\,dr\,d\theta\,d\phi \,.
+\tag{25}
+\end{equation}
+%
+Upon substituting equations (7a), (11), (12), and (22) into this expression and
+integrating over $\theta$, we obtain for the fluid kinetic energy of the $n$th quasi-normal mode
+%
+\begin{equation}
+E_{\rm kin} = 2\pi\,(2l+1)^{-1}\,\sigma_n^2\,e^{-2i\sigma_n t}
+\int_0^R (\rho+p)\,e^{(\lambda-\nu)/2}
+\Bigl\{
+r^{-2}\bigl|W_n^{(l)}(r)\bigr|^2
++ l(l+1)\,r^{-2}\bigl|V_n^{(l)}(r)\bigr|^2
+\Bigr\}
+\Bigl[
+1 + l(l+1)\,\bigl|V_n^{(l)}(r)\bigr|^2
+\sin^2\bigl(\sigma_n t + \delta_n(r)\bigr)
++ \bigl\{l + \delta_n(r)\bigr\}
+\Bigr]\,dr \,,
+\tag{26}
+\end{equation}
+%
+Here $\delta_n(r)$ and $\delta_n(r)$ are the phases of $W_n^{(l)}(r)$ and $V_n^{(l)}(r)$, and we have assumed that
+$1/\tau_n \ll \sigma_n$.
+
+For situations of physical interest---e.g., neutron stars formed in a supernova explosion or neutron stars undergoing relaxation oscillations---rough estimates suggest
+that $1/\tau_n \ll \sigma_n$ (see Wheeler 1966; Zee and Wheeler 1967; Misner and Zapolsky 1967;
+Chau 1967). When this is true, the eigenfunctions (14) couple the real and imaginary
+parts of the eigenfunctions only very slightly; and, consequently, one has
+%
+\begin{equation}
+\delta_n(r) \ll 1, \quad \delta_n(r) \ll 1 \,.
+\tag{27}
+\end{equation}
+%
+and
+%
+\begin{equation}
+E_{\rm kin} = E_{\rm pulse}^n \sin^2(\sigma_n t) \,.
+\tag{28a}
+\end{equation}
+%
+Here
+%
+\begin{equation}
+E_{\rm pulse}^n = 2\pi\,(2l+1)^{-1}\,\sigma_n^2
+\int_0^R (\rho+p)\,e^{(\lambda-\nu)/2}
+\Bigl[
+r^{-2}\bigl|W_n^{(l)}(r)\bigr|^2
++ l(l+1)\,r^{-2}\bigl|V_n^{(l)}(r)\bigr|^2
+\Bigr]\,dr \,.
+\tag{28b}
+\end{equation}
+%
+When $1/\tau_n \ll \sigma_n$, the total fluid pulsation energy---kinetic plus potential---is very
+nearly constant over a total pulsation period, $\Delta t = 2\pi/\sigma_n$. This is possible only if the
+potential energy of pulsation is given by
+%
+\begin{equation}
+E_{\rm pot} \approx E_{\rm pulse}^n \cos^2(\sigma_n t) \,,
+\tag{29a}
+\end{equation}
+%
+so that
+%
+\begin{equation}
+E_{\rm kin} + E_{\rm pot} = E_{\rm pulse}^n \,.
+\tag{29b}
+\end{equation}
+%
+is nearly time independent. Equations (29a) and (29b) for the total pulsation energy
+should be roughly correct even when $1/\tau_n$ is not small compared to $\sigma_n$.
+
+Since the power radiated as gravitational waves is the negative of the time rate of
+change of the fluid pulsion energy, the \emph{radiated power as measured far from the star is}
+%
+\begin{equation}
+  P \approx -2\,\tau_{n}^{-1}\, E_{\text{puls}}^{0}\, e^{-2t/\tau_{n}} \;.
+  \label{eq:30}
+\end{equation}
+
+\subsection*{b) The Region near the Wave Front}
+
+Thus far we have described mathematically the quasi-normal pulsations only in the
+region far behind the wave front. Near the wavefront the description is more complicated because one must superimpose a large number of normal modes with various
+amounts of outgoing and incoming radiation in order to obtain a sharp ``turning-on'' of
+the perturbation at the wave front.
+
+We shall confine our analysis near the wavefront to those quasi-normal modes with
+$|f/\tau_{n}| \ll \sigma_{n}$ ($\sigma_{n}$ near the positive real axis); and we shall pattern our analysis after the
+classic analysis of nuclear particle decay by Gamow (1931) and by Breit and Wert
+(1935).
+
+We build the wave front and associated quasi-normal pulsations out of a linear
+combination of real standing-wave normal modes with eigenfrequencies near $\sigma_{n}$---and
+hence also near $\omega_{n} = \sigma_{n} + i/\tau_{n}$. Each of these standing-wave modes is normalized to
+have the same real amplitude, $B_{n}$, at the center of the star (cf.\ eq.\ [18]). In the wave
+zone reality of the eigenfunctions guarantees that the ingoing and outgoing amplitudes
+are complex conjugates of each other (cf.\ eq.\ [18]):
+%
+\begin{equation}
+  C^{(\mathrm{I})} = C^{(\mathrm{O})*} \;.
+  \label{eq:31}
+\end{equation}
+
+These wave-zone amplitudes are conveniently expressed as functions of the real frequency, $\omega$, by means of a power series expansion in the complex frequency plane about
+the purely outgoing frequency $\omega_{n} = \sigma_{n} + i/\tau_{n}$:
+%
+\begin{equation}
+  C_{\omega}^{(\mathrm{O})} = C_{\Omega}^{(\mathrm{O})} = \int dC^{(\mathrm{O})}/d\omega\big|_{\Omega}\,(\omega - \omega_{n} - i/\tau_{n}) \;.
+  \label{eq:32}
+\end{equation}
+
+The particular combination of real, standing-wave normal modes which yields the desired wave front and subsequent quasi-normal pulsations is this:
+%
+\begin{equation}
+  K(r,t) = \int_{-\infty}^{+\infty}
+    \frac{K_{n}(r)}{(\omega - \sigma_{n})^{2} + \tau_{n}^{-2}}
+    \frac{1}{2\pi}\,e^{i\omega t}\,d\omega
+  + \begin{pmatrix} \text{complex} \\ \text{conjugate} \end{pmatrix} ,
+  \label{eq:33}
+\end{equation}
+%
+and similarly for $H_{0}, W, V$.
+
+In the wave zone this becomes, for times\footnote{For times $t < 0$ (eq.\ (30))---incoming gravitational waves
+with a trailing wave front. We choose to assume $t = 0$. The perturbation is first turned on inside the star
+at time $t = 0$, thereby discarding the incoming solution for $t < 0$.} $t > 0$ [combine eqs.\ (18), (32), and (33); integrate $\omega \to \infty$ since the resonant denominator in eq.\ (33) is huge for negative
+$\omega$; close the integration contours at complex infinity; and use the method of residues to
+evaluate the integrals]:
+%
+\begin{equation}
+  K(r,t)
+  = \begin{cases}
+      0 & \text{if} \quad t < r + 2M\ln r \;, \\[4pt]
+      \dfrac{1}{2}\,dC^{(\mathrm{O})}/d\omega\big|_{\Omega}\,
+        \exp\!\bigl[-(t - r - 2M\ln r)/\tau_{n} + i\sigma_{n}(t - r - 2M\ln r) + \delta\bigr]
+      & \text{if} \quad t > r + 2M\ln r \;.
+    \end{cases}
+  \tag{34a}
+\end{equation}
+
+\begin{equation}
+H_0(r,t) =
+\begin{cases}
+0 & \text{if} \quad t < r + 2M \ln r \,, \\[6pt]
+-2\sigma_n \bigl|dC^{(\mathrm{I})}/d\omega\bigr|_{\omega_n}\, r \exp\bigl[-\bigl(t - r - 2M\ln r\bigr)/\tau_n\bigr]
+\sin\bigl[\sigma_n\bigl(t - r - 2M\ln r\bigr) + \delta\bigr] & \\[2pt]
+& \text{if} \quad t > r + 2M \ln r \,.
+\end{cases}
+\tag{34b}
+\end{equation}
+
+Here $\delta + \pi/2$ is the phase of $[dC^{(\mathrm{I})}/d\omega]_{\omega_n}$.
+
+Note that in the wave zone ($r \gg 2M$, beyond the wave front) there is no gravitational radiation; information that the equilibrium configuration was perturbed has not yet had time to reach radius $r$. However, immediately behind the wave front ($r > r + 2M$ in the original), an observer will measure gravitational waves corresponding to the $\omega$ quasi-normal mode of pulsation of harmonic $(l,\, M = 0,\, \tau \equiv [-\frac{1}{2}])$ (cf.\ eqs.\ [23] with eqs.\ [34]).
+
+\section*{V. METHODS FOR CALCULATING THE COMPLEX OUTGOING NORMAL MODES}
+
+In \S~IV we have outlined the key role played in real, physical pulsations by the outgoing normal modes. We next turn to the question of, given a general-relativistic stellar model, how might one go about calculating numerically the eigenfrequencies and functions of the outgoing modes.
+
+In our present state of ignorance about analytic properties of the normal modes, the only computational method possible is iterative trial and error. One specifies once and for all the spherical-harmonic index, $l$, and the pulsation amplitude, $B$ (eq.\ [15a]), at the center of the star. One then specifies successive trial values for the complex frequency, $\omega$; and for each trial frequency one integrates the eigenequations (14), subject to the boundary conditions (15), to obtain that unique eigenfunction which is well-behaved at both the center and the surface of the star. The resultant eigenfunction for each value of $\omega$ has a particular amplitude, $C_\omega^{(1)}$, for incoming gravitational waves. The purely outgoing normal modes for which one is searching are those for which the ratio
+%
+\begin{equation}
+\frac{C_\omega^{(1)}}{B} =
+\left(\frac{\text{incoming wave amplitude}}{\text{central pulsation amplitude}}\right)
+\tag{35}
+\end{equation}
+%
+vanishes. Hence, one chooses one trial value of $\omega$ after another in search of the zeros of $C_\omega^{(1)}/B$.
+
+In practice, this technique should not require very many iterations. One can use, as initial trial frequency, values obtained from the linearized theory of gravitation (see Wheeler 1962; Zee and Wheeler 1967; Chau 1967) and from the theory of radial pulsations (RSSD, chaps.\ iv and vii); and one can devise efficient predictor-corrector techniques for choosing successive trial frequencies in the search for zeros of $C_\omega^{(1)}/B$.
+
+\section*{VI. WHERE DO WE GO FROM HERE?}
+
+This paper is just a modest introduction to a story which promises to be long, complicated, and fascinating. There are two main directions in which one must now proceed to develop the story further:
+
+1. One needs badly an analysis of the analytic properties of the complex eigenfunctions. Can the eigenproblem be put into a self-adjoint form? If so, can one identify the terms in the Lagrangian with kinetic and potential energy? Can one find decompositions analogous to those for radial pulsations (RSSD), which relate the structures of the various eigenfunctions to each other and to the eigenfunctions? Answers to such questions would be of great help in understanding the nature of non-radial pulsations and in computing numerically the outgoing normal modes of particular stellar models.
+
+The entire theory remains rather academic until one uses it to compute numerically
+the complex normal modes for particular, physically interesting stellar models. Such
+computations should not be difficult with modern techniques and machines; and they
+should yield results of considerable physical interest (cf.\ \S~1).
+
+In subsequent papers in this series, we hope to move in both of the above directions
+and also to analyze the dipole ($l = 1$) pulsations which were omitted from consideration
+here.
+
+The analysis reported in this paper was guided in part by the Havener (1966) and
+Havener-Thorne (1965) analysis of the radial pulsations of cylindrical configurations of
+perfect fluid, where gravitational radiation also comes into play. We thank Mr.\ Havener
+for helpful discussions. We also gratefully acknowledge several valuable discussions with
+Professors John A.\ Wheeler and S.\ Chandrasekhar, without which our analysis would
+have been much less complete; and we thank Dr.\ L.\ Edelstein and Dr.\ C.\ V.\ Vishvesh\-wara
+for communicating to us in advance of publication some of the results of their
+work on perturbations of the Schwarzschild geometry. Finally, we thank the National
+Science Foundation (K.\ S.\ T.) and NATO (A.\ C.) for postdoctoral fellowships, and
+Princeton University for hospitality, during the spring of 1966 when this investigation
+was being initiated.
+
+\appendix
+
+\section*{APPENDIX A \\ THE SPLIT INTO TENSORIAL SPHERICAL HARMONICS \\ AND THE REGGE-WHEELER CHOICE OF GAUGE}
+
+\textit{(cf.\ Regge and Wheeler 1957)}
+
+At the beginning of the analysis we expand the arbitrary metric of an equilibrium configuration in spherical harmonics. All quantities which transform as scalar fields under rotations are
+expanded in scalar spherical harmonics, $Y^l_m(\theta, \phi)$, which have \emph{even parity}, $\pi = (-1)^l$.
+All fields which transform as vectors with respect to rotations are expanded in vector spherical
+harmonics, which are of two types: \emph{even-parity} harmonics ($\pi = (-1)^l$)
+%
+\begin{equation}
+\psi^l_{Mj} = \partial_j Y^l_M(\theta, \phi)
+\label{eq:A1a}
+\tag{A1a}
+\end{equation}
+%
+and \emph{odd-parity} harmonics ($\pi = (-1)^{l+1}$)
+%
+\begin{equation}
+\phi^l_{Mj} = \epsilon_j{}^{kl}\, \partial_k Y^l_M(\theta, \phi) \,.
+\label{eq:A1b}
+\tag{A1b}
+\end{equation}
+%
+Here $j$ and $k$ run over $x^3 = \theta$ and $x^4 = \phi$, and $\epsilon_j^{\ kl}$ is the antisymmetric tensor with respect to
+rotations
+%
+\begin{equation}
+\epsilon_{34} = -1/\sin\theta \,, \qquad
+\epsilon_{43} = \sin\theta \,, \qquad
+\epsilon_{33} = \epsilon_{44} = 0 \,.
+\label{eq:A2}
+\tag{A2}
+\end{equation}
+%
+All fields which transform as tensors with respect to rotations are expanded in tensor spherical
+harmonics, which have \emph{even parity}
+%
+\begin{equation}
+\Psi^l_{Mjk} = Y^l_M \gamma_{jk} \,, \qquad
+\hat{\Psi}^l_{Mjk} = \partial_j \partial_k Y^l_M \,,
+\label{eq:A3a}
+\tag{A3a}
+\end{equation}
+%
+or \emph{odd parity}
+%
+\begin{equation}
+\chi^l_{Mjk} = \tfrac{1}{2}\bigl(\epsilon_j{}^{kl}\, \partial_k \psi^l_{Ml}
++ \epsilon_k{}^{lm}\, \partial_l \psi^l_{Mj}\bigr) \,.
+\label{eq:A3b}
+\tag{A3b}
+\end{equation}
+%
+Here $\gamma_{jk}$ is the metric for rotations
+%
+\begin{equation}
+\gamma_{33} = 1 \,, \qquad
+\gamma_{23} = \gamma_{32} = 0 \,, \qquad
+\gamma_{44} = \sin^2\theta \,;
+\label{eq:A4}
+\tag{A4}
+\end{equation}
+%
+and the slash in equation (A3a) denotes covariant differentiation with respect to the metric $\boldsymbol{\gamma}$.
+
+Consider first the \emph{odd-parity} parts of the fluid displacement and metric perturbation.
+$\xi_r$, $h_{00}$, $h_{0r}$, and $h_{rr}$ are all scalars under the rotation group and therefore have vanishing
+odd-parity parts. $(\xi_\theta, \xi_\phi)$ and $(h_{0\theta}, h_{0\phi})$ are vectors under the rotation group;
+and $h_{\theta\theta}$, $(h_{\theta\phi},\, h_{\phi\phi})$ is a tensor under the rotation group.
+Consequently, the \emph{odd-parity} $(l,\, M,\, \varpi = [-1]^{l+1})$ harmonics of the perturbation are
+%
+\begin{subequations}
+\begin{align}
+\xi_r &= 0 \,,
+&\xi_\theta &= U(r_f)\Psi^l{}_{M} \,,
+&\xi_\phi &= V(r_f)\Psi^l{}_{M} \,;
+&h_{0r} &= h_0(r_f)\Psi^l{}_{M} \,;
+\notag\\
+h_{0j} &= h_0(r_f)e^l{}_{jM} \,,
+\quad
+h_{1j} &= h_1(r_f)e^l{}_{jM} \,;
+&&
+h_{j k} &= h_2(r_f)\chi^l{}_{jkM} \,.
+\tag{A5}
+\end{align}
+\end{subequations}
+
+Similarly, the general \emph{even-parity} $(l,\, M,\, \varpi = [-1]^l)$ harmonics of the perturbation are
+%
+\begin{subequations}
+\begin{align}
+\xi_r &= X(r_f)Y^l{}_{M} \,,
+&\xi_\theta &= V(r_f)\Psi^l{}_{M} \,,
+&\xi_\phi &= V(r_f)\Psi^l{}_{M} \,;
+\notag\\
+h_{00} &= e^{2\Phi}H_0 Y^l{}_{M} \,,
+&h_{0r} &= H_1 Y^l{}_{M} \,,
+&h_{rr} &= e^{2\Lambda}H_2 Y^l{}_{M} \,;
+\notag\\
+h_{0j} &= h_0(r_f)\Psi^l{}_{jM} \,,
+\quad
+h_{1j} &= h_1(r_f)\Psi^l{}_{jM} \,;
+&&
+h_{jk} &= r^2 K(r_f)g^l{}_{jkM} + r^2 G(r_f)g^l{}_{jkM} \,.
+\tag{A6}
+\end{align}
+\end{subequations}
+
+In order to simplify the above expressions we introduce, for each spherical harmonic, a small
+coordinate transformation similar to that which Regge and Wheeler (1957) used in studying
+perturbations of the Schwarzschild geometry:
+%
+\begin{equation}
+x^{\mu'} = x^\mu + \varphi^\mu(x) \,.
+\tag{A7}
+\end{equation}
+
+In the new coordinate system (Regge--Wheeler gauge) the metric perturbation has the new form
+%
+\begin{equation}
+h_{\mu'\nu'} = h_{\mu\nu} + \varphi_{\mu;\nu} + \varphi_{\nu;\mu} \,.
+\tag{A8}
+\end{equation}
+
+For the \emph{odd-parity} harmonic $(l,\, M,\, \varpi = [-1]^{l+1})$, we take
+%
+\begin{equation}
+\eta_0 = 0 \,,
+\qquad
+\eta_1 = \Lambda(r_f)\Psi^l{}_{M} \,,
+\tag{A9}
+\end{equation}
+%
+where $\Lambda$ is chosen so as to annul the function $h_2(r_f)$ in equations (A5):
+%
+\begin{equation}
+h_2(r_f) = 0 \quad \text{for odd-parity harmonic.}
+\tag{A10}
+\end{equation}
+
+For the \emph{even-parity} $(l,\, M,\, \varpi = [-1]^l)$, we take
+%
+\begin{equation}
+\eta_0 = M_0(r_f)Y^l{}_{M} \,,
+\qquad
+\eta_1 = M_1(r_f)\Psi^l{}_{M} \,,
+\tag{A11}
+\end{equation}
+%
+where $M_0$, $M_1$, and $M_2$ are chosen so as to annul the functions $h_0(r_f)$, $h_1(r_f)$, and $G(r_f)$ in equations (A6):
+%
+\begin{equation}
+h_0(r_f) = h_1(r_f) = G(r_f) = 0 \,.
+\tag{A12}
+\end{equation}
+
+When we specialize to components $M = 0$ and change notation slightly, the general odd-parity
+gauge (A5), (A10) in the Regge--Wheeler gauge takes on the forms (7) used in this
+paper; and the general even-parity gauge (A6), (A12) takes on the form (7).
+
+\section*{APPENDIX B \\ EQUATIONS OF MOTION FOR ODD PARITY}
+
+The fluid 4-velocity corresponding to the odd-parity displacements of equation (6) is, to
+first order in the displacement,
+%
+\begin{equation}
+u_0 = e^{\Phi} \,,
+\quad
+u_r = 0 \,,
+\quad
+u_\theta = 0 \,,
+\quad
+u_\phi = e^{-\Phi} U_{,t} \sin\theta\, \partial_\theta P_l(\cos\theta) \,.
+\tag{B1}
+\end{equation}
+
+For odd parity the pressure and density are unchanged since they are scalars under the rotation
+group. Consequently, the perturbation in the stress-energy tensor,
+$T_{\mu\nu} = (\rho + p)\,u_\mu u_\nu - p\,g_{\mu\nu}$,
+has as its only non-vanishing components
+%
+\begin{align}
+\delta T_{t\phi} = \delta T_{\phi t} &= [(\rho+p)\,U_\phi - p\,h_t]
+    \sin\theta\,\partial_\theta P_l(\cos\theta) \,, \notag \\
+\delta T_{r\phi} = \delta T_{\phi r} &= -p\,h_r
+    \sin\theta\,\partial_\theta P_l(\cos\theta) \,.
+\tag{B2}
+\end{align}
+
+We have calculated by hand the perturbations in the Ricci curvature tensor, $\delta R_{\mu\nu}$,
+associated with the odd-parity metric perturbation of equation (6b). Our result, which has been checked
+against similar hand computations of Edelstein and Vishveshwara (1966) and against IBM 7094
+computations using a program of Thorne and Zimmerman (1967), is
+%
+\begin{align}
+\delta R_{t\phi} &=
+    e^{-\lambda}\bigl[{-h_{0,rr}'} + \tfrac{1}{2}(\nu'+\lambda')\,h_{0,r}'
+    + [-l(l+1)\,e^{-\nu} + 2r^{-1}e^{-\lambda}]\,r^{-1}h_0'\bigr]
+\notag \\
+&\quad
+    - h_{0,t}'\bigl[-2r^{-1}e^{-\nu} + \tfrac{1}{2}(\nu'+\lambda')\,e^{-\nu}\bigr] \,,
+\notag \\[4pt]
+\delta R_{r\phi} &=
+    \tfrac{1}{2}\bigl[e^{-\nu-\lambda}h_{0,tr}'' + 2r^{-1}e^{-\lambda}h_{0,r}'\bigr] \,,
+\tag{B3} \\[4pt]
+\delta R_{\theta\phi} &=
+    \tfrac{1}{2}\bigl[e^{-\nu-\lambda}h_{0,t\theta}'' + 2e^{-\lambda}r^{-1}h_{0,\theta}'\bigr] \,,
+\notag \\[4pt]
+\delta R_{\phi\phi} &=
+    \tfrac{1}{2}\bigl[e^{-\nu}h_{0,tt}'' + 2r^{-2}e^{-\lambda}h_0''
+    - 2\cot\theta\,\partial_\theta P_l(\cos\theta)\bigr] \,.
+\notag
+\end{align}
+
+All other components vanish.
+
+The Einstein field equations,
+%
+\begin{equation}
+\delta R_{\mu\nu} = 8\pi\,\delta\!\left(T_{\mu\nu} - \tfrac{1}{2}g_{\mu\nu}T\right) \,,
+\tag{B4}
+\end{equation}
+%
+which govern the odd-parity perturbation can be put into the following form by combining
+equations (B3), (B2), (6b), and (3):
+%
+\begin{align}
+h_{0,rr} &- r^{-1}[e^{(\nu-\lambda)/2}]^{-1}[l(l+1)+1]^{1/2}[l(l+1)-2]\,r^{-1}h_0
+    - 2r^{-2}e^{-\lambda}h_0 = 0 \,,
+\tag{B5a} \\[4pt]
+h_{0,t} &= e^{(\nu+\lambda)/2}\bigl[l(l+1)/r^2\bigr]\,h_1 \,,
+\tag{B5b} \\[4pt]
+16\pi\,(\rho+p)\,U &=
+    -\bigl[{-h_{1,t}'} + (-P-l+2)\,r^{-1}e^{-\lambda} - 2/r^2\bigr]
+\notag \\
+&\quad
+    - \tfrac{1}{2}(\lambda'+\nu')\,h_1'
+    + (r^{-1}e^{-\lambda})\,h_0' = F(t) \,.
+\tag{B5c}
+\end{align}
+
+Note that equations (B5a) and (B5b) guarantee that the right-hand side of equation (B5c) is
+time-independent and, therefore, the fluid does not pulsate:
+%
+\begin{equation}
+U_{,tt} = 0 \,.
+\tag{B6}
+\end{equation}
+
+Rather, the fluid undergoes a continuous, non-varying differential rotation.
+
+In physical terms equation (B5a) is the propagation equation for the odd-parity gravitational
+waves, which do not couple to the star in any way. Equations (B5b) and (B5c) together fix $h_0$,
+$h_1$, and, thence, the dragging of inertial reference frames, once the differential rotation and the
+decoupled gravitational waves have been specified.
+
+When gravitational waves are absent, $U$, $h_0$, $h_1$ are all constant in time; the star rotates
+rigidly (eq.~[B5b]), and the local inertial frames are dragged along by the star with angular velocity
+as measured by a distant observer
+%
+\begin{equation}
+\Omega_\mathrm{star} = \bigl[(h_0 - U_\phi)/(r^2\sin\theta)\bigr]
+    \partial_\theta P_l(\cos\theta) \,;
+\tag{B7}
+\end{equation}
+%
+and the local inertial frames are dragged along with the star with angular velocity as measured by
+a distant observer
+%
+\begin{equation}
+\Omega_\mathrm{drag} = \Omega_\mathrm{local} =
+    (h_0/r^2\,e^\nu)\sin\theta\,\partial_\theta P_l(\cos\theta) \,.
+\tag{B8}
+\end{equation}
+
+\section*{APPENDIX C \\ EQUATIONS OF MOTION FOR EVEN PARITY}
+
+The fluid 4-velocity corresponding to the even-parity equation of (7) in, to
+first order in the displacement,
+\begin{align}
+u^{0} &= e^{-\nu/2}\bigl[1 - \tfrac{1}{2}H_{0}\,P_{l}(\cos\theta)\bigr] , &
+u^{r} &= e^{-\lambda/2} r^{-1} e^{-(\lambda+\nu)/2} \dot{W}_{l}\,P_{l}(\cos\theta) ,
+\nonumber\\
+u^{\theta} &= -r^{-1} e^{-\nu/2} \dot{V}_{l}\,\partial_{\theta}P_{l}(\cos\theta) , &
+u^{\phi} &= 0 \;.
+\tag{C1}
+\end{align}
+
+In the pulsating configuration the Lagrangian change in the number density of baryons is
+\begin{equation}
+\Delta n = -n\,\Theta^{k}{}_{;k} - \tfrac{1}{2}n\,\dot{h}^{l}{}_{l}\,({}^{(3)}g)^{1/2} \;.
+\tag{C2}
+\end{equation}
+Here $\Theta^{k}{}_{;k}$ is the divergence of the fluid displacement with respect to the 3-geometry at constant
+time, $t$; and ${}^{(3)}g$ is the determinant of the metric of that 3-geometry.  In the Regge-Wheeler
+choice of gauge, equation (C2) reduces to$^{3}$
+\begin{equation}
+\Delta n/n = \bigl[-r^{-2}e^{(\lambda-\nu)/2}\dot{W} - l(l+1)r^{-2}\dot{V}
+             + \tfrac{1}{2}\dot{H}_{1} + \dot{K}\bigr]P_{l}(\cos\theta) \;.
+\tag{C3}
+\end{equation}
+
+The corresponding Eulerian changes in pressure and in density of mass-energy are
+\begin{align}
+\delta p &= (p+\rho)\,(\Delta n/n) - p'\,r^{-1}e^{-(\lambda+\nu)/2}W\,P_{l}(\cos\theta) ,
+\nonumber\\
+\delta\rho &= \gamma p\,(\Delta n/n) - \rho'\,r^{-1}e^{-(\lambda+\nu)/2}W\,P_{l}(\cos\theta) \;;
+\tag{C4}
+\end{align}
+and the Eulerian changes in the stress-energy tensor are
+\begin{align}
+\delta T^{0}{}_{0} &= -\delta\rho , &
+\delta T^{1}{}_{1} &= \delta T^{2}{}_{2} = \delta T^{3}{}_{3} = \delta p , &
+\delta T^{0}{}_{1} &= (p+\rho)\,u^{1} ,
+\nonumber\\
+\delta T^{1}{}_{0} &= -(p+\rho)\,u^{1} , &
+\delta T^{2}{}_{0} &= (p+\rho)\,u^{0}\mu^{2} , &
+\delta T^{3}{}_{0} &= (p+\rho)\,u^{0}\mu^{3} \;.
+\tag{C5}
+\end{align}
+
+All other components of $\delta T^{\mu}{}_{\nu}$ vanish.
+
+The way we had the perturbations in the Einstein field equations,
+$\delta G^{\mu}{}_{\nu} = 8\pi\,\delta T^{\mu}{}_{\nu}$,
+and in the equations of motion of the fluid,
+$\delta(T^{\mu}{}_{\nu;\mu}) = 0$, associated with the perturbed
+stress-energy tensor (C5) and the perturbed metric (7b); and we have checked our result on the
+IBM 7094 using the computer programs of Thorne and Zimmerman (1967).$^{4}$
+The origins of equations (8) and (9) are as follows.
+Equation (8a) is $\delta G^{t}{}_{t} - \delta G^{r}{}_{r} = 8\pi\,\delta T^{t}{}_{t} - 8\pi\,\delta T^{r}{}_{r}$,
+and it has been used to eliminate $H_{2}$ from all equations.
+Equation (8b) is $\delta G^{r}{}_{t} = 8\pi\,\delta T^{r}{}_{t}$,
+and it has been used to eliminate $H_{1}$ from all equations.
+Equation (8c) is $\delta G^{r}{}_{r} = 8\pi\,\delta T^{r}{}_{r}$,
+and it has been used to eliminate $\dot{K}$ from all other equations.
+Equation (8d) is $\delta G^{\theta}{}_{\theta} = 8\pi\,\delta T^{\theta}{}_{\theta}$,
+and it has been used to eliminate $\dot{H}_{1}$ from all other equations.
+Equation (9a) is $\delta G^{r}{}_{\theta} = 0$.
+Equation (9b) is $\delta(T^{r}{}_{\theta;\mu}) = 0$.
+Combined with equation (8a), equation (9b) is $\delta G^{\theta}{}_{r} = 0$.
+Equation (9c) is $\delta(T^{r}{}_{\mu;\nu}) = 0$.
+Equation (9d) is $\delta(T^{r}{}_{\mu;\nu}) = 0$.
+Several other useful dynamical equations for the perturbed configuration, which can be
+derived from equations (2), (3), (8), and (9) with a large amount of effort, are these:
+$\delta G^{r}{}_{t} = 8\pi\,\delta T^{r}{}_{t}$ is
+\begin{equation}
+H_{1}'' + \bigl[\tfrac{1}{2}r^{-1}(\lambda' - \nu') - 2r^{-1}\bigr]H_{1}'
+  + \bigl[2r\nu' e^{-\nu} p - \nu'' - \tfrac{1}{4}(\nu')^{2}\bigr]H_{1}
+  = e^{\lambda}(K_{1} + H_{00}) - 16\pi(p+\rho)V \;.
+\tag{C6}
+\end{equation}
+
+\bigskip
+\noindent\rule{0.4\textwidth}{0.4pt}
+
+\footnotetext[3]{The peculiar form (7a) in which we chose to define $\delta n$ was motivated by a desire to take
+on as simple a form as possible and to thereby simplify the eigensys.\ (14).}
+
+\footnotetext[4]{$G^{r}{}_{r}$, $K_{r}$, $T^{r}{}_{r}$, and $T^{\phi}{}_{\phi}$ for even-parity pulsations are presented in Thorne and Zimmerman (1967)
+precisely as they were output by the computer.}
+
+and $8(G^1 + 2G\gamma) = 8\pi(T_r^0 - T_\phi^0 + 2T_r^r)$, when combined with equation (8c), is
+%
+\begin{align}
+H_{0,tt}
+  &= -e^{-2\Lambda} H_0''
+     + e^{-2\Lambda} \bigl[1 - 5m/r + 2\pi r^2 - 3p\bigr] H_0'   % "3p" possibly "3\rho"
+\notag \\
+  &\quad
+     + 2\pi^{-1} r^{-1} \bigl\{4m/r - 10m^2/r^2 - 3p\bigr\} p    % prefactor uncertain
+\notag \\
+  &\quad
+     + 2\pi r^{-1} \bigl[1 - \gamma + (\gamma - 3)\,2m/r\bigr]
+     - 32\pi r^2 e^{-2\Lambda} p^3                                  % exponent on p uncertain
+\notag \\
+  &\quad
+     + l[l+1]\,e^{-2\Lambda} H_0
+     + 2r^{-2} \bigl[-2 + 6m/r + 8\pi r^2 \rho\bigr] K'
+\notag \\
+  &\quad
+     + 8\pi e^2 (\rho + \gamma p) K
+     - 8\pi e^2 (\rho + \gamma p)\,r^{e^{-\Lambda}} W''             % exponent on r uncertain
+\notag \\
+  &\quad
+     - 8\pi (r^2 - p)^2\,r^{-1} e^{-\Lambda} W
+     - 8\pi l(l+1)\,e^2 (\rho + \gamma p)\,r^{-1} V                % (r^2-p)^2 uncertain
+\notag \\
+  &= 0 \,.
+\tag{C7}
+\end{align}
+
+
+\section*{APPENDIX D \\ BOUNDARY CONDITIONS FOR EVEN-PARITY EIGENFUNCTIONS}
+
+Near the center of the star ($r \ll M$, $r \ll r_s^{-1/3}$), the eigenfunctions (14) reduce to the simpler
+form
+%
+\begin{align}
+H    &= \tfrac{1}{2} r^l K'' + \bigl[1 - l(l+1)/2\bigr] K \,, \tag{D1a} \\[4pt]
+H' + \bigl[1 + l(l+1)/2\bigr] H/r
+     &= K'' + 3K' + \bigl[1 - l(l+1)/2\bigr] K/r \,, \tag{D1b} \\[4pt]
+W'   &= -l(l+1)\,V \,, \tag{D1c} \\[4pt]
+K' - H' &= \omega^2 e^{-\nu} \bigl(V + W/r\bigr) \,, \tag{D1d}
+\end{align}
+%
+where $r_s$ is the value of $r$ at the center of the star. Equation (D1a) arises from the leading terms
+in (14c) and (14b). Equation (D1d), the remaining content of (14c) and (14d), is the sum of
+(14c) and (14d) used to eliminate $W$ and $V$.
+
+Equations (D1) are a 4th-order system of linear differential equations, so there are four
+linearly independent solutions. Only two of the independent solutions---those of equations
+(15a)---are physically acceptable. Two unacceptable solutions correspond to the two arbitrary
+constants $C$ and $D$ in
+%
+\begin{align}
+K &= C\,r^{-(l+1)} + \cdots \,, & H &= C\,r^{-(l+1)} + \cdots \,,
+\notag \\
+W &= D\,r^{-(l+1)} + \cdots \,, & V &= \tfrac{1}{2} D/(l+1)\cdot r^{-(l+1)} + \cdots \,;
+\tag{D2}
+\end{align}
+%
+and the third unacceptable solution corresponds to the arbitrary constant, $E$, in
+%
+\begin{align}
+K &= E\,r^{2-l(l+1)/4} + \cdots \,, \notag \\
+H &= \tfrac{1}{2}\bigl\{1 - l(l+1)/2 - l(l+1)/2\bigr\} E\,r^{2-l(l+1)/4} + \cdots \,, \notag \\
+W &= \omega^2 e^{-\nu}\{1+l\}\bigl[1 + l(l+1)/2\bigr] E\,r^{l(l+1)(l+1)/2} + \cdots \,, \notag \\
+V &= -\omega^2 e^{-\nu}\bigl\{-1 - l(l+1)/2\bigr\} E\,r^{l(l+1)/2} + \cdots \,.
+\tag{D3}
+\end{align}
+
+The solutions (D2) and (D3) are unacceptable for $l \geq 1$ because they lead to perturbations
+in the density, the pressure, and the geometry of spacetime which diverge at $r = 0$. (Cf.\ eqs.\
+[C3], [C4], and [7b].)
+
+At the surface of the star we demand that the Lagrangian change in the pressure (eq.\ [160])
+vanish and that the fluid displacement and the perturbation in the spatial geometry not diverge.
+
+As for
+radial perturbations (see Bardeen, Thorne, and Meltzer 1966), so also here, the precise analytic
+conditions which these demands place on the eigenfunctions depend upon the distribution of
+pressure, density, and adiabatic index near the surface of the equilibrium configuration. In all
+cases the eigenfunctions will have to assume the regular form (15b) at the surface, but the
+relation of the constants $k_j$, $h_j$, $W_j$, and $v_j$ to each other will vary from case to case.
+
+All cases of current interest fall into two classes: (1) \textit{Absolute zero temperature at the
+surface}; example---the Harrison-Wakano-Wheeler configurations (see Harrison et al.\ 1965). In
+this case the pressure, density, and adiabatic index near the surface have the form
+%
+\begin{equation}
+p \sim p_0(R - r) \,, \qquad
+\rho \sim p_0 + p_1(R - r) \,, \qquad
+\gamma p \sim \gamma_0 + \gamma_1(R - r) \,;
+\tag{D4}
+\end{equation}
+%
+and, consequently, all five solutions to the eigenequations (14) have the regular form (15b) near
+the surface. However, only four of the five solutions are acceptable because only four have
+vanishing Lagrangian change in pressure.
+
+(2) \textit{Polytropic pressure-density relation near the surface}; example---any hot stellar model.
+In this case the pressure, density, and adiabatic index near the surface are related by
+%
+\begin{equation}
+p = Q\rho^{1+1/N} \,, \qquad \gamma = \gamma_0 \,;
+\tag{D5}
+\end{equation}
+%
+and the equation of hydrostatic equilibrium then sets up the pressure and density distributions
+%
+\begin{equation}
+p = a(R - r)^{N+1} \,, \qquad \rho = b(R - r)^N \,.
+\tag{D6}
+\end{equation}
+%
+Here $a$, $b$, $\gamma_0$, and $Q$ are constants. An examination of the eigenequations (14) near the
+surface for such configurations reveals that only four of the five solutions have the regular form
+(15b). These four solutions are physically acceptable because equations (D5) and (D6) guarantee
+that $\gamma p$ vanishes at the surface, and therefore---for regular solutions---that $\Delta p$ vanishes
+(see eq.\ [16]). The fifth, unacceptable, solution has the surface behavior
+%
+\begin{align}
+K &= k_0 + k_1(R - r) + \cdots \,, \quad
+H = h_0 + h_1(R - r) + \cdots \,, \quad
+W = G(R - r)^{-N} \,, \notag \\[4pt]
+V &= -\frac{G(1 - 2M/R)^{1/2}\,(N\gamma_0 - N - 1)}{\omega^2 R}\,(R - r)^{-N} \,.
+\tag{D7}
+\end{align}
+%
+Here $k_0$, $k_1$, $h_0$, $h_1$ are constants freely adjustable by the addition of varying amounts of
+the regular solutions (15b); while $G$ is the arbitrary constant which characterizes the solution.
+
+\section*{APPENDIX E \\ BEHAVIOR OF THE EVEN-PARITY EIGENFUNCTIONS AT $r = \infty$}
+
+Outside the star's surface ($r > R$) the eigenequations (14b) and (14c) become vacuous, and
+(14a) and (14b) alone govern the behavior of the gravitational-wave functions $H_0$ and $K$.
+Equations (14a) and (14b) form a third-order differential system and have three independent
+solutions. However, only one of these solutions is physically acceptable since only one joins
+smoothly ($K'$, $K$, and $H$ continuous) at the star's surface to the perturbed interior geometry.
+
+In the wave zone ($r \gg R$, $r \gg 1/|\omega|$) the eigenequations (14a) and (14b) take on the
+simplified form
+%
+\begin{align}
+H' + \bigl[1 + l(l+1)/2\bigr] H/r
+  &= K'' + 3K'/r + \bigl[1 - l(l+1)/2\bigr] K/r^2 \,,
+\tag{E1a}\\[4pt]
+2H/r^2
+  &= K'' + 2K'/r + 2\bigl[1 - l(l+1)/2\bigr] K/r^2 + \omega^2\bigl[1 + 4M/r\bigr] K \,.
+\tag{E1b}
+\end{align}
+%
+By combining equations (E1a), (E1b), and $d(\text{E1b})/dr$, one can eliminate $H$:
+%
+\begin{equation}
+\bigl[K'' + \omega^2(1 + 4M/r)\,K\bigr]'
++ \bigl[3 + l(l+1)/2\bigr]\,r^{-1}
+\times \bigl[K'' + \omega^2(1 + 4M/r)\,K\bigr] = 0 \,.
+\tag{E2}
+\end{equation}
+
+The third-order structure of the equations is now more explicit. Although equation (E2) is of
+third order, one of its three independent solutions degenerates rapidly with increasing $r$ into a
+linear combination of the other two. The two dominant solutions of (E2), and the corresponding
+solutions of (E3b) for $H_1$, have the form (48).
+
+\bibliography{references}
+
+\end{document}

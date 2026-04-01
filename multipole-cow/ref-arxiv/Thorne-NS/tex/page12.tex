@@ -1,0 +1,94 @@
+\subsubsection{(iii) Gravitational Radiation from the Quasi-normal Modes}
+
+The power radiated in gravitational waves by the quasi-normal pulsations is equal
+to the time rate of change of the fluid's pulsation energy. (Here we refer to energies
+measured at infinity with the energy redshift effect taken into account; cf.\ Harrison,
+Thorne, Wakano, and Wheeler [1965], pp.\ 19--21; also RSSD \S~3.1.2.) It is easy to
+write down an expression for the kinetic energy of fluid motion but very difficult to
+construct an expression for the compressional and gravitational potential energy.
+Therefore, we shall calculate only the kinetic energy, and we shall then argue that the
+potential energy must be equal to the kinetic energy but must pulsate out of phase with
+it.
+
+\subsubsection{(iv) Pulsation Energy and Power Radiated}
+
+The kinetic energy of pulsation is given by (cf.\ RSSD, eq.\ [4.26'])
+%
+\begin{equation}
+E_{\rm kin} = \int_{\rm star}
+\underbrace{\left(\rho + p\right)}_{\text{inertial mass}\atop\text{per unit volume}}
+\underbrace{\left(\frac{1}{2}v^2\right)}_{\text{physical velocity}\atop\text{of fluid}}
+\underbrace{e^{(\nu - \lambda)/2}}_{\text{gravitational}\atop\text{redshift}}
+\underbrace{d\mathcal{V}}_{\text{proper}\atop\text{volume}}
+= \int_0^R \frac{1}{4}(\rho+p)\,e^{(\lambda-\nu)/2}\bigl[r^{-2}\xi_r^2(r) + (r^{-1}\xi_\perp(r))^2\bigr]\,e^{\nu/2}\,4\pi r^2\,dr\,d\theta\,d\phi \,.
+\tag{25}
+\end{equation}
+%
+Upon substituting equations (7a), (11), (12), and (22) into this expression and
+integrating over $\theta$, we obtain for the fluid kinetic energy of the $n$th quasi-normal mode
+%
+\begin{equation}
+E_{\rm kin} = 2\pi\,(2l+1)^{-1}\,\sigma_n^2\,e^{-2i\sigma_n t}
+\int_0^R (\rho+p)\,e^{(\lambda-\nu)/2}
+\Bigl\{
+r^{-2}\bigl|W_n^{(l)}(r)\bigr|^2
++ l(l+1)\,r^{-2}\bigl|V_n^{(l)}(r)\bigr|^2
+\Bigr\}
+\Bigl[
+1 + l(l+1)\,\bigl|V_n^{(l)}(r)\bigr|^2
+\sin^2\bigl(\sigma_n t + \delta_n(r)\bigr)
++ \bigl\{l + \delta_n(r)\bigr\}
+\Bigr]\,dr \,,
+\tag{26}
+\end{equation}
+%
+Here $\delta_n(r)$ and $\delta_n(r)$ are the phases of $W_n^{(l)}(r)$ and $V_n^{(l)}(r)$, and we have assumed that
+$1/\tau_n \ll \sigma_n$.
+
+For situations of physical interest---e.g., neutron stars formed in a supernova explosion or neutron stars undergoing relaxation oscillations---rough estimates suggest
+that $1/\tau_n \ll \sigma_n$ (see Wheeler 1966; Zee and Wheeler 1967; Misner and Zapolsky 1967;
+Chau 1967). When this is true, the eigenfunctions (14) couple the real and imaginary
+parts of the eigenfunctions only very slightly; and, consequently, one has
+%
+\begin{equation}
+\delta_n(r) \ll 1, \quad \delta_n(r) \ll 1 \,.
+\tag{27}
+\end{equation}
+%
+and
+%
+\begin{equation}
+E_{\rm kin} = E_{\rm pulse}^n \sin^2(\sigma_n t) \,.
+\tag{28a}
+\end{equation}
+%
+Here
+%
+\begin{equation}
+E_{\rm pulse}^n = 2\pi\,(2l+1)^{-1}\,\sigma_n^2
+\int_0^R (\rho+p)\,e^{(\lambda-\nu)/2}
+\Bigl[
+r^{-2}\bigl|W_n^{(l)}(r)\bigr|^2
++ l(l+1)\,r^{-2}\bigl|V_n^{(l)}(r)\bigr|^2
+\Bigr]\,dr \,.
+\tag{28b}
+\end{equation}
+%
+When $1/\tau_n \ll \sigma_n$, the total fluid pulsation energy---kinetic plus potential---is very
+nearly constant over a total pulsation period, $\Delta t = 2\pi/\sigma_n$. This is possible only if the
+potential energy of pulsation is given by
+%
+\begin{equation}
+E_{\rm pot} \approx E_{\rm pulse}^n \cos^2(\sigma_n t) \,,
+\tag{29a}
+\end{equation}
+%
+so that
+%
+\begin{equation}
+E_{\rm kin} + E_{\rm pot} = E_{\rm pulse}^n \,.
+\tag{29b}
+\end{equation}
+%
+is nearly time independent. Equations (29a) and (29b) for the total pulsation energy
+should be roughly correct even when $1/\tau_n$ is not small compared to $\sigma_n$.

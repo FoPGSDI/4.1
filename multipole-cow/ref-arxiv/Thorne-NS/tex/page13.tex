@@ -1,0 +1,68 @@
+Since the power radiated as gravitational waves is the negative of the time rate of
+change of the fluid pulsion energy, the \emph{radiated power as measured far from the star is}
+%
+\begin{equation}
+  P = -2\,\tau_{n}^{-1} E_{n,\text{puls}}^{-k/\tau_{n}} \;.
+  \label{eq:30}
+\end{equation}
+
+\subsection*{b) The Region near the Wave Front}
+
+Thus far we have described mathematically the quasi-normal pulsations only in the
+region far behind the wave front. Near the wavefront the description is more complicated because one must superimpose a large number of normal modes with various
+amounts of outgoing and incoming radiation in order to obtain a sharp ``turning-on'' of
+the perturbation at the wave front.
+
+We shall confine our analysis near the wavefront to those quasi-normal modes with
+$|f/\tau_{n}| \ll \sigma_{n}$ ($\sigma_{n}$ near the positive real axis); and we shall pattern our analysis after the
+classic analysis of nuclear particle decay by Gamow (1931) and by Breit and Wert
+(1935).
+
+We build the wave front and associated quasi-normal pulsations out of a linear
+combination of real standing-wave normal modes with eigenfrequencies near $\sigma_{n}$---and
+hence also near $\omega_{n} = \sigma_{n} + i/\tau_{n}$. Each of these standing-wave modes is normalized to
+have the same real amplitude, $B_{n}$, at the center of the star (cf.\ eq.\ [18]). In the wave
+zone reality of the eigenfunctions guarantees that the ingoing and outgoing amplitudes
+are complex conjugates of each other (cf.\ eq.\ [18]):
+%
+\begin{equation}
+  C^{(\mathrm{I})} = C^{(\mathrm{O})*} \;.
+  \label{eq:31}
+\end{equation}
+
+These wave-zone amplitudes are conveniently expressed as functions of the real frequency, $\omega$, by means of a power series expansion in the complex frequency plane about
+the purely outgoing frequency $\omega_{n} = \sigma_{n} + i/\tau_{n}$:
+%
+\begin{equation}
+  C_{\omega}^{(\mathrm{O})} = C_{\Omega}^{(\mathrm{O})} = \int dC^{(\mathrm{O})}/d\omega\big|_{\Omega}\,(\omega - \omega_{n} - i/\tau_{n}) \;.
+  \label{eq:32}
+\end{equation}
+
+The particular combination of real, standing-wave normal modes which yields the desired wave front and subsequent quasi-normal pulsations is this:
+%
+\begin{equation}
+  K(r,t) = \int_{-\infty}^{+\infty}
+    \frac{K_{n}(r)}{(\omega - \sigma_{n})^{2} + \tau_{n}^{-2}}
+    \frac{1}{2\pi}\,e^{i\omega t}\,d\omega
+  + \begin{pmatrix} \text{complex} \\ \text{conjugate} \end{pmatrix} ,
+  \label{eq:33}
+\end{equation}
+%
+and similarly for $H_{0}, W, V$.
+
+In the wave zone this becomes, for times\footnote{For times $t < 0$ (eq.\ (30))---incoming gravitational waves
+with a trailing wave front. We choose to assume $t = 0$. The perturbation is first turned on inside the star
+at time $t = 0$, thereby discarding the incoming solution for $t < 0$.} $t > 0$ [combine eqs.\ (18), (32), and (33); integrate $\omega \to \infty$ since the resonant denominator in eq.\ (33) is huge for negative
+$\omega$; close the integration contours at complex infinity; and use the method of residues to
+evaluate the integrals]:
+%
+\begin{equation}
+  K(r,t)
+  = \begin{cases}
+      0 & \text{if} \quad t < r + 2M\ln r \;, \\[4pt]
+      \dfrac{1}{2}\,dC^{(\mathrm{O})}/d\omega\big|_{\Omega}\,
+        \exp\!\bigl[-(t - r - 2M\ln r)/\tau_{n} + i\sigma_{n}(t - r - 2M\ln r) + \delta\bigr]
+      & \text{if} \quad t > r + 2M\ln r \;.
+    \end{cases}
+  \tag{34a}
+\end{equation}
